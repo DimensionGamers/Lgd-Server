@@ -1,0 +1,99 @@
+
+
+- Decreased the speed at which weapons lose durability.
+
+- Adjusted the speed at which Dark Spirit loses life to allow for longer hunting.
+
+1: cuando entra alguien nuevo a la party , aparece con la vida en 0, la ee se la pasa intentando curarlo y deja de bufear.
+3: cuando reconnectas o switcheas apareces skeleton (hiper minimo)
+
+- che me di cuenta q en el cc pretas el f10 y desaparecen los mob y te muestra cuales son los player
+
+- BC al reconectar apareces en el safe y no te desbloquea el puente.
+
+
+
+tengo sd recovery en el master pero no me recupera el sd
+
+
+
+-- Monster ILLUSION ( el del skill ) acomodarle los rates en DB
+
+
+
+
+
+-- SEASON 12
+-- Borrar todos los Sphere excepto lvl 1 ( shop_items, item_drop, item_bag_items )
+-- Deshabilitar items que no existen en el Kor
+-- Agregar a shop_items los nuevos item Ruud
+-- Actualizar shop_items y poner 0xFFFF, 0xFFFE en items con 0xFF y 0xFE respectivamente
+-- Actualizar item_bag_items Muun
+-- Borrar todos los muun type 13 de item_template
+-- Borrar todas las notes e items para upgradear armas socket ( shop_items, item_drop, item_bag_items )
+-- Borrar NPC de Seed Master
+-- Modificar tabla log_mix -> mix_id a smallint
+-- WorldAttribute (57, 79, 113, 114)
+-- World BC & CC modificar display id
+-- Nixies Lake LOG
+-- Agregar LabyrinthOfDimensionInfo.txt a EventData
+
+-- Agregar todos los items nuevos
+-- Agregar todos los mobs nuevos
+-- Agregar todos los items socket nuevos
+-- Agregar todos los seed nuevos
+-- Agregar todos los penta nuevos
+-- Agregar todos los item stack
+-- Agregar todos los buff
+-- Agregar tabla de experiencia master
+-- Editar buff Normales y ponerles los valores de los Master
+-- Borrar req de Energia a los Penta Nuevos
+-- Acomodar req Lvl de los Penta Nuevos
+-- Actualizar las EvolutionStone de item_bag_items (Socket_1)
+-- Actualizar item_stack de EvolutionStone
+-- Borrar el NPC Monica o agregar a la venta todas las evolution stone
+-- Actualizar DarkSpirit item_template ( Slot = -1, InventoryItem flag )
+-- Cambiar de slot arco y flechas al crear una elf
+
+
+-- MuCharacterDB
+-- Convertir Sphere lvl2, lvl3 y lvl4 a Sphere lvl1
+-- Convertir Muun
+-- Actualizar item_data e item_recovery -> poner 0xFFFF y 0xFFFE en items con 0xFF y 0xFE respectivamente
+-- Eliminar notes e items para upgradear armas socket
+-- Agregar las 3 columas de buff_item a character_helper
+-- Actualizar las EvolutionStone de item_data (Socket_1)
+
+
+
+
+
+3) ¿Habrá evento de seed por llegar a lvl10, ejemplo cada seed lvl10 de cada tipo se ganara otra del mismo y/o random seed pero lvl 5.
+4) ¿Habrá algun evento inauguracion Season 12?, cual? definirlo.
+5) Tema web, nunca se testeó con gente, creen adecuado largarla sin test?
+6) Boss John (mapa nixie), avisar si va a salir el primer dia o si se lo demorará. (Tambien definir los drops)
+
+8) Terminar de pullir el TP y testearlo con gente.
+9) TEST del skill DK
+
+11) Muun (nuevos) drop, definir y publicar cuales se van a agregar.
+12) Muun special ability, en que quedó esto?.
+
+13) Wrath GL mst, aun por fixear?
+14) Score Evomon, aun por fixear?
+
+23) Si cambiaron los drops de Bosses/Kundums avisar cuales seran los nuevos cambios.
+
+24) Quest pve/pvp custom seran habilitadas?
+
+25) Creacion de flyer S12 para publicitar? subirlo a la web please para compartir.
+
+
+
+
+
+
+
+
+BATTLE CORE:
+- Armar los comandos para Admin

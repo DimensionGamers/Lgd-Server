@@ -1,0 +1,366 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Log">
+      <UniqueIdentifier>{75e07820-69c4-4c29-ae54-663fd7fb2c0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sha">
+      <UniqueIdentifier>{80f97e5c-d014-4b9c-a741-7dac6dfffc76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Window">
+      <UniqueIdentifier>{19662660-d17c-4f79-8f5f-9a25ab345f4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataBase">
+      <UniqueIdentifier>{08da1d5d-b457-4dfe-942f-eba11c974548}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TCSocket">
+      <UniqueIdentifier>{7ca91250-0666-476b-9f22-4ada5a2b22be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TCPClient">
+      <UniqueIdentifier>{51f85890-9aa7-463c-a36a-d9c7819f68a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PacketData">
+      <UniqueIdentifier>{9889e583-f8ba-48a1-985d-486f26723cf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PacketData\TCPacket">
+      <UniqueIdentifier>{0b484bc5-04ec-4694-a57c-65a9d2d25f1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Custom">
+      <UniqueIdentifier>{b891939a-9674-4a19-a847-5684b5ba57a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataBase\DB">
+      <UniqueIdentifier>{13bbf03a-26a7-43c5-9500-616af8a26bfd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="checked.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Common.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CompilerDefs.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Config.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Define.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Errors.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UnorderedMapSet.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Util.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VarTemplate.h">
+      <Filter>Custom</Filter>
+    </ClInclude>
+    <ClInclude Include="Readscript.h">
+      <Filter>Custom</Filter>
+    </ClInclude>
+    <ClInclude Include="LargeRandom.h">
+      <Filter>Custom</Filter>
+    </ClInclude>
+    <ClInclude Include="FreeImage.h">
+      <Filter>Custom</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemTimer.h">
+      <Filter>Custom</Filter>
+    </ClInclude>
+    <ClInclude Include="SingletonInc.h">
+      <Filter>Custom</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomValueMgr.h">
+      <Filter>Custom</Filter>
+    </ClInclude>
+    <ClInclude Include="TickTimer.h">
+      <Filter>Custom</Filter>
+    </ClInclude>
+    <ClInclude Include="base64.h">
+      <Filter>Custom</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonPCH.h" />
+    <ClInclude Include="Log.h">
+      <Filter>Log</Filter>
+    </ClInclude>
+    <ClInclude Include="Appender.h">
+      <Filter>Log</Filter>
+    </ClInclude>
+    <ClInclude Include="AppenderConsole.h">
+      <Filter>Log</Filter>
+    </ClInclude>
+    <ClInclude Include="AppenderFile.h">
+      <Filter>Log</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Log</Filter>
+    </ClInclude>
+    <ClInclude Include="LogOperation.h">
+      <Filter>Log</Filter>
+    </ClInclude>
+    <ClInclude Include="App.h">
+      <Filter>Window</Filter>
+    </ClInclude>
+    <ClInclude Include="AsyncAcceptor.h">
+      <Filter>TCSocket</Filter>
+    </ClInclude>
+    <ClInclude Include="SocketMgr.h">
+      <Filter>TCSocket</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket.h">
+      <Filter>TCSocket</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageBuffer.h">
+      <Filter>TCSocket</Filter>
+    </ClInclude>
+    <ClInclude Include="SFMT.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="randomc.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkThread.h">
+      <Filter>TCSocket</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessPriority.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TCPClient.h">
+      <Filter>TCPClient</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomPacket.h">
+      <Filter>PacketData</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerLinkPacket.h">
+      <Filter>PacketData</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketDefine.h">
+      <Filter>PacketData</Filter>
+    </ClInclude>
+    <ClInclude Include="EncDec.h">
+      <Filter>PacketData</Filter>
+    </ClInclude>
+    <ClInclude Include="LoginServerPacket.h">
+      <Filter>PacketData</Filter>
+    </ClInclude>
+    <ClInclude Include="ByteBuffer.h">
+      <Filter>PacketData\TCPacket</Filter>
+    </ClInclude>
+    <ClInclude Include="ByteConverter.h">
+      <Filter>PacketData\TCPacket</Filter>
+    </ClInclude>
+    <ClInclude Include="LockedQueue.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldPacket.h">
+      <Filter>PacketData\TCPacket</Filter>
+    </ClInclude>
+    <ClInclude Include="GameServerDatabase.h">
+      <Filter>DataBase\DB</Filter>
+    </ClInclude>
+    <ClInclude Include="LoginDatabase.h">
+      <Filter>DataBase\DB</Filter>
+    </ClInclude>
+    <ClInclude Include="MuDatabase.h">
+      <Filter>DataBase\DB</Filter>
+    </ClInclude>
+    <ClInclude Include="MuLogDatabase.h">
+      <Filter>DataBase\DB</Filter>
+    </ClInclude>
+    <ClInclude Include="Security.h">
+      <Filter>Custom</Filter>
+    </ClInclude>
+    <ClInclude Include="Sha256.h">
+      <Filter>Sha</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectServerPacket.h">
+      <Filter>PacketData</Filter>
+    </ClInclude>
+    <ClInclude Include="MD5.h">
+      <Filter>Custom</Filter>
+    </ClInclude>
+    <ClInclude Include="MD5KEY.h">
+      <Filter>Custom</Filter>
+    </ClInclude>
+    <ClInclude Include="Settings.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniDump.h">
+      <Filter>Custom</Filter>
+    </ClInclude>
+    <ClInclude Include="MuEditorDatabase.h">
+      <Filter>DataBase\DB</Filter>
+    </ClInclude>
+    <ClInclude Include="AdhocStatement.h">
+      <Filter>DataBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Callback.h">
+      <Filter>DataBase</Filter>
+    </ClInclude>
+    <ClInclude Include="DatabaseEnv.h">
+      <Filter>DataBase</Filter>
+    </ClInclude>
+    <ClInclude Include="DatabaseWorker.h">
+      <Filter>DataBase</Filter>
+    </ClInclude>
+    <ClInclude Include="DatabaseWorkerPool.h">
+      <Filter>DataBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Field.h">
+      <Filter>DataBase</Filter>
+    </ClInclude>
+    <ClInclude Include="MySQLConnection.h">
+      <Filter>DataBase</Filter>
+    </ClInclude>
+    <ClInclude Include="MySQLThreading.h">
+      <Filter>DataBase</Filter>
+    </ClInclude>
+    <ClInclude Include="PreparedStatement.h">
+      <Filter>DataBase</Filter>
+    </ClInclude>
+    <ClInclude Include="ProducerConsumerQueue.h">
+      <Filter>DataBase</Filter>
+    </ClInclude>
+    <ClInclude Include="QueryHolder.h">
+      <Filter>DataBase</Filter>
+    </ClInclude>
+    <ClInclude Include="QueryResult.h">
+      <Filter>DataBase</Filter>
+    </ClInclude>
+    <ClInclude Include="SQLOperation.h">
+      <Filter>DataBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Transaction.h">
+      <Filter>DataBase</Filter>
+    </ClInclude>
+    <ClInclude Include="TransactionCallBack.h">
+      <Filter>DataBase</Filter>
+    </ClInclude>
+    <ClInclude Include="FieldReader.h">
+      <Filter>DataBase</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Util.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LargeRandom.cpp">
+      <Filter>Custom</Filter>
+    </ClCompile>
+    <ClCompile Include="Readscript.cpp">
+      <Filter>Custom</Filter>
+    </ClCompile>
+    <ClCompile Include="TickTimer.cpp">
+      <Filter>Custom</Filter>
+    </ClCompile>
+    <ClCompile Include="base64.cpp">
+      <Filter>Custom</Filter>
+    </ClCompile>
+    <ClCompile Include="CommonPCH.cpp" />
+    <ClCompile Include="Log.cpp">
+      <Filter>Log</Filter>
+    </ClCompile>
+    <ClCompile Include="Appender.cpp">
+      <Filter>Log</Filter>
+    </ClCompile>
+    <ClCompile Include="AppenderConsole.cpp">
+      <Filter>Log</Filter>
+    </ClCompile>
+    <ClCompile Include="AppenderFile.cpp">
+      <Filter>Log</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Log</Filter>
+    </ClCompile>
+    <ClCompile Include="LogOperation.cpp">
+      <Filter>Log</Filter>
+    </ClCompile>
+    <ClCompile Include="App.cpp">
+      <Filter>Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Errors.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EncDec.cpp">
+      <Filter>PacketData</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessPriority.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ByteBuffer.cpp">
+      <Filter>PacketData\TCPacket</Filter>
+    </ClCompile>
+    <ClCompile Include="GameServerDatabase.cpp">
+      <Filter>DataBase\DB</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginDatabase.cpp">
+      <Filter>DataBase\DB</Filter>
+    </ClCompile>
+    <ClCompile Include="MuDatabase.cpp">
+      <Filter>DataBase\DB</Filter>
+    </ClCompile>
+    <ClCompile Include="MuLogDatabase.cpp">
+      <Filter>DataBase\DB</Filter>
+    </ClCompile>
+    <ClCompile Include="Security.cpp">
+      <Filter>Custom</Filter>
+    </ClCompile>
+    <ClCompile Include="Sha256.cpp">
+      <Filter>Sha</Filter>
+    </ClCompile>
+    <ClCompile Include="MD5.cpp">
+      <Filter>Custom</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniDump.cpp">
+      <Filter>Custom</Filter>
+    </ClCompile>
+    <ClCompile Include="MuEditorDatabase.cpp">
+      <Filter>DataBase\DB</Filter>
+    </ClCompile>
+    <ClCompile Include="AdhocStatement.cpp">
+      <Filter>DataBase</Filter>
+    </ClCompile>
+    <ClCompile Include="DatabaseEnv.cpp">
+      <Filter>DataBase</Filter>
+    </ClCompile>
+    <ClCompile Include="DatabaseWorker.cpp">
+      <Filter>DataBase</Filter>
+    </ClCompile>
+    <ClCompile Include="Field.cpp">
+      <Filter>DataBase</Filter>
+    </ClCompile>
+    <ClCompile Include="MySQLConnection.cpp">
+      <Filter>DataBase</Filter>
+    </ClCompile>
+    <ClCompile Include="PreparedStatement.cpp">
+      <Filter>DataBase</Filter>
+    </ClCompile>
+    <ClCompile Include="QueryHolder.cpp">
+      <Filter>DataBase</Filter>
+    </ClCompile>
+    <ClCompile Include="QueryResult.cpp">
+      <Filter>DataBase</Filter>
+    </ClCompile>
+    <ClCompile Include="Transaction.cpp">
+      <Filter>DataBase</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

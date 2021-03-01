@@ -1,0 +1,73 @@
+//	Parte 		Condicion 	Valor 		Mensaje
+0
+	0		0		0		// Ninguna
+	1		0		0		// Evento no Comenzado
+	2		0		0		// Batalla con Maya
+	3		0		0		// Batalla con NightMare
+	4		0		0		// Torre de Refinamiento
+	5		1		0		// Fin
+end
+
+//	Parte 		Condicion 	Valor 		Mensaje
+1
+	0		0		0		// Ninguna
+	1		1		60		// Tiempo en segundos para empezar la batalla
+	2		1		60		// Tiempo en segundos para entrar a la torre de refinamiento
+	3		0		0		// Find	
+end
+
+//	Parte 		Condicion 	Valor 		Mensaje
+2
+	0		1		900		// Primera Batalla
+	1		1		900		// Segunda Batalla
+	2		1		1200		// Tercer Batalla
+end
+
+
+//	Parte 		Condicion 	Valor 		Mensaje
+3
+// Setting
+	0		0		0		// Ninguna
+	1		1		120		// En Espera
+	2		1		15		// Notificacion
+// Primera Parte
+	3		0		0		// Inicio
+	4		0		0		// Maya	
+	5		1		5		// Muerte de Maya
+	6		1		3		// Fin del Ciclo
+	7		1		60		// En Espera
+// Segunda Parte
+	8		0		0		// Inicio
+	9		0		0		// Maya
+	10		1		5		// Muerte de Maya
+	11		1		3		// Fin del Ciclo
+	12		1		120		// En Espera
+// Tercera Parte	
+	13		0		0		// Inicio	
+	14		0		0		// Maya
+	15		1		5		// Muerte de Maya
+	16		1		10		// Fin del Ciclo
+	17		1		3		// Fin
+	18		0		0		// Fin del Ciclo
+end
+
+//Ciclo del NightMare
+//	Parte 		Condicion 	Valor 		Mensaje
+4
+	0		0		0		// Ninguna
+	1		1		5		// Idle
+	2		1		10		// Notificacion
+	3		1		1200		// Comienzo
+	4		1		5		// Fin
+	5		0		0		// Fin del Ciclo
+end
+
+//	Parte 		Condicion 	Valor 		Mensaje
+5
+	0		0		0		// Ninguna
+	1		1		21600		// Revitalizacion
+	2		1		300		// Notificacion
+	3		1		2220		// Fin
+	4		1		180		// Notificacion
+	5		1		5		// Fin
+end

@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B98EEA21-D2A6-45E7-B5A7-31BCD2FA012C}</ProjectGuid>
+    <RootNamespace>Common</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IntDir>Release\</IntDir>
+    <OutDir>..\Libraries\</OutDir>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IntDir>Release\</IntDir>
+    <OutDir>..\Libraries\</OutDir>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\MySQL\include;..\dep;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PreprocessorDefinitions>ACE_AS_STATIC_LIBS;WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>CommonPCH.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>CommonPCH.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <DisableSpecificWarnings>
+      </DisableSpecificWarnings>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <OmitFramePointers>false</OmitFramePointers>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>..\Libraries\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ACE.lib;mysqlclient.lib;libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>..\Libraries\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ACE.lib;libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\Dependencies;..\Dependencies\Lua;..\Dependencies\MySQL\include;C:\Boost_2013;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>CommonPCH.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>CommonPCH.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <DisableSpecificWarnings>
+      </DisableSpecificWarnings>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <AdditionalOptions>/Zm500 %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <TreatSpecificWarningsAsErrors>4263;4264</TreatSpecificWarningsAsErrors>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>..\Libraries\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ACE.lib;mysqlclient.lib;libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>..\Libraries\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions> /machine:X86 %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="AdhocStatement.h" />
+    <ClInclude Include="App.h" />
+    <ClInclude Include="Appender.h" />
+    <ClInclude Include="AppenderConsole.h" />
+    <ClInclude Include="AppenderFile.h" />
+    <ClInclude Include="AsyncAcceptor.h" />
+    <ClInclude Include="base64.h" />
+    <ClInclude Include="ByteBuffer.h" />
+    <ClInclude Include="ByteConverter.h" />
+    <ClInclude Include="Callback.h" />
+    <ClInclude Include="checked.h" />
+    <ClInclude Include="Common.h" />
+    <ClInclude Include="CommonPCH.h" />
+    <ClInclude Include="CompilerDefs.h" />
+    <ClInclude Include="Config.h" />
+    <ClInclude Include="ConnectServerPacket.h" />
+    <ClInclude Include="core.h" />
+    <ClInclude Include="CustomPacket.h" />
+    <ClInclude Include="DatabaseEnv.h" />
+    <ClInclude Include="DatabaseWorker.h" />
+    <ClInclude Include="DatabaseWorkerPool.h" />
+    <ClInclude Include="Define.h" />
+    <ClInclude Include="EncDec.h" />
+    <ClInclude Include="Errors.h" />
+    <ClInclude Include="Field.h" />
+    <ClInclude Include="FieldReader.h" />
+    <ClInclude Include="FreeImage.h" />
+    <ClInclude Include="GameServerDatabase.h" />
+    <ClInclude Include="LockedQueue.h" />
+    <ClInclude Include="LoginServerPacket.h" />
+    <ClInclude Include="MD5.h" />
+    <ClInclude Include="MD5KEY.h" />
+    <ClInclude Include="MiniDump.h" />
+    <ClInclude Include="MuDatabase.h" />
+    <ClInclude Include="MuEditorDatabase.h" />
+    <ClInclude Include="MuLogDatabase.h" />
+    <ClInclude Include="LargeRandom.h" />
+    <ClInclude Include="Logger.h" />
+    <ClInclude Include="LoginDatabase.h" />
+    <ClInclude Include="LogOperation.h" />
+    <ClInclude Include="MessageBuffer.h" />
+    <ClInclude Include="MySQLConnection.h" />
+    <ClInclude Include="MySQLThreading.h" />
+    <ClInclude Include="NetworkThread.h" />
+    <ClInclude Include="PacketDefine.h" />
+    <ClInclude Include="PreparedStatement.h" />
+    <ClInclude Include="ProcessPriority.h" />
+    <ClInclude Include="ProducerConsumerQueue.h" />
+    <ClInclude Include="QueryHolder.h" />
+    <ClInclude Include="QueryResult.h" />
+    <ClInclude Include="randomc.h" />
+    <ClInclude Include="RandomValueMgr.h" />
+    <ClInclude Include="Readscript.h" />
+    <ClInclude Include="Security.h" />
+    <ClInclude Include="ServerLinkPacket.h" />
+    <ClInclude Include="Settings.h" />
+    <ClInclude Include="SFMT.h" />
+    <ClInclude Include="Sha256.h" />
+    <ClInclude Include="SingletonInc.h" />
+    <ClInclude Include="Socket.h" />
+    <ClInclude Include="SocketMgr.h" />
+    <ClInclude Include="SQLOperation.h" />
+    <ClInclude Include="SystemTimer.h" />
+    <ClInclude Include="TCPClient.h" />
+    <ClInclude Include="TickTimer.h" />
+    <ClInclude Include="Timer.h" />
+    <ClInclude Include="Transaction.h" />
+    <ClInclude Include="TransactionCallBack.h" />
+    <ClInclude Include="UnorderedMapSet.h" />
+    <ClInclude Include="Util.h" />
+    <ClInclude Include="VarTemplate.h" />
+    <ClInclude Include="Log.h" />
+    <ClInclude Include="WorldPacket.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AdhocStatement.cpp" />
+    <ClCompile Include="App.cpp" />
+    <ClCompile Include="Appender.cpp" />
+    <ClCompile Include="AppenderConsole.cpp" />
+    <ClCompile Include="AppenderFile.cpp" />
+    <ClCompile Include="base64.cpp" />
+    <ClCompile Include="ByteBuffer.cpp" />
+    <ClCompile Include="CommonPCH.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Config.cpp" />
+    <ClCompile Include="DatabaseEnv.cpp" />
+    <ClCompile Include="DatabaseWorker.cpp" />
+    <ClCompile Include="EncDec.cpp" />
+    <ClCompile Include="Errors.cpp" />
+    <ClCompile Include="Field.cpp" />
+    <ClCompile Include="GameServerDatabase.cpp" />
+    <ClCompile Include="MD5.cpp" />
+    <ClCompile Include="MiniDump.cpp" />
+    <ClCompile Include="MuDatabase.cpp" />
+    <ClCompile Include="MuEditorDatabase.cpp" />
+    <ClCompile Include="MuLogDatabase.cpp" />
+    <ClCompile Include="LargeRandom.cpp" />
+    <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="LoginDatabase.cpp" />
+    <ClCompile Include="LogOperation.cpp" />
+    <ClCompile Include="MySQLConnection.cpp" />
+    <ClCompile Include="PreparedStatement.cpp" />
+    <ClCompile Include="ProcessPriority.cpp" />
+    <ClCompile Include="QueryHolder.cpp" />
+    <ClCompile Include="QueryResult.cpp" />
+    <ClCompile Include="Readscript.cpp" />
+    <ClCompile Include="Security.cpp" />
+    <ClCompile Include="Sha256.cpp" />
+    <ClCompile Include="TickTimer.cpp" />
+    <ClCompile Include="Transaction.cpp" />
+    <ClCompile Include="Util.cpp" />
+    <ClCompile Include="Log.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

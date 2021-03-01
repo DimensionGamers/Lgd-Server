@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MainSocket.cpp" />
+    <ClCompile Include="MainSocketMgr.cpp" />
+    <ClCompile Include="ServerList.cpp" />
+    <ClCompile Include="ConnectServerPCH.cpp" />
+    <ClCompile Include="GSSocket.cpp" />
+    <ClCompile Include="GSSocketMgr.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Main.h" />
+    <ClInclude Include="MainSocket.h" />
+    <ClInclude Include="MainSocketMgr.h" />
+    <ClInclude Include="ServerList.h" />
+    <ClInclude Include="ConnectServerPCH.h" />
+    <ClInclude Include="GSSocket.h" />
+    <ClInclude Include="GSSocketMgr.h" />
+  </ItemGroup>
+</Project>

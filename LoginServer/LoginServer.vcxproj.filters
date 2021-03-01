@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="LoginServerPCH.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="ServerList.cpp" />
+    <ClCompile Include="LoginQueue.cpp">
+      <Filter>Queue</Filter>
+    </ClCompile>
+    <ClCompile Include="AuthSocket.cpp">
+      <Filter>Connection</Filter>
+    </ClCompile>
+    <ClCompile Include="AuthSocketMgr.cpp">
+      <Filter>Connection</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="LoginServerPCH.h" />
+    <ClInclude Include="Main.h" />
+    <ClInclude Include="ServerList.h" />
+    <ClInclude Include="LoginQueue.h">
+      <Filter>Queue</Filter>
+    </ClInclude>
+    <ClInclude Include="AuthSocket.h">
+      <Filter>Connection</Filter>
+    </ClInclude>
+    <ClInclude Include="AuthSocketMgr.h">
+      <Filter>Connection</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Connection">
+      <UniqueIdentifier>{1d118619-935a-41f0-a487-3fd0d11e9ead}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Queue">
+      <UniqueIdentifier>{b8e74363-aa1b-4eb7-8adf-e89ee592309a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Main">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Connection">
+      <UniqueIdentifier>{9cde23b9-b7a0-43b2-bc52-564e674c3e44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Queue">
+      <UniqueIdentifier>{c8f7bc54-dac3-459a-9f33-561d88aada60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Character">
+      <UniqueIdentifier>{069b52e2-64c2-4dff-9190-832a03b7945b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Guild">
+      <UniqueIdentifier>{71162ad0-69cb-4bb8-8f68-d3288e1e71c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CastleSiege">
+      <UniqueIdentifier>{4829830e-91fe-409d-b49c-202640250b2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Crywolf">
+      <UniqueIdentifier>{3db9eb83-8f05-40fe-8531-d24cb59ee620}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ArkaWar">
+      <UniqueIdentifier>{d35f6a6f-5209-459a-a267-d6e4c3cb673d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerLinkPCH.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerSocket.cpp">
+      <Filter>Connection</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerSocketMgr.cpp">
+      <Filter>Connection</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterCreateQueue.cpp">
+      <Filter>Queue</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="GuildMgr.cpp">
+      <Filter>Guild</Filter>
+    </ClCompile>
+    <ClCompile Include="GuildCreateQueue.cpp">
+      <Filter>Queue</Filter>
+    </ClCompile>
+    <ClCompile Include="CastleSiege.cpp">
+      <Filter>CastleSiege</Filter>
+    </ClCompile>
+    <ClCompile Include="Crywolf.cpp">
+      <Filter>Crywolf</Filter>
+    </ClCompile>
+    <ClCompile Include="GuildMatching.cpp">
+      <Filter>Guild</Filter>
+    </ClCompile>
+    <ClCompile Include="ArkaWar.cpp">
+      <Filter>ArkaWar</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Main.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerLinkPCH.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerSocket.h">
+      <Filter>Connection</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerSocketMgr.h">
+      <Filter>Connection</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterCreateQueue.h">
+      <Filter>Queue</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="GuildMgr.h">
+      <Filter>Guild</Filter>
+    </ClInclude>
+    <ClInclude Include="GuildCreateQueue.h">
+      <Filter>Queue</Filter>
+    </ClInclude>
+    <ClInclude Include="CastleSiege.h">
+      <Filter>CastleSiege</Filter>
+    </ClInclude>
+    <ClInclude Include="Crywolf.h">
+      <Filter>Crywolf</Filter>
+    </ClInclude>
+    <ClInclude Include="GuildMatching.h">
+      <Filter>Guild</Filter>
+    </ClInclude>
+    <ClInclude Include="ArkaWar.h">
+      <Filter>ArkaWar</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

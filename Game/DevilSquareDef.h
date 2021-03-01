@@ -1,0 +1,52 @@
+/*
+*
+* Copyright (C) 2008-2017 Dimension Gamers <http://www.dimensiongamers.net>
+*
+* File: "DevilSquareDef.h"
+*
+*/
+#ifndef DEVIL_SQUAREDEF_H
+#define DEVIL_SQUAREDEF_H
+
+#define MAX_DEVIL_SQUARE_GROUND			7
+#define MAX_DEVIL_SQUARE_RANK			10
+
+#define DEVIL_SQUARE_END_TIME			1
+#define DEVIL_SQUARE_GATE				505
+
+enum DevilSquareState
+{
+	DEVIL_SQUARE_STATE_NONE,
+	DEVIL_SQUARE_STATE_OPEN,
+	DEVIL_SQUARE_STATE_STANDBY,
+	DEVIL_SQUARE_STATE_PLAYING,
+	DEVIL_SQUARE_STATE_PLAYEND,
+	DEVIL_SQUARE_STATE_MAX
+};
+
+static const EventCommonGroundData g_DevilSquareData[MAX_DEVIL_SQUARE_GROUND] = 
+{ 
+	WORLD_DEVIL_SQUARE_1,	58,
+	WORLD_DEVIL_SQUARE_2,	59,
+	WORLD_DEVIL_SQUARE_3,	60,
+	WORLD_DEVIL_SQUARE_4,	61,
+	WORLD_DEVIL_SQUARE_5,	111,
+	WORLD_DEVIL_SQUARE_6,	112,
+	WORLD_DEVIL_SQUARE_7,	270
+};
+
+static const struct DevilSquareMixInfo
+{
+	uint32 price;
+	int32 rate;
+} m_DevilSquareMixInfo[MAX_DEVIL_SQUARE_GROUND] = {
+	{100000, 80},
+	{200000, 80},
+	{400000, 80},
+	{700000, 80},
+	{1100000, 70},
+	{1600000, 70},
+	{2000000, 70}
+};
+
+#endif

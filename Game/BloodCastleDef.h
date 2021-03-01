@@ -1,0 +1,90 @@
+/*
+*
+* Copyright (C) 2008-2017 Dimension Gamers <http://www.dimensiongamers.net>
+*
+* File: "BloodCastleDef.h"
+*
+*/
+#ifndef BLOOD_CASTLE_DEF_H
+#define BLOOD_CASTLE_DEF_H
+
+#define MAX_BLOOD_CASTLE_GROUND			7
+#define BLOOD_CASTLE_STANDBY_TIME		1
+#define BLOOD_CASTLE_END_TIME			2
+#define BLOOD_CASTLE_GATE				504
+
+enum BloodCastleState
+{
+	BLOOD_CASTLE_STATE_NONE,
+	BLOOD_CASTLE_STATE_OPEN,
+	BLOOD_CASTLE_STATE_STANDBY,
+	BLOOD_CASTLE_STATE_PLAYING,
+	BLOOD_CASTLE_STATE_PLAYEND,
+	BLOOD_CASTLE_STATE_MAX
+};
+
+enum BloodCastleSubState
+{
+	BLOOD_CASTLE_SUBSTATE_NONE,
+	BLOOD_CASTLE_SUBSTATE_MONSTER_KILL,
+	BLOOD_CASTLE_SUBSTATE_DOOR_STANDBY,
+	BLOOD_CASTLE_SUBSTATE_DOOR_KILL,
+	BLOOD_CASTLE_SUBSTATE_BOSS_KILL,
+	BLOOD_CASTLE_SUBSTATE_STATUE_KILL,
+	BLOOD_CASTLE_SUBSTATE_DELIVER_WEAPON,
+	BLOOD_CASTLE_SUBSTATE_WEAPON_DELIVERED,
+	BLOOD_CASTLE_SUBSTATE_COMPLETE,
+	BLOOD_CASTLE_SUBSTATE_MAX
+};
+
+enum BloodCastleMonsterType
+{
+	BLOOD_CASTLE_MONSTER_ARCHANGEL,
+	BLOOD_CASTLE_MONSTER_DOOR,
+	BLOOD_CASTLE_MONSTER_STATUE,
+	BLOOD_CASTLE_MONSTER_BRIDGE,
+	BLOOD_CASTLE_MONSTER_MISC,
+	BLOOD_CASTLE_MONSTER_BOSS
+};
+
+enum BloodCastleMessage
+{
+	BLOOD_CASTLE_STATUS_GO,
+	BLOOD_CASTLE_STATUS_MONSTER_KILL,
+	BLOOD_CASTLE_STATUS_END,
+	BLOOD_CASTLE_STATUS_UNK2, // Frena el timer
+	BLOOD_CASTLE_STATUS_MAGIC_SKELETON,
+};
+
+static const EventCommonGroundData m_BloodCastleData[MAX_BLOOD_CASTLE_GROUND] =
+{
+	WORLD_BLOOD_CASTLE_2,	67,		
+	WORLD_BLOOD_CASTLE_3,	68,		
+	WORLD_BLOOD_CASTLE_4,	69,		
+	WORLD_BLOOD_CASTLE_5,	70,		
+	WORLD_BLOOD_CASTLE_6,	71,		
+	WORLD_BLOOD_CASTLE_7,	80,		
+	WORLD_BLOOD_CASTLE_8,	271
+};
+
+static const coord_type m_BloodCastleZoneEntrance[] = { 13, 15, 15, 23 };
+static const coord_type m_BloodCastleZoneBridge[] = { 13, 70, 15, 75 };
+static const coord_type m_BloodCastleZoneDoor[] = { 13, 76, 15, 79 };
+static const coord_type m_BloodCastleZoneBossZone[] = { 11, 80, 25, 89 };
+static const coord_type m_BloodCastleZoneAltar[] = { 8, 80, 10, 83 };
+
+static const struct BloodCastleMixInfo
+{
+	uint32 price;
+	int32 rate;
+} m_BloodCastleMixInfo[MAX_BLOOD_CASTLE_GROUND] = {
+	{50000, 80},
+	{80000, 80},
+	{150000, 80},
+	{250000, 80},
+	{400000, 80},
+	{600000, 80},
+	{850000, 80}
+};
+
+#endif

@@ -1,0 +1,6 @@
+#ifndef DUNGEON_DEF_H
+#define DUNGEON_DEF_H
+
+#define MAX_DUNGEON_SECONDARY_CHEST		4
+
+#endif

@@ -1,0 +1,5 @@
+MuDatabaseWorkerPool MuDatabase;
+GameServerDatabaseWorkerPool GameServerDatabase;
+MuLogDatabaseWorkerPool MuLogDatabase;
+LoginDatabaseWorkerPool LoginDatabase;
+MuEditorDatabaseWorkerPool EditorDatabase;

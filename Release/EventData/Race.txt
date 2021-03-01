@@ -1,0 +1,19 @@
+// Dungeon Data
+// Gate	Points
+0
+1	5
+5	10
+9	15
+end
+
+// Losttower Data
+// Gate Points
+1
+28	3
+30	6
+32	9
+34	12
+36	15
+38	18
+40	21
+end

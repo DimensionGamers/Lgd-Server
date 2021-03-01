@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Main">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Conection">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerList.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldSocket.cpp">
+      <Filter>Conection</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldSocketMgr.cpp">
+      <Filter>Conection</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginServerPCH.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Main.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientPacket.h">
+      <Filter>Conection</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerList.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldSocket.h">
+      <Filter>Conection</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldSocketMgr.h">
+      <Filter>Conection</Filter>
+    </ClInclude>
+    <ClInclude Include="LoginServerPCH.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

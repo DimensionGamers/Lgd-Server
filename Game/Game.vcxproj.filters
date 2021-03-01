@@ -1,0 +1,1145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="GameObject">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="World">
+      <UniqueIdentifier>{7c78d4de-0398-4302-945c-a36250c24b72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Connection">
+      <UniqueIdentifier>{9572c0dc-7fec-4802-a7be-742ef966a549}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DBInfo">
+      <UniqueIdentifier>{6b13bf59-d56b-4c9b-976c-de8479456e1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Player">
+      <UniqueIdentifier>{0f5e7712-6526-4761-a334-e938f2d523db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="GameObject\Player\Store">
+      <UniqueIdentifier>{09400ef6-e95c-4b6d-b4d2-58b856962014}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Unit">
+      <UniqueIdentifier>{0adfb797-1072-4dfb-ab05-42999abb110d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Mix">
+      <UniqueIdentifier>{5d724571-6fc0-4578-a791-dd9f6ea9ab54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\ScriptAI">
+      <UniqueIdentifier>{26a2c03b-34a3-46ed-b5a7-7a5d2aaf0f09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Guild">
+      <UniqueIdentifier>{25f7fc08-7958-4fa0-a085-24d7723c4f0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Object">
+      <UniqueIdentifier>{b77b9603-44e6-4551-aadd-4a4698d3b9ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Monster">
+      <UniqueIdentifier>{e42dc4f5-ee22-4313-b268-96ea0674df65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Monster\ScriptAI">
+      <UniqueIdentifier>{383e4d02-bb98-4d20-84dc-7bf93994416e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{75282853-731b-4b5e-9030-3887c5845cd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Party">
+      <UniqueIdentifier>{6dd6cc51-8c68-47d9-9bea-d84a1b4c8ac1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event">
+      <UniqueIdentifier>{2ed08c5d-8e59-4d20-b706-e6e039711be7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\Kanturu">
+      <UniqueIdentifier>{4a84e545-ce6c-4aad-87b7-4e0692c71fa3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\Crywolf">
+      <UniqueIdentifier>{b6b0fedb-1288-4134-8ad0-a30cbcff0368}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\CastleSiege">
+      <UniqueIdentifier>{597ecf11-721c-45c7-b41a-ff3ae5bc7d2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\BloodCastle">
+      <UniqueIdentifier>{b385c82a-4121-4345-8160-5c0ad0b54f46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\DevilSquare">
+      <UniqueIdentifier>{9bbc2d9f-95ab-4bdf-8d55-f209fc618e1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\ChaosCastle">
+      <UniqueIdentifier>{dda8266b-630b-43e0-a8ab-40436c57bac6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\Imperial Fortress">
+      <UniqueIdentifier>{2aaa0b02-297d-433a-af15-4bae5ce40aa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\Raklion">
+      <UniqueIdentifier>{74350328-acbf-404e-b5cb-d6e70958fcdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\IllusionTemple">
+      <UniqueIdentifier>{f60023d4-83d6-4b8e-92e8-c38d050317a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\Misc">
+      <UniqueIdentifier>{95cc94c6-dffe-40aa-9ed0-1afc497738a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\Misc\Scramble">
+      <UniqueIdentifier>{6657dfa3-2d5d-43fd-ac63-54375a6f46c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\Misc\Race">
+      <UniqueIdentifier>{77922d87-381c-4a2a-982f-59d51f29e1ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\Doppelganger">
+      <UniqueIdentifier>{569352b1-0f02-40a1-8de0-31cd169f1200}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\TormentedSquare">
+      <UniqueIdentifier>{4063c864-a2b4-4210-ad63-964cff051635}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\ArkaWar">
+      <UniqueIdentifier>{b138bd46-440d-40da-a202-7b59c5c8b718}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\ProtectorOfAcheron">
+      <UniqueIdentifier>{7ee36748-d60d-4f0f-a397-462d2d0b0268}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\LabyrinthDimensions">
+      <UniqueIdentifier>{f3f0c063-173f-4687-8f2c-428791ffb224}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\NixiesLake">
+      <UniqueIdentifier>{f67d7e18-e054-4e17-a0e9-ce8a6e27f2b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\CastleDeep">
+      <UniqueIdentifier>{0e3bc745-88d7-4753-bd1b-bf34672377ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\Evomon">
+      <UniqueIdentifier>{a8d13a02-be85-4956-b8f0-91bb9b8f752e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\EventInventory">
+      <UniqueIdentifier>{3b5f8588-c074-4131-b95b-33103341a47e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\Invasion">
+      <UniqueIdentifier>{d2f7f4ef-07db-4b76-b5f3-a29010314931}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\SwampOfDarkness">
+      <UniqueIdentifier>{47c0fbe7-4463-4219-9571-7cb6d143d6e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event\InstancedDungeon">
+      <UniqueIdentifier>{73dbcabf-faba-449b-ac78-f62158165da5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Misc">
+      <UniqueIdentifier>{f97f5164-39a1-48fe-8300-07e46383a4a6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CommonDef.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldClass.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldManager.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectManager.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="System_Message.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientPacket.h">
+      <Filter>Connection</Filter>
+    </ClInclude>
+    <ClInclude Include="spe.h">
+      <Filter>Connection</Filter>
+    </ClInclude>
+    <ClInclude Include="GameServer.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="ChatHandler.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="NpcHandler.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>GameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDef.h">
+      <Filter>GameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemMgr.h">
+      <Filter>DBInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>GameObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="QuestMgr.h">
+      <Filter>DBInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="QuestDef.h">
+      <Filter>DBInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillMgr.h">
+      <Filter>DBInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillDef.h">
+      <Filter>DBInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="VIPMgr.h">
+      <Filter>DBInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="DuelMgr.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldDef.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemDef.h">
+      <Filter>DBInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemBag.h">
+      <Filter>DBInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="GenPacket.h">
+      <Filter>Connection</Filter>
+    </ClInclude>
+    <ClInclude Include="GenMgr.h">
+      <Filter>DBInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="QuestPacket.h">
+      <Filter>Connection</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterMgr.h">
+      <Filter>DBInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="GuildPacket.h">
+      <Filter>Connection</Filter>
+    </ClInclude>
+    <ClInclude Include="EventManager.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageDef.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterDef.h">
+      <Filter>GameObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="EventPacket.h">
+      <Filter>Connection</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterThreat.h">
+      <Filter>GameObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="ShopMgr.h">
+      <Filter>DBInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="JewelMix.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="CashShopDef.h">
+      <Filter>DBInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="KanturuDef.h">
+      <Filter>Event\Kanturu</Filter>
+    </ClInclude>
+    <ClInclude Include="Kanturu.h">
+      <Filter>Event\Kanturu</Filter>
+    </ClInclude>
+    <ClInclude Include="KanturuStandBy.h">
+      <Filter>Event\Kanturu</Filter>
+    </ClInclude>
+    <ClInclude Include="KanturuMaya.h">
+      <Filter>Event\Kanturu</Filter>
+    </ClInclude>
+    <ClInclude Include="KanturuNightmare.h">
+      <Filter>Event\Kanturu</Filter>
+    </ClInclude>
+    <ClInclude Include="KanturuTower.h">
+      <Filter>Event\Kanturu</Filter>
+    </ClInclude>
+    <ClInclude Include="CrywolfDef.h">
+      <Filter>Event\Crywolf</Filter>
+    </ClInclude>
+    <ClInclude Include="Crywolf.h">
+      <Filter>Event\Crywolf</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemBagDef.h">
+      <Filter>DBInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="TeleportMgr.h">
+      <Filter>DBInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="ai_basic.h">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClInclude>
+    <ClInclude Include="BuffDef.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="CastleSiegeDef.h">
+      <Filter>Event\CastleSiege</Filter>
+    </ClInclude>
+    <ClInclude Include="CastleSiege.h">
+      <Filter>Event\CastleSiege</Filter>
+    </ClInclude>
+    <ClInclude Include="BloodCastleDef.h">
+      <Filter>Event\BloodCastle</Filter>
+    </ClInclude>
+    <ClInclude Include="BloodCastle.h">
+      <Filter>Event\BloodCastle</Filter>
+    </ClInclude>
+    <ClInclude Include="DevilSquareDef.h">
+      <Filter>Event\DevilSquare</Filter>
+    </ClInclude>
+    <ClInclude Include="DevilSquare.h">
+      <Filter>Event\DevilSquare</Filter>
+    </ClInclude>
+    <ClInclude Include="ChaosCastleDef.h">
+      <Filter>Event\ChaosCastle</Filter>
+    </ClInclude>
+    <ClInclude Include="ChaosCastle.h">
+      <Filter>Event\ChaosCastle</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldPath.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="ai_summon_player.h">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryScript.h">
+      <Filter>GameObject\Player\Store</Filter>
+    </ClInclude>
+    <ClInclude Include="StoreScript.h">
+      <Filter>GameObject\Player\Store</Filter>
+    </ClInclude>
+    <ClInclude Include="WarehouseScript.h">
+      <Filter>GameObject\Player\Store</Filter>
+    </ClInclude>
+    <ClInclude Include="TradeScript.h">
+      <Filter>GameObject\Player\Store</Filter>
+    </ClInclude>
+    <ClInclude Include="EventCommon.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillHandler.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterAIHandler.h">
+      <Filter>GameObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Scramble.h">
+      <Filter>Event\Misc\Scramble</Filter>
+    </ClInclude>
+    <ClInclude Include="ScrambleDef.h">
+      <Filter>Event\Misc\Scramble</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonRace.h">
+      <Filter>Event\Misc\Race</Filter>
+    </ClInclude>
+    <ClInclude Include="DungeonRace.h">
+      <Filter>Event\Misc\Race</Filter>
+    </ClInclude>
+    <ClInclude Include="LosttowerRace.h">
+      <Filter>Event\Misc\Race</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldItem.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="PartyMgr.h">
+      <Filter>GameObject\Party</Filter>
+    </ClInclude>
+    <ClInclude Include="Party.h">
+      <Filter>GameObject\Party</Filter>
+    </ClInclude>
+    <ClInclude Include="PartyDef.h">
+      <Filter>GameObject\Party</Filter>
+    </ClInclude>
+    <ClInclude Include="Unit.h">
+      <Filter>GameObject\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="Guild.h">
+      <Filter>GameObject\Guild</Filter>
+    </ClInclude>
+    <ClInclude Include="GuildMgr.h">
+      <Filter>GameObject\Guild</Filter>
+    </ClInclude>
+    <ClInclude Include="MixHandler.h">
+      <Filter>GameObject\Mix</Filter>
+    </ClInclude>
+    <ClInclude Include="MixMgr.h">
+      <Filter>GameObject\Mix</Filter>
+    </ClInclude>
+    <ClInclude Include="ImperialFortressDef.h">
+      <Filter>Event\Imperial Fortress</Filter>
+    </ClInclude>
+    <ClInclude Include="ImperialFortress.h">
+      <Filter>Event\Imperial Fortress</Filter>
+    </ClInclude>
+    <ClInclude Include="RaklionDef.h">
+      <Filter>Event\Raklion</Filter>
+    </ClInclude>
+    <ClInclude Include="Raklion.h">
+      <Filter>Event\Raklion</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePCH.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerLink.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Main.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldSocket.h">
+      <Filter>Connection</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldSocketMgr.h">
+      <Filter>Connection</Filter>
+    </ClInclude>
+    <ClInclude Include="GuildWar.h">
+      <Filter>GameObject\Guild</Filter>
+    </ClInclude>
+    <ClInclude Include="IllusionTemple.h">
+      <Filter>Event\IllusionTemple</Filter>
+    </ClInclude>
+    <ClInclude Include="IllusionTempleDef.h">
+      <Filter>Event\IllusionTemple</Filter>
+    </ClInclude>
+    <ClInclude Include="HappyHour.h">
+      <Filter>Event\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterBase.h">
+      <Filter>DBInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerToServer.h">
+      <Filter>Connection</Filter>
+    </ClInclude>
+    <ClInclude Include="AuthServer.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleSoccer.h">
+      <Filter>GameObject\Guild</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleSoccerDef.h">
+      <Filter>GameObject\Guild</Filter>
+    </ClInclude>
+    <ClInclude Include="ScriptAI.h">
+      <Filter>GameObject\ScriptAI</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterAI.h">
+      <Filter>GameObject\ScriptAI</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>GameObject\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="MuunScript.h">
+      <Filter>GameObject\Player\Store</Filter>
+    </ClInclude>
+    <ClInclude Include="EventInventoryScript.h">
+      <Filter>GameObject\Player\Store</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniMap.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="SummonScroll.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="PentagramSystem.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="PentagramSystemDef.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="MiningSystem.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="MuunDef.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="MuunSystem.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="RuudSystem.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Doppelganger.h">
+      <Filter>Event\Doppelganger</Filter>
+    </ClInclude>
+    <ClInclude Include="GremoryCaseScript.h">
+      <Filter>GameObject\Player\Store</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectServer.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="NPCSellScript.h">
+      <Filter>GameObject\Player\Store</Filter>
+    </ClInclude>
+    <ClInclude Include="LastManStanding.h">
+      <Filter>Event\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="SocketSystem.h">
+      <Filter>DBInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="ChaosCastleSurvival.h">
+      <Filter>Event\ChaosCastle</Filter>
+    </ClInclude>
+    <ClInclude Include="TormentedSquare.h">
+      <Filter>Event\TormentedSquare</Filter>
+    </ClInclude>
+    <ClInclude Include="TormentedSquareSurvival.h">
+      <Filter>Event\TormentedSquare</Filter>
+    </ClInclude>
+    <ClInclude Include="TormentedSquareDef.h">
+      <Filter>Event\TormentedSquare</Filter>
+    </ClInclude>
+    <ClInclude Include="ArkaWar.h">
+      <Filter>Event\ArkaWar</Filter>
+    </ClInclude>
+    <ClInclude Include="ProtectorOfAcheron.h">
+      <Filter>Event\ProtectorOfAcheron</Filter>
+    </ClInclude>
+    <ClInclude Include="LabyrinthDimensions.h">
+      <Filter>Event\LabyrinthDimensions</Filter>
+    </ClInclude>
+    <ClInclude Include="NixiesLake.h">
+      <Filter>Event\NixiesLake</Filter>
+    </ClInclude>
+    <ClInclude Include="CastleDeep.h">
+      <Filter>Event\CastleDeep</Filter>
+    </ClInclude>
+    <ClInclude Include="LabyrinthDimensionsDef.h">
+      <Filter>Event\LabyrinthDimensions</Filter>
+    </ClInclude>
+    <ClInclude Include="Evomon.h">
+      <Filter>Event\Evomon</Filter>
+    </ClInclude>
+    <ClInclude Include="EventInventory.h">
+      <Filter>Event\EventInventory</Filter>
+    </ClInclude>
+    <ClInclude Include="Invasion.h">
+      <Filter>Event\Invasion</Filter>
+    </ClInclude>
+    <ClInclude Include="PartyMatching.h">
+      <Filter>GameObject\Party</Filter>
+    </ClInclude>
+    <ClInclude Include="GuildMatching.h">
+      <Filter>GameObject\Guild</Filter>
+    </ClInclude>
+    <ClInclude Include="HuntingRecord.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GremoryCase.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldBoss.h">
+      <Filter>Event\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniBomb.h">
+      <Filter>Event\EventInventory</Filter>
+    </ClInclude>
+    <ClInclude Include="MuRoomy.h">
+      <Filter>Event\EventInventory</Filter>
+    </ClInclude>
+    <ClInclude Include="JewelBingo.h">
+      <Filter>Event\EventInventory</Filter>
+    </ClInclude>
+    <ClInclude Include="MossMerchant.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="EventMassive.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="SwampOfDarkness.h">
+      <Filter>Event\SwampOfDarkness</Filter>
+    </ClInclude>
+    <ClInclude Include="ImperialFortressInstance.h">
+      <Filter>Event\Imperial Fortress</Filter>
+    </ClInclude>
+    <ClInclude Include="NumericBaseball.h">
+      <Filter>Event\EventInventory</Filter>
+    </ClInclude>
+    <ClInclude Include="Dungeon.h">
+      <Filter>Event\InstancedDungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="DungeonInstance.h">
+      <Filter>Event\InstancedDungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="DungeonDef.h">
+      <Filter>Event\InstancedDungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="FormulaData.h">
+      <Filter>DBInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterSoul.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="CashShop.h">
+      <Filter>DBInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePacket.h">
+      <Filter>Connection</Filter>
+    </ClInclude>
+    <ClInclude Include="PersonalStoreScript.h">
+      <Filter>GameObject\Player\Store</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="WorldClass.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldManager.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectManager.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="System_Message.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="GameServer.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="ChatHandler.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="NpcHandler.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerCharacter.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerSocket.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerHelper.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerParty.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerFriend.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerTrade.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerGuild.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemMgr.cpp">
+      <Filter>DBInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>GameObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerPersonalStore.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerSkillTree.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillMgr.cpp">
+      <Filter>DBInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterAggro.cpp">
+      <Filter>GameObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerSkillUse.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="VIPMgr.cpp">
+      <Filter>DBInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="DuelMgr.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerDuel.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemBag.cpp">
+      <Filter>DBInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterMovement.cpp">
+      <Filter>GameObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerGen.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GenMgr.cpp">
+      <Filter>DBInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerMix.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerQuestEvolution.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerChat.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="QuestMgr.cpp">
+      <Filter>DBInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerStatFruit.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterMgr.cpp">
+      <Filter>DBInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerDarkSpirit.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="EventManager.cpp">
+      <Filter>Event</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterThreat.cpp">
+      <Filter>GameObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterAttack.cpp">
+      <Filter>GameObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="ShopMgr.cpp">
+      <Filter>DBInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerDB.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="JewelMix.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="CashShop.cpp">
+      <Filter>DBInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerCashShop.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Kanturu.cpp">
+      <Filter>Event\Kanturu</Filter>
+    </ClCompile>
+    <ClCompile Include="KanturuStandBy.cpp">
+      <Filter>Event\Kanturu</Filter>
+    </ClCompile>
+    <ClCompile Include="KanturuMaya.cpp">
+      <Filter>Event\Kanturu</Filter>
+    </ClCompile>
+    <ClCompile Include="KanturuNightmare.cpp">
+      <Filter>Event\Kanturu</Filter>
+    </ClCompile>
+    <ClCompile Include="KanturuTower.cpp">
+      <Filter>Event\Kanturu</Filter>
+    </ClCompile>
+    <ClCompile Include="Crywolf.cpp">
+      <Filter>Event\Crywolf</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_trap.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_summon.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_guard.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_personal_merchant.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_moss_merchant.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_soccer_ball.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_kundun.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_kalima_gate.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_castle_siege.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_raklion.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_chaos_castle.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_invasion.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_devil_square.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_blood_castle.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_kanturu.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_imperial_fortress.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_crywolf.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="CastleSiege.cpp">
+      <Filter>Event\CastleSiege</Filter>
+    </ClCompile>
+    <ClCompile Include="BloodCastle.cpp">
+      <Filter>Event\BloodCastle</Filter>
+    </ClCompile>
+    <ClCompile Include="DevilSquare.cpp">
+      <Filter>Event\DevilSquare</Filter>
+    </ClCompile>
+    <ClCompile Include="ChaosCastle.cpp">
+      <Filter>Event\ChaosCastle</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_champion.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_summon_player.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="StoreScript.cpp">
+      <Filter>GameObject\Player\Store</Filter>
+    </ClCompile>
+    <ClCompile Include="InventoryScript.cpp">
+      <Filter>GameObject\Player\Store</Filter>
+    </ClCompile>
+    <ClCompile Include="WarehouseScript.cpp">
+      <Filter>GameObject\Player\Store</Filter>
+    </ClCompile>
+    <ClCompile Include="EventCommon.cpp">
+      <Filter>Event</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillHandler.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="TeleportMgr.cpp">
+      <Filter>DBInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterAIHandler.cpp">
+      <Filter>GameObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Scramble.cpp">
+      <Filter>Event\Misc\Scramble</Filter>
+    </ClCompile>
+    <ClCompile Include="CommonRace.cpp">
+      <Filter>Event\Misc\Race</Filter>
+    </ClCompile>
+    <ClCompile Include="DungeonRace.cpp">
+      <Filter>Event\Misc\Race</Filter>
+    </ClCompile>
+    <ClCompile Include="LosttowerRace.cpp">
+      <Filter>Event\Misc\Race</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldItem.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="Party.cpp">
+      <Filter>GameObject\Party</Filter>
+    </ClCompile>
+    <ClCompile Include="PartyMgr.cpp">
+      <Filter>GameObject\Party</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit.cpp">
+      <Filter>GameObject\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitSkill.cpp">
+      <Filter>GameObject\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="Guild.cpp">
+      <Filter>GameObject\Guild</Filter>
+    </ClCompile>
+    <ClCompile Include="GuildMgr.cpp">
+      <Filter>GameObject\Guild</Filter>
+    </ClCompile>
+    <ClCompile Include="MixHandler.cpp">
+      <Filter>GameObject\Mix</Filter>
+    </ClCompile>
+    <ClCompile Include="MixMgr.cpp">
+      <Filter>GameObject\Mix</Filter>
+    </ClCompile>
+    <ClCompile Include="ImperialFortress.cpp">
+      <Filter>Event\Imperial Fortress</Filter>
+    </ClCompile>
+    <ClCompile Include="Raklion.cpp">
+      <Filter>Event\Raklion</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePCH.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerLink.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldSocket.cpp">
+      <Filter>Connection</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldSocketMgr.cpp">
+      <Filter>Connection</Filter>
+    </ClCompile>
+    <ClCompile Include="GuildWar.cpp">
+      <Filter>GameObject\Guild</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldPath.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="IllusionTemple.cpp">
+      <Filter>Event\IllusionTemple</Filter>
+    </ClCompile>
+    <ClCompile Include="HappyHour.cpp">
+      <Filter>Event\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerPVP.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterBase.cpp">
+      <Filter>DBInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerToServer.cpp">
+      <Filter>Connection</Filter>
+    </ClCompile>
+    <ClCompile Include="AuthServer.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="BattleSoccer.cpp">
+      <Filter>GameObject\Guild</Filter>
+    </ClCompile>
+    <ClCompile Include="ScriptAI.cpp">
+      <Filter>GameObject\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterAI.cpp">
+      <Filter>GameObject\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>GameObject\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectViewport.cpp">
+      <Filter>GameObject\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_medusa.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerInterface.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="MuunScript.cpp">
+      <Filter>GameObject\Player\Store</Filter>
+    </ClCompile>
+    <ClCompile Include="EventInventoryScript.cpp">
+      <Filter>GameObject\Player\Store</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniMap.cpp">
+      <Filter>Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="SummonScroll.cpp">
+      <Filter>Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="PentagramSystem.cpp">
+      <Filter>Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="MiningSystem.cpp">
+      <Filter>Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="MuunSystem.cpp">
+      <Filter>Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="RuudSystem.cpp">
+      <Filter>Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_protector_of_acheron.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_uruk_mountain.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_nars.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_ferea.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_tormented_square.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="Doppelganger.cpp">
+      <Filter>Event\Doppelganger</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_doppelganger.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="GremoryCaseScript.cpp">
+      <Filter>GameObject\Player\Store</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_evomon.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_arka_war.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectServer.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="NPCSellScript.cpp">
+      <Filter>GameObject\Player\Store</Filter>
+    </ClCompile>
+    <ClCompile Include="LastManStanding.cpp">
+      <Filter>Event\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_ground_darkness.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="SocketSystem.cpp">
+      <Filter>DBInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_nixies_lake.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ChaosCastleSurvival.cpp">
+      <Filter>Event\ChaosCastle</Filter>
+    </ClCompile>
+    <ClCompile Include="TormentedSquare.cpp">
+      <Filter>Event\TormentedSquare</Filter>
+    </ClCompile>
+    <ClCompile Include="TormentedSquareSurvival.cpp">
+      <Filter>Event\TormentedSquare</Filter>
+    </ClCompile>
+    <ClCompile Include="ArkaWar.cpp">
+      <Filter>Event\ArkaWar</Filter>
+    </ClCompile>
+    <ClCompile Include="ProtectorOfAcheron.cpp">
+      <Filter>Event\ProtectorOfAcheron</Filter>
+    </ClCompile>
+    <ClCompile Include="LabyrinthDimensions.cpp">
+      <Filter>Event\LabyrinthDimensions</Filter>
+    </ClCompile>
+    <ClCompile Include="NixiesLake.cpp">
+      <Filter>Event\NixiesLake</Filter>
+    </ClCompile>
+    <ClCompile Include="CastleDeep.cpp">
+      <Filter>Event\CastleDeep</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_castle_deep.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_labyrinth_of_dimensions.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="Evomon.cpp">
+      <Filter>Event\Evomon</Filter>
+    </ClCompile>
+    <ClCompile Include="EventInventory.cpp">
+      <Filter>Event\EventInventory</Filter>
+    </ClCompile>
+    <ClCompile Include="Invasion.cpp">
+      <Filter>Event\Invasion</Filter>
+    </ClCompile>
+    <ClCompile Include="PartyMatching.cpp">
+      <Filter>GameObject\Party</Filter>
+    </ClCompile>
+    <ClCompile Include="GuildMatching.cpp">
+      <Filter>GameObject\Guild</Filter>
+    </ClCompile>
+    <ClCompile Include="HuntingRecord.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GremoryCase.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_world_boss.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldBoss.cpp">
+      <Filter>Event\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniBomb.cpp">
+      <Filter>Event\EventInventory</Filter>
+    </ClCompile>
+    <ClCompile Include="MuRoomy.cpp">
+      <Filter>Event\EventInventory</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerQuestGuided.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerMajesticSkillTree.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_quest.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="JewelBingo.cpp">
+      <Filter>Event\EventInventory</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_moving_npc.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="MossMerchant.cpp">
+      <Filter>Event</Filter>
+    </ClCompile>
+    <ClCompile Include="SwampOfDarkness.cpp">
+      <Filter>Event\SwampOfDarkness</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_swamp_of_darkness.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ImperialFortressInstance.cpp">
+      <Filter>Event\Imperial Fortress</Filter>
+    </ClCompile>
+    <ClCompile Include="NumericBaseball.cpp">
+      <Filter>Event\EventInventory</Filter>
+    </ClCompile>
+    <ClCompile Include="Dungeon.cpp">
+      <Filter>Event\InstancedDungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="DungeonInstance.cpp">
+      <Filter>Event\InstancedDungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_instanced_dungeon.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="FormulaData.cpp">
+      <Filter>DBInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerQuestMU.cpp">
+      <Filter>GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_summoner_debuff.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterSoul.cpp">
+      <Filter>Event</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_majestic_debuff.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_custom_boss.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="ai_special_map.cpp">
+      <Filter>GameObject\Monster\ScriptAI</Filter>
+    </ClCompile>
+    <ClCompile Include="PersonalStoreScript.cpp">
+      <Filter>GameObject\Player\Store</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="TODO List.txt" />
+  </ItemGroup>
+</Project>

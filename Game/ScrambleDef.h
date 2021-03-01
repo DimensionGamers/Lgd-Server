@@ -1,0 +1,11 @@
+#ifndef SCRAMBLE_DEF_H
+#define SCRAMBLE_DEF_H
+
+enum ScrambleState
+{
+	SCRAMBLE_STATE_NONE,
+	SCRAMBLE_STATE_NOTIFY,
+	SCRAMBLE_STATE_START,
+};
+
+#endif

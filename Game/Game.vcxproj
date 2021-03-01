@@ -1,0 +1,542 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E3C1D872-0087-44A5-A969-7FFF4071DF63}</ProjectGuid>
+    <RootNamespace>GameServer_Nuevo</RootNamespace>
+    <ProjectName>Game</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <TargetName>GameServer</TargetName>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <GenerateManifest>true</GenerateManifest>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <TargetName>GameServer</TargetName>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <GenerateManifest>true</GenerateManifest>
+    <IntDir>Release\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\Common\;..\MySQL\;..\dep\ACE_wrappers;..\dep;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PreprocessorDefinitions>ACE_AS_STATIC_LIBS;VERSION="0.17";WIN32;_WINDOWS;NDEBUG;__EXCEPTION_TRACER__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>GameServerPCH.h</PrecompiledHeaderFile>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <ForcedIncludeFiles>GameServerPCH.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <CompileAs>Default</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <OmitFramePointers>false</OmitFramePointers>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <WarningLevel>Level3</WarningLevel>
+      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\Libraries\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Common.lib;ACE.lib;libmysql.lib;libeay32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Windows</SubSystem>
+      <GenerateMapFile>false</GenerateMapFile>
+      <LinkTimeCodeGeneration>
+      </LinkTimeCodeGeneration>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\Common\;..\Dependencies\MySQL\include;..\Dependencies;C:\Boost_2013;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;__EXCEPTION_TRACER__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>GamePCH.h</PrecompiledHeaderFile>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <ForcedIncludeFiles>GamePCH.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalOptions>/Zm500 %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <TreatSpecificWarningsAsErrors>4263;4264</TreatSpecificWarningsAsErrors>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\Libraries\;C:\Boost_2013\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Common.lib;libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+      <LinkTimeCodeGeneration>
+      </LinkTimeCodeGeneration>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>$(OutDir)$(TargetName).map</MapFileName>
+      <LargeAddressAware>true</LargeAddressAware>
+      <AdditionalOptions> /machine:X86 %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <ProjectReference />
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="ai_basic.h" />
+    <ClInclude Include="ai_summon_player.h" />
+    <ClInclude Include="ArkaWar.h" />
+    <ClInclude Include="BattleSoccer.h" />
+    <ClInclude Include="BattleSoccerDef.h" />
+    <ClInclude Include="BloodCastle.h" />
+    <ClInclude Include="BloodCastleDef.h" />
+    <ClInclude Include="BuffDef.h" />
+    <ClInclude Include="CashShop.h" />
+    <ClInclude Include="CashShopDef.h" />
+    <ClInclude Include="CastleDeep.h" />
+    <ClInclude Include="CastleSiege.h" />
+    <ClInclude Include="CastleSiegeDef.h" />
+    <ClInclude Include="ChaosCastleSurvival.h" />
+    <ClInclude Include="ChaosCastle.h" />
+    <ClInclude Include="ChaosCastleDef.h" />
+    <ClInclude Include="ChatHandler.h" />
+    <ClInclude Include="ClientPacket.h" />
+    <ClInclude Include="CommonDef.h" />
+    <ClInclude Include="CommonRace.h" />
+    <ClInclude Include="ConnectServer.h" />
+    <ClInclude Include="Crywolf.h" />
+    <ClInclude Include="CrywolfDef.h" />
+    <ClInclude Include="DevilSquare.h" />
+    <ClInclude Include="DevilSquareDef.h" />
+    <ClInclude Include="Doppelganger.h" />
+    <ClInclude Include="DuelMgr.h" />
+    <ClInclude Include="DungeonDef.h" />
+    <ClInclude Include="DungeonInstance.h" />
+    <ClInclude Include="DungeonRace.h" />
+    <ClInclude Include="EventCommon.h" />
+    <ClInclude Include="EventInventory.h" />
+    <ClInclude Include="EventInventoryScript.h" />
+    <ClInclude Include="EventManager.h" />
+    <ClInclude Include="EventMassive.h" />
+    <ClInclude Include="EventPacket.h" />
+    <ClInclude Include="Evomon.h" />
+    <ClInclude Include="FormulaData.h" />
+    <ClInclude Include="GamePacket.h" />
+    <ClInclude Include="GamePCH.h" />
+    <ClInclude Include="GenMgr.h" />
+    <ClInclude Include="GenPacket.h" />
+    <ClInclude Include="GremoryCase.h" />
+    <ClInclude Include="GremoryCaseScript.h" />
+    <ClInclude Include="GuildMatching.h" />
+    <ClInclude Include="GuildPacket.h" />
+    <ClInclude Include="GuildWar.h" />
+    <ClInclude Include="HappyHour.h" />
+    <ClInclude Include="HuntingRecord.h" />
+    <ClInclude Include="IllusionTemple.h" />
+    <ClInclude Include="IllusionTempleDef.h" />
+    <ClInclude Include="ImperialFortress.h" />
+    <ClInclude Include="ImperialFortressDef.h" />
+    <ClInclude Include="ImperialFortressInstance.h" />
+    <ClInclude Include="Dungeon.h" />
+    <ClInclude Include="Invasion.h" />
+    <ClInclude Include="InventoryScript.h" />
+    <ClInclude Include="ItemBag.h" />
+    <ClInclude Include="ItemBagDef.h" />
+    <ClInclude Include="ItemDef.h" />
+    <ClInclude Include="JewelBingo.h" />
+    <ClInclude Include="JewelMix.h" />
+    <ClInclude Include="Kanturu.h" />
+    <ClInclude Include="KanturuDef.h" />
+    <ClInclude Include="KanturuMaya.h" />
+    <ClInclude Include="KanturuNightmare.h" />
+    <ClInclude Include="KanturuStandBy.h" />
+    <ClInclude Include="KanturuTower.h" />
+    <ClInclude Include="AuthServer.h" />
+    <ClInclude Include="LabyrinthDimensions.h" />
+    <ClInclude Include="LabyrinthDimensionsDef.h" />
+    <ClInclude Include="LastManStanding.h" />
+    <ClInclude Include="LosttowerRace.h" />
+    <ClInclude Include="Main.h" />
+    <ClInclude Include="MessageDef.h" />
+    <ClInclude Include="MiniBomb.h" />
+    <ClInclude Include="MiniMap.h" />
+    <ClInclude Include="MiningSystem.h" />
+    <ClInclude Include="MixHandler.h" />
+    <ClInclude Include="MixMgr.h" />
+    <ClInclude Include="MonsterAI.h" />
+    <ClInclude Include="MonsterAIHandler.h" />
+    <ClInclude Include="MonsterDef.h" />
+    <ClInclude Include="MonsterSoul.h" />
+    <ClInclude Include="MonsterThreat.h" />
+    <ClInclude Include="MossMerchant.h" />
+    <ClInclude Include="MuRoomy.h" />
+    <ClInclude Include="MuunDef.h" />
+    <ClInclude Include="MuunScript.h" />
+    <ClInclude Include="MuunSystem.h" />
+    <ClInclude Include="NixiesLake.h" />
+    <ClInclude Include="NPCSellScript.h" />
+    <ClInclude Include="NumericBaseball.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="PartyDef.h" />
+    <ClInclude Include="PartyMatching.h" />
+    <ClInclude Include="PentagramSystem.h" />
+    <ClInclude Include="PentagramSystemDef.h" />
+    <ClInclude Include="PersonalStoreScript.h" />
+    <ClInclude Include="ProtectorOfAcheron.h" />
+    <ClInclude Include="RuudSystem.h" />
+    <ClInclude Include="Scramble.h" />
+    <ClInclude Include="ScrambleDef.h" />
+    <ClInclude Include="ServerLink.h" />
+    <ClInclude Include="ServerToServer.h" />
+    <ClInclude Include="SkillHandler.h" />
+    <ClInclude Include="SocketSystem.h" />
+    <ClInclude Include="StoreScript.h" />
+    <ClInclude Include="QuestDef.h" />
+    <ClInclude Include="QuestMgr.h" />
+    <ClInclude Include="QuestPacket.h" />
+    <ClInclude Include="Raklion.h" />
+    <ClInclude Include="RaklionDef.h" />
+    <ClInclude Include="ScriptAI.h" />
+    <ClInclude Include="SkillDef.h" />
+    <ClInclude Include="SummonScroll.h" />
+    <ClInclude Include="SwampOfDarkness.h" />
+    <ClInclude Include="TormentedSquare.h" />
+    <ClInclude Include="TormentedSquareDef.h" />
+    <ClInclude Include="TormentedSquareSurvival.h" />
+    <ClInclude Include="TradeScript.h" />
+    <ClInclude Include="Unit.h" />
+    <ClInclude Include="GameServer.h" />
+    <ClInclude Include="Guild.h" />
+    <ClInclude Include="GuildMgr.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemMgr.h" />
+    <ClInclude Include="Monster.h" />
+    <ClInclude Include="MonsterMgr.h" />
+    <ClInclude Include="NpcHandler.h" />
+    <ClInclude Include="ObjectManager.h" />
+    <ClInclude Include="Party.h" />
+    <ClInclude Include="PartyMgr.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="CharacterBase.h" />
+    <ClInclude Include="PlayerDef.h" />
+    <ClInclude Include="ShopMgr.h" />
+    <ClInclude Include="Skill.h" />
+    <ClInclude Include="SkillMgr.h" />
+    <ClInclude Include="WarehouseScript.h" />
+    <ClInclude Include="WorldBoss.h" />
+    <ClInclude Include="WorldItem.h" />
+    <ClInclude Include="WorldPath.h" />
+    <ClInclude Include="spe.h" />
+    <ClInclude Include="System_Message.h" />
+    <ClInclude Include="TeleportMgr.h" />
+    <ClInclude Include="VIPMgr.h" />
+    <ClInclude Include="WorldClass.h" />
+    <ClInclude Include="WorldDef.h" />
+    <ClInclude Include="WorldManager.h" />
+    <ClInclude Include="WorldSocket.h" />
+    <ClInclude Include="WorldSocketMgr.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ai_arka_war.cpp" />
+    <ClCompile Include="ai_blood_castle.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GamePCH.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="ai_castle_deep.cpp" />
+    <ClCompile Include="ai_castle_siege.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GameServerPCH.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GamePCH.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="ai_champion.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GameServerPCH.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GamePCH.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="ai_chaos_castle.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GamePCH.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="ai_crywolf.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GameServerPCH.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GamePCH.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="ai_custom_boss.cpp" />
+    <ClCompile Include="ai_devil_square.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GamePCH.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="ai_doppelganger.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GamePCH.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="ai_evomon.cpp" />
+    <ClCompile Include="ai_ferea.cpp" />
+    <ClCompile Include="ai_ground_darkness.cpp" />
+    <ClCompile Include="ai_guard.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GameServerPCH.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GamePCH.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="ai_imperial_fortress.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GameServerPCH.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GamePCH.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="ai_instanced_dungeon.cpp" />
+    <ClCompile Include="ai_invasion.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GamePCH.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="ai_kalima_gate.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GameServerPCH.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GamePCH.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="ai_kanturu.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GamePCH.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="ai_kundun.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GameServerPCH.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GamePCH.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="ai_labyrinth_of_dimensions.cpp" />
+    <ClCompile Include="ai_majestic_debuff.cpp" />
+    <ClCompile Include="ai_medusa.cpp" />
+    <ClCompile Include="ai_moss_merchant.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GamePCH.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="ai_moving_npc.cpp" />
+    <ClCompile Include="ai_nars.cpp" />
+    <ClCompile Include="ai_nixies_lake.cpp" />
+    <ClCompile Include="ai_personal_merchant.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GameServerPCH.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GamePCH.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="ai_protector_of_acheron.cpp" />
+    <ClCompile Include="ai_quest.cpp" />
+    <ClCompile Include="ai_raklion.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GameServerPCH.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GamePCH.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="ai_soccer_ball.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GameServerPCH.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GamePCH.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="ai_special_map.cpp" />
+    <ClCompile Include="ai_summon.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GameServerPCH.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GamePCH.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="ai_summoner_debuff.cpp" />
+    <ClCompile Include="ai_summon_player.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GamePCH.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="ai_swamp_of_darkness.cpp" />
+    <ClCompile Include="ai_tormented_square.cpp" />
+    <ClCompile Include="ai_trap.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GameServerPCH.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GamePCH.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="ai_uruk_mountain.cpp" />
+    <ClCompile Include="ai_world_boss.cpp" />
+    <ClCompile Include="ArkaWar.cpp" />
+    <ClCompile Include="BattleSoccer.cpp" />
+    <ClCompile Include="BloodCastle.cpp" />
+    <ClCompile Include="CashShop.cpp" />
+    <ClCompile Include="CastleDeep.cpp" />
+    <ClCompile Include="CastleSiege.cpp" />
+    <ClCompile Include="ChaosCastleSurvival.cpp" />
+    <ClCompile Include="ChaosCastle.cpp" />
+    <ClCompile Include="ChatHandler.cpp" />
+    <ClCompile Include="CommonRace.cpp" />
+    <ClCompile Include="ConnectServer.cpp" />
+    <ClCompile Include="Crywolf.cpp" />
+    <ClCompile Include="DevilSquare.cpp" />
+    <ClCompile Include="Doppelganger.cpp" />
+    <ClCompile Include="DuelMgr.cpp" />
+    <ClCompile Include="DungeonInstance.cpp" />
+    <ClCompile Include="DungeonRace.cpp" />
+    <ClCompile Include="EventCommon.cpp" />
+    <ClCompile Include="EventInventory.cpp" />
+    <ClCompile Include="EventInventoryScript.cpp" />
+    <ClCompile Include="EventManager.cpp" />
+    <ClCompile Include="Evomon.cpp" />
+    <ClCompile Include="FormulaData.cpp" />
+    <ClCompile Include="GamePCH.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="GenMgr.cpp" />
+    <ClCompile Include="GremoryCase.cpp" />
+    <ClCompile Include="GremoryCaseScript.cpp" />
+    <ClCompile Include="GuildMatching.cpp" />
+    <ClCompile Include="GuildWar.cpp" />
+    <ClCompile Include="HappyHour.cpp" />
+    <ClCompile Include="HuntingRecord.cpp" />
+    <ClCompile Include="IllusionTemple.cpp" />
+    <ClCompile Include="ImperialFortress.cpp" />
+    <ClCompile Include="ImperialFortressInstance.cpp" />
+    <ClCompile Include="Dungeon.cpp" />
+    <ClCompile Include="Invasion.cpp" />
+    <ClCompile Include="InventoryScript.cpp" />
+    <ClCompile Include="ItemBag.cpp" />
+    <ClCompile Include="JewelBingo.cpp" />
+    <ClCompile Include="JewelMix.cpp" />
+    <ClCompile Include="Kanturu.cpp" />
+    <ClCompile Include="KanturuMaya.cpp" />
+    <ClCompile Include="KanturuNightmare.cpp" />
+    <ClCompile Include="KanturuStandBy.cpp" />
+    <ClCompile Include="KanturuTower.cpp" />
+    <ClCompile Include="AuthServer.cpp" />
+    <ClCompile Include="LabyrinthDimensions.cpp" />
+    <ClCompile Include="LastManStanding.cpp" />
+    <ClCompile Include="LosttowerRace.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MiniBomb.cpp" />
+    <ClCompile Include="MiniMap.cpp" />
+    <ClCompile Include="MiningSystem.cpp" />
+    <ClCompile Include="MixHandler.cpp" />
+    <ClCompile Include="MixMgr.cpp" />
+    <ClCompile Include="MonsterAggro.cpp" />
+    <ClCompile Include="MonsterAI.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GamePCH.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="MonsterAIHandler.cpp" />
+    <ClCompile Include="MonsterAttack.cpp" />
+    <ClCompile Include="MonsterMovement.cpp" />
+    <ClCompile Include="MonsterSoul.cpp" />
+    <ClCompile Include="MonsterThreat.cpp" />
+    <ClCompile Include="MossMerchant.cpp" />
+    <ClCompile Include="MuRoomy.cpp" />
+    <ClCompile Include="MuunScript.cpp" />
+    <ClCompile Include="MuunSystem.cpp" />
+    <ClCompile Include="NixiesLake.cpp" />
+    <ClCompile Include="NPCSellScript.cpp" />
+    <ClCompile Include="NumericBaseball.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="PartyMatching.cpp" />
+    <ClCompile Include="PentagramSystem.cpp" />
+    <ClCompile Include="PersonalStoreScript.cpp" />
+    <ClCompile Include="PlayerCashShop.cpp" />
+    <ClCompile Include="PlayerChat.cpp" />
+    <ClCompile Include="PlayerDarkSpirit.cpp" />
+    <ClCompile Include="PlayerDB.cpp" />
+    <ClCompile Include="PlayerDuel.cpp" />
+    <ClCompile Include="PlayerGen.cpp" />
+    <ClCompile Include="PlayerInterface.cpp" />
+    <ClCompile Include="PlayerMajesticSkillTree.cpp" />
+    <ClCompile Include="PlayerMix.cpp" />
+    <ClCompile Include="PlayerPersonalStore.cpp" />
+    <ClCompile Include="PlayerPVP.cpp" />
+    <ClCompile Include="PlayerQuestEvolution.cpp" />
+    <ClCompile Include="PlayerQuestGuided.cpp" />
+    <ClCompile Include="PlayerQuestMU.cpp" />
+    <ClCompile Include="PlayerSkillTree.cpp" />
+    <ClCompile Include="PlayerSkillUse.cpp" />
+    <ClCompile Include="PlayerStatFruit.cpp" />
+    <ClCompile Include="ProtectorOfAcheron.cpp" />
+    <ClCompile Include="RuudSystem.cpp" />
+    <ClCompile Include="Scramble.cpp" />
+    <ClCompile Include="ServerLink.cpp" />
+    <ClCompile Include="ServerToServer.cpp" />
+    <ClCompile Include="SkillHandler.cpp" />
+    <ClCompile Include="SocketSystem.cpp" />
+    <ClCompile Include="StoreScript.cpp" />
+    <ClCompile Include="QuestMgr.cpp" />
+    <ClCompile Include="Raklion.cpp" />
+    <ClCompile Include="ScriptAI.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GamePCH.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="SummonScroll.cpp" />
+    <ClCompile Include="SwampOfDarkness.cpp" />
+    <ClCompile Include="TormentedSquare.cpp" />
+    <ClCompile Include="TormentedSquareSurvival.cpp" />
+    <ClCompile Include="Unit.cpp" />
+    <ClCompile Include="GameServer.cpp" />
+    <ClCompile Include="Guild.cpp" />
+    <ClCompile Include="GuildMgr.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemMgr.cpp" />
+    <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="MonsterMgr.cpp" />
+    <ClCompile Include="NpcHandler.cpp" />
+    <ClCompile Include="ObjectManager.cpp" />
+    <ClCompile Include="Party.cpp" />
+    <ClCompile Include="PartyMgr.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerCharacter.cpp" />
+    <ClCompile Include="CharacterBase.cpp" />
+    <ClCompile Include="PlayerFriend.cpp" />
+    <ClCompile Include="PlayerGuild.cpp" />
+    <ClCompile Include="PlayerHelper.cpp" />
+    <ClCompile Include="PlayerParty.cpp" />
+    <ClCompile Include="PlayerSocket.cpp" />
+    <ClCompile Include="PlayerTrade.cpp" />
+    <ClCompile Include="ShopMgr.cpp" />
+    <ClCompile Include="Skill.cpp" />
+    <ClCompile Include="SkillMgr.cpp" />
+    <ClCompile Include="System_Message.cpp" />
+    <ClCompile Include="TeleportMgr.cpp" />
+    <ClCompile Include="UnitSkill.cpp" />
+    <ClCompile Include="ObjectViewport.cpp" />
+    <ClCompile Include="VIPMgr.cpp" />
+    <ClCompile Include="WarehouseScript.cpp" />
+    <ClCompile Include="WorldBoss.cpp" />
+    <ClCompile Include="WorldClass.cpp" />
+    <ClCompile Include="WorldItem.cpp" />
+    <ClCompile Include="WorldManager.cpp" />
+    <ClCompile Include="WorldPath.cpp" />
+    <ClCompile Include="WorldSocket.cpp" />
+    <ClCompile Include="WorldSocketMgr.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="TODO List.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
