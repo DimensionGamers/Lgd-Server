@@ -52,9 +52,6 @@ class ItemShop: public Item
 		DECLARE_ENUM(uint32, Price);
 };
 
-typedef std::map<uint32, int32> ShopBuyCountMap;
-typedef std::map<uint8, ShopBuyCountMap> ShopBuyMap;
-
 class Shop
 {
 	friend class ShopMgr;
@@ -62,8 +59,8 @@ class Shop
 	public:
 		explicit Shop();
 
-		void insert_item(ItemShop item);
-		uint8 map_check(uint8 X, uint8 Y, uint8 W, uint8 H);
+		void AddItem(ItemShop item);
+		uint8 MapCheck(uint8 X, uint8 Y, uint8 W, uint8 H);
 
 		DECLARE_ENUM(uint8, ID);
 		DECLARE_PROPERTY_STRING(Name);
@@ -71,7 +68,7 @@ class Shop
 		DECLARE_PROPERTY_STRING(PKText);
 		DECLARE_FLAG(uint8, Flag);
 		DECLARE_ARRAY_STRUCT(ItemShop, Item, max_shop_item);
-		DECLARE(uint8, shop_map[max_shop_item]);
+		uint8 _shopMap[max_shop_item];
 		DECLARE_ENUM(uint8, Type);
 		DECLARE_PROPERTY(int32, ItemCount);
 
@@ -79,21 +76,10 @@ class Shop
 		DECLARE_ENUM(uint8, MaxBuyType);
 };
 
-typedef std::map<uint8, Shop*> ShopMap;
-
 class ShopMgr
 {
 	SingletonInstance(ShopMgr);
 
-	private:
-		ShopMap shop_map;
-
-		ShopBuyMap buy_count_character;
-		ShopBuyMap buy_count_account;
-		ShopBuyMap buy_count_pc;
-		ShopBuyMap buy_count_server;
-
-		DECLARE_ENUM(uint16, UpdateDay);
 	public:
 		ShopMgr();
 		virtual ~ShopMgr();
@@ -107,8 +93,17 @@ class ShopMgr
 
 		bool IsShop(std::string const& name) const;
 
-		bool EnableToBuy(Player* pPlayer, Shop const* pShop);
+		bool EnableToBuy(Player* player, Shop const* shop);
 		void Update();
+
+	private:
+		std::map<uint8, Shop*> _shops;
+		std::map<uint8, std::map<uint32, int32>> _characterPurchases;
+		std::map<uint8, std::map<uint32, int32>> _accountPurchases;
+		std::map<uint8, std::map<uint32, int32>> _pcPurchases;
+		std::map<uint8, std::map<uint32, int32>> _serverPurchases;
+
+		uint16 _updateDay;
 };
 
 #endif

@@ -6,332 +6,37 @@
 *
 */
 
-ShopMgr::ShopMgr()
-{
-	this->SetUpdateDay(-1);
-}
-
-ShopMgr::~ShopMgr()
-{
-	MAP_CLEAR(ShopMap::iterator, this->shop_map);
-	this->buy_count_character.clear();
-	this->buy_count_account.clear();
-	this->buy_count_pc.clear();
-	this->buy_count_server.clear();
-}
-
-void ShopMgr::LoadShopTemplate()
-{
-	sLog->outInfo(LOG_DEFAULT, "Loading Shop Template...");
-
-	MAP_CLEAR(ShopMap::iterator, this->shop_map);
-
-	uint32 count = 0;
-
-	QueryResult result = GameServerDatabase.Query("SELECT * FROM shop_template");
-
-	if ( result )
-	{
-		do
-		{
-			Field* fields = result->Fetch();
-			int32 loop = 0;
-
-			Shop * add_shop = new Shop;
-			
-			add_shop->SetID(fields[loop++].GetUInt8());
-			add_shop->SetName(fields[loop++].GetString());
-			add_shop->SetMaxPKLevel(fields[loop++].GetUInt8());
-			add_shop->SetPKText(fields[loop++].GetString());
-			add_shop->SetFlag(fields[loop++].GetUInt8());
-			add_shop->SetType(fields[loop++].GetUInt8());
-			add_shop->SetMaxBuyCount(fields[loop++].GetInt32());
-			add_shop->SetMaxBuyType(fields[loop++].GetUInt8());
-
-			add_shop->SetItemCount(0);
-			
-			this->shop_map[add_shop->GetID()] = add_shop;
-
-			count++;
-		}
-		while(result->NextRow());
-	}
-
-	sLog->outInfo(LOG_DEFAULT, ">> Loaded %u shop definitions", count);
-	sLog->outInfo(LOG_DEFAULT, " ");
-}
-
-void ShopMgr::LoadShopItems()
-{
-	sLog->outInfo(LOG_DEFAULT, "Loading Shop Items...");
-
-	uint32 count = 0;
-
-	QueryResult result = GameServerDatabase.Query("SELECT * FROM shop_items ORDER BY shop ASC, id ASC");
-
-	if ( result )
-	{
-		do
-		{
-			Field* fields = result->Fetch();
-			int32 loop = 0;
-						
-			uint8 id = fields[loop++].GetUInt8();
-
-			Shop * shop = this->GetShop(id);
-
-			if ( !shop )
-			{
-				continue;
-			}
-
-			uint8 type = fields[loop++].GetUInt8();
-			uint16 index = fields[loop++].GetUInt16();
-			ItemShop additem;
-			additem.clear();
-			additem.SetItem(ITEMGET(type, index));
-			additem.SetLevel(fields[loop++].GetUInt8());
-			additem.SetDurability(static_cast<float>(fields[loop++].GetUInt8()));
-			additem.SetSkill(fields[loop++].GetUInt8());
-			additem.SetLuck(fields[loop++].GetUInt8());
-			additem.SetOption(fields[loop++].GetUInt8());
-			additem.SetExe(fields[loop++].GetUInt8());
-			additem.SetAncient(fields[loop++].GetUInt8());
-
-			if ( !sItemMgr->IsItem(additem.GetItem()) )
-			{
-				sLog->outError(LOG_DEFAULT, "LoadShopItems() Shop: %u, item: %d", 
-					id, additem.GetItem());
-
-				continue;
-			}
-
-			for ( uint8 i = 0; i < MAX_SOCKET_SLOT; ++i )
-			{
-				additem.SetSocket(i, fields[loop++].GetUInt16());
-			}
-
-			additem.SetPrice(fields[loop++].GetUInt32());
-
-			shop->insert_item(additem);
-			count++;
-		}
-		while(result->NextRow());
-	}
-
-	sLog->outInfo(LOG_DEFAULT, ">> Loaded %u shop items", count);
-	sLog->outInfo(LOG_DEFAULT, " ");
-}
-
-Shop * ShopMgr::GetShop(uint8 id)
-{
-	ShopMap::iterator it = this->shop_map.find(id);
-
-	if ( it != this->shop_map.end() )
-	{
-		return it->second;
-	}
-	else
-	{
-		return nullptr;
-	}
-}
-
-Shop const* ShopMgr::GetShop(uint8 id) const
-{
-	ShopMap::const_iterator it = this->shop_map.find(id);
-
-	if ( it != this->shop_map.end() )
-	{
-		return it->second;
-	}
-	else
-	{
-		return nullptr;
-	}
-}
-
-Shop const* ShopMgr::GetShop(std::string const& name) const
-{
-	for ( ShopMap::const_iterator it = this->shop_map.begin(); it != this->shop_map.end(); ++it )
-	{
-		if ( it->second->GetName() != name )
-		{
-			continue;
-		}
-
-		return it->second;
-	}
-
-	return nullptr;
-}
-
-bool ShopMgr::IsShop(std::string const& name) const
-{
-	return this->GetShop(name) != nullptr;
-}
-
-bool ShopMgr::EnableToBuy(Player* pPlayer, Shop const* pShop)
-{
-	if ( !pPlayer || !pShop )
-	{
-		return false;
-	}
-
-	int32 count = 0;
-
-	switch ( pShop->GetMaxBuyType() )
-	{
-	case SHOP_COUNT_NONE:
-		{
-			return true;
-		} break;
-
-	case SHOP_COUNT_CHARACTER:
-		{
-			ShopBuyCountMap & data_map = this->buy_count_character[pShop->GetID()];
-
-			ShopBuyCountMap::iterator it = data_map.find(pPlayer->GetGUID());
-
-			if ( it != data_map.end() )
-			{
-				count = it->second;
-			}
-		} break;
-
-	case SHOP_COUNT_ACCOUNT:
-		{
-			ShopBuyCountMap & data_map = this->buy_count_account[pShop->GetID()];
-
-			ShopBuyCountMap::iterator it = data_map.find(pPlayer->GetAccountData()->GetGUID());
-
-			if ( it != data_map.end() )
-			{
-				count = it->second;
-			}
-		} break;
-
-	case SHOP_COUNT_PC:
-		{
-			ShopBuyCountMap & data_map = this->buy_count_pc[pShop->GetID()];
-
-			ShopBuyCountMap::iterator it = data_map.find(pPlayer->GetAccountData()->GetDiskSerial());
-
-			if ( it != data_map.end() )
-			{
-				count = it->second;
-			}
-		} break;
-
-	case SHOP_COUNT_SERVER:
-		{
-			ShopBuyCountMap & data_map = this->buy_count_server[pShop->GetID()];
-
-			ShopBuyCountMap::iterator it = data_map.find(sGameServer->GetServerCode());
-
-			if ( it != data_map.end() )
-			{
-				count = it->second;
-			}
-		} break;
-
-	default:
-		{
-			return true;
-		} break;
-	}
-
-	if ( count >= pShop->GetMaxBuyCount() )
-	{
-		pPlayer->SendMessageBox(0, "Error", "Reached maximum day buy count.");
-
-		return false;
-	}
-
-	++count;
-
-	switch ( pShop->GetMaxBuyType() )
-	{
-	case SHOP_COUNT_CHARACTER:
-		{
-			ShopBuyCountMap & data_map = this->buy_count_character[pShop->GetID()];
-
-			data_map[pPlayer->GetGUID()] = count;
-		} break;
-
-	case SHOP_COUNT_ACCOUNT:
-		{
-			ShopBuyCountMap & data_map = this->buy_count_account[pShop->GetID()];
-
-			data_map[pPlayer->GetAccountData()->GetGUID()] = count;
-		} break;
-
-	case SHOP_COUNT_PC:
-		{
-			ShopBuyCountMap & data_map = this->buy_count_pc[pShop->GetID()];
-
-			data_map[pPlayer->GetAccountData()->GetDiskSerial()] = count;
-		} break;
-
-	case SHOP_COUNT_SERVER:
-		{
-			ShopBuyCountMap & data_map = this->buy_count_server[pShop->GetID()];
-
-			data_map[sGameServer->GetServerCode()] = count;
-		} break;
-	}
-
-	return true;
-}
-
-void ShopMgr::Update()
-{
-	Custom::SystemTimer time = Custom::SystemTimer();
-
-	if ( time.GetDay() != this->GetUpdateDay() )
-	{
-		this->buy_count_character.clear();
-		this->buy_count_account.clear();
-		this->buy_count_pc.clear();
-		this->buy_count_server.clear();
-
-		this->SetUpdateDay(time.GetDay());
-	}
-}
-
 Shop::Shop()
 {
-	for ( int32 i = 0; i < max_shop_item; ++i )
+	for (int32 i = 0; i < max_shop_item; ++i)
 	{
-		this->GetItem(i)->clear();
-		this->GetItem(i)->position.set(-1);
-		this->shop_map[i].set(0);
+		GetItem(i)->clear();
+		GetItem(i)->position.set(-1);
+		_shopMap[i] = 0;
 	}
 
-	this->SetMaxBuyCount(0);
-	this->SetMaxBuyType(SHOP_COUNT_NONE);
+	SetMaxBuyCount(0);
+	SetMaxBuyType(SHOP_COUNT_NONE);
 }
 
-void Shop::insert_item(ItemShop item)
+void Shop::AddItem(ItemShop item)
 {
-	item_template const* item_info = sItemMgr->GetItem(item.GetItem());
-
-	if ( !item_info )
+	auto const item_info = sItemMgr->GetItem(item.GetItem());
+	if (!item_info)
 		return;
 
-	if ( this->GetType() != SHOP_TYPE_RUUD )
+	if (GetType() != SHOP_TYPE_RUUD)
 	{
 		uint8 blank = 0xFF;
 
-		for ( uint8 Y = 0; Y < 15; ++Y )
+		for (uint8 Y = 0; Y < 15; ++Y)
 		{
-			for ( uint8 X = 0; X < 8; ++X )
+			for (uint8 X = 0; X < 8; ++X)
 			{
-				if ( this->shop_map[X + Y * 8] == 0 )
+				if (_shopMap[X + Y * 8] == 0)
 				{
-					blank = this->map_check(X, Y, item_info->GetX(), item_info->GetY());
-
-					if ( blank != 0xFF )
+					blank = MapCheck(X, Y, item_info->GetX(), item_info->GetY());
+					if (blank != 0xFF)
 					{
 						goto SkipLoop;
 					}
@@ -339,12 +44,10 @@ void Shop::insert_item(ItemShop item)
 			}
 		}
 
-		if ( blank == 0xFF )
-		{
+		if (blank == 0xFF)
 			return;
-		}
 
-SkipLoop:
+	SkipLoop:
 		item.CalculateDurability();
 		item.Convert();
 
@@ -363,32 +66,253 @@ SkipLoop:
 	}
 }
 
-uint8 Shop::map_check(uint8 X, uint8 Y, uint8 W, uint8 H)
+uint8 Shop::MapCheck(uint8 X, uint8 Y, uint8 W, uint8 H)
 {
-	if ( (X + W) > 8 )
+	if ((X + W) > 8)
 		return 0xFF;
 
-	if ( (Y + H) > 15 )
+	if ((Y + H) > 15)
 		return 0xFF;
 
-	for( uint8 YY = 0; YY < H; ++YY )
+	for (uint8 YY = 0; YY < H; ++YY)
 	{
-		for( uint8 XX = 0; XX < W; ++XX )
+		for (uint8 XX = 0; XX < W; ++XX)
 		{
-			if ( this->shop_map[(Y + YY) * 8 + (X + XX)].Is(1) )
-			{
+			if (_shopMap[(Y + YY) * 8 + (X + XX)] == 1)
 				return 0xFF;
-			}
 		}
 	}
 
-	for( uint8 YY = 0; YY < H; ++YY )
+	for (uint8 YY = 0; YY < H; ++YY)
 	{
-		for( uint8 XX = 0; XX < W; ++XX )
+		for (uint8 XX = 0; XX < W; ++XX)
 		{
-			this->shop_map[(Y + YY) * 8 + (X + XX)].set(1);
+			_shopMap[(Y + YY) * 8 + (X + XX)] = 1;
 		}
 	}
 
 	return (X + Y * 8);
+}
+
+ShopMgr::ShopMgr() : _updateDay(-1)
+{
+	
+}
+
+ShopMgr::~ShopMgr()
+{
+	CLEAR_MAP(_shops);
+	_characterPurchases.clear();
+	_accountPurchases.clear();
+	_pcPurchases.clear();
+	_serverPurchases.clear();
+}
+
+void ShopMgr::LoadShopTemplate()
+{
+	sLog->outLoad(true, "Loading Shop Template...");
+
+	CLEAR_MAP(_shops);
+
+	auto result = GameServerDatabase.Query("SELECT * FROM shop_template");
+	if (result)
+	{
+		do
+		{
+			FieldReader reader(result->Fetch());
+
+			Shop * add_shop = new Shop;
+
+			add_shop->SetID(reader.GetUInt8());
+			add_shop->SetName(reader.GetString());
+			add_shop->SetMaxPKLevel(reader.GetUInt8());
+			add_shop->SetPKText(reader.GetString());
+			add_shop->SetFlag(reader.GetUInt8());
+			add_shop->SetType(reader.GetUInt8());
+			add_shop->SetMaxBuyCount(reader.GetInt32());
+			add_shop->SetMaxBuyType(reader.GetUInt8());
+			add_shop->SetItemCount(0);
+
+			_shops[add_shop->GetID()] = add_shop;
+		} while (result->NextRow());
+	}
+
+	sLog->outLoad(false, ">> Loaded %u shop definitions", _shops.size());
+}
+
+void ShopMgr::LoadShopItems()
+{
+	sLog->outLoad(true, "Loading Shop Items...");
+
+	uint32 count = 0;
+
+	auto result = GameServerDatabase.Query("SELECT * FROM shop_items ORDER BY shop ASC, id ASC");
+	if (result)
+	{
+		do
+		{
+			FieldReader reader(result->Fetch());
+			
+			auto id = reader.GetUInt8();
+			auto shop = GetShop(id);
+			if (!shop)
+				continue;
+
+			ItemShop additem;
+			additem.clear();
+			additem.SetItem(reader.ReadItem());
+			additem.SetLevel(reader.GetUInt8());
+			additem.SetDurability(static_cast<float>(reader.GetUInt8()));
+			additem.SetSkill(reader.GetUInt8());
+			additem.SetLuck(reader.GetUInt8());
+			additem.SetOption(reader.GetUInt8());
+			additem.SetExe(reader.GetUInt8());
+			additem.SetAncient(reader.GetUInt8());
+
+			for (uint8 i = 0; i < MAX_SOCKET_SLOT; ++i)
+				additem.SetSocket(i, reader.GetUInt16());
+
+			additem.SetPrice(reader.GetUInt32());
+
+			if (!sItemMgr->IsItem(additem.GetItem()))
+			{
+				sLog->outError("root", "%s :: Shop: %u, item: %d", __FUNCTION__, id, additem.GetItem());
+				continue;
+			}
+
+			shop->AddItem(additem);
+			count++;
+		} while (result->NextRow());
+	}
+
+	sLog->outLoad(false, ">> Loaded %u shop items", count);
+}
+
+Shop * ShopMgr::GetShop(uint8 id)
+{
+	auto itr = _shops.find(id);
+	if (itr != _shops.end())
+		return itr->second;
+	else
+		return nullptr;
+}
+
+Shop const* ShopMgr::GetShop(uint8 id) const
+{
+	auto itr = _shops.find(id);
+	if (itr != _shops.end())
+		return itr->second;
+	else
+		return nullptr;
+}
+
+Shop const* ShopMgr::GetShop(std::string const& name) const
+{
+	for (auto & itr : _shops)
+	{
+		auto shop = itr.second;
+		if (shop->GetName() == name)
+			return shop;
+	}
+
+	return nullptr;
+}
+
+bool ShopMgr::IsShop(std::string const& name) const
+{
+	return this->GetShop(name) != nullptr;
+}
+
+bool ShopMgr::EnableToBuy(Player* player, Shop const* shop)
+{
+	if (!player || !shop)
+		return false;
+
+	int32 count = 0;
+
+	switch (shop->GetMaxBuyType())
+	{
+	case SHOP_COUNT_CHARACTER:
+	{
+								 auto & data_map = _characterPurchases[shop->GetID()];
+
+								 auto it = data_map.find(player->GetGUID());
+								 if (it != data_map.end())
+									 count = it->second;
+	} break;
+
+	case SHOP_COUNT_ACCOUNT:
+	{
+							   auto & data_map = _accountPurchases[shop->GetID()];
+
+							   auto it = data_map.find(player->GetAccountData()->GetGUID());
+							   if (it != data_map.end())
+								   count = it->second;
+	} break;
+
+	case SHOP_COUNT_PC:
+	{
+						  auto & data_map = _pcPurchases[shop->GetID()];
+
+						  auto it = data_map.find(player->GetAccountData()->GetDiskSerial());
+						  if (it != data_map.end())
+							  count = it->second;
+	} break;
+
+	case SHOP_COUNT_SERVER:
+	{
+							  auto & data_map = _serverPurchases[shop->GetID()];
+
+							  auto it = data_map.find(sGameServer->GetServerCode());
+							  if (it != data_map.end())
+								  count = it->second;
+	} break;
+
+	default:
+		return true;
+		break;
+	}
+
+	if (count >= shop->GetMaxBuyCount())
+	{
+		player->SendMessageBox(0, "Error", "Reached maximum day buy count.");
+		return false;
+	}
+
+	++count;
+
+	switch (shop->GetMaxBuyType())
+	{
+	case SHOP_COUNT_CHARACTER:
+		_characterPurchases[shop->GetID()][player->GetGUID()] = count;
+		break;
+
+	case SHOP_COUNT_ACCOUNT:
+		_accountPurchases[shop->GetID()][player->GetAccountData()->GetGUID()] = count;
+		break;
+
+	case SHOP_COUNT_PC:
+		_pcPurchases[shop->GetID()][player->GetAccountData()->GetDiskSerial()] = count;
+		break;
+
+	case SHOP_COUNT_SERVER:
+		_serverPurchases[shop->GetID()][sGameServer->GetServerCode()] = count;
+		break;
+	}
+
+	return true;
+}
+
+void ShopMgr::Update()
+{
+	auto time = Custom::SystemTimer();
+	if (time.GetDay() != _updateDay)
+	{
+		_characterPurchases.clear();
+		_accountPurchases.clear();
+		_pcPurchases.clear();
+		_serverPurchases.clear();
+
+		_updateDay = time.GetDay();
+	}
 }

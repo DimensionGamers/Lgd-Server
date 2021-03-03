@@ -1,0 +1,13 @@
+
+*.log
+*.ipch
+*.sdf
+*.opensdf
+*.suo
+*.obj
+*.tlog
+*.pdb
+Libraries/Common.lib
+*.pch
+*.map
+*.exe
