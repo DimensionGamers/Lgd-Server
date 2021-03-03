@@ -23,17 +23,17 @@ class ImperialFortressTrap
 			this->SetDamage(0.0f);
 		}
 
-		bool IsInTrap(coord_type x, coord_type y) const
+		bool IsInTrap(int16 x, int16 y) const
 		{
 			return ( x >= this->GetX1() && x <= this->GetX2() &&
 					 y >= this->GetY1() && y <= this->GetY2() );
 		}
 
 	private:
-		DECLARE_ENUM(coord_type, X1);
-		DECLARE_ENUM(coord_type, Y1);
-		DECLARE_ENUM(coord_type, X2);
-		DECLARE_ENUM(coord_type, Y2);
+		DECLARE_ENUM(int16, X1);
+		DECLARE_ENUM(int16, Y1);
+		DECLARE_ENUM(int16, X2);
+		DECLARE_ENUM(int16, Y2);
 		DECLARE_ENUM(uint8, Element);
 		DECLARE_FLOAT(Damage);
 };

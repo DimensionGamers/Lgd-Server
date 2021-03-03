@@ -655,7 +655,7 @@ namespace Path
 		}
 	}
 
-	inline void FixCoordinate(coord_type & to_fix, coord_type to_compare, int32 distance)
+	inline void FixCoordinate(int16 & to_fix, int16 to_compare, int32 distance)
 	{
 		if ( to_fix < to_compare )
 		{

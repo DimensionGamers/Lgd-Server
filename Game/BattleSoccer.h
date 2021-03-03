@@ -66,7 +66,7 @@ class CBattleSoccerMgr
 		void UpdateBall(Monster* Ball);
 
 		bool IsInField(Player const* pPlayer) const;
-		bool GetRespawnLocation(coord_type & x, coord_type & y, Player* pPlayer);
+		bool GetRespawnLocation(int16 & x, int16 & y, Player* pPlayer);
 		bool IsAttackAllowed(Player* pPlayer01, Player* pPlayer02);
 
 		void MovePlayersOut();

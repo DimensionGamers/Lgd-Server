@@ -277,7 +277,7 @@ bool SwampOfDarkness::IsBossZone(Player* pPlayer) const
 	return false;
 }
 
-bool SwampOfDarkness::IsBossZone(world_type world, coord_type x1, coord_type y1, coord_type x2, coord_type y2) const
+bool SwampOfDarkness::IsBossZone(uint16 world, int16 x1, int16 y1, int16 x2, int16 y2) const
 {
 	if (world != WORLD_SWAMP_OF_DARKNESS)
 	{

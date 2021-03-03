@@ -25,10 +25,10 @@ enum
 
 static const struct BattleSoccerZones
 {
-	coord_type x1;
-	coord_type y1;
-	coord_type x2;
-	coord_type y2;
+	int16 x1;
+	int16 y1;
+	int16 x2;
+	int16 y2;
 } g_BattleSoccerZones[GUILD_WAR_TEAM_MAX] = {
 	60, 181, 64, 182,
 	60, 139, 64, 140

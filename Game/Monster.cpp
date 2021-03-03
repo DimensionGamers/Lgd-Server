@@ -133,7 +133,7 @@ void Monster::reset()
 	this->Unit::Init();
 }
 
-void Monster::SetBasicLocation(coord_type x1, coord_type y1, coord_type x2, coord_type y2)
+void Monster::SetBasicLocation(int16 x1, int16 y1, int16 x2, int16 y2)
 {
 	this->SetX(x1);
 	this->SetY(y1);
@@ -405,10 +405,10 @@ void Monster::MakeRespawnLocation(bool random)
 	//	return;
 
 	int32 count = 100;
-	coord_type x1 = this->GetSpawnX(0);
-	coord_type y1 = this->GetSpawnY(0);
-	coord_type x2 = this->GetSpawnX(1);
-	coord_type y2 = this->GetSpawnY(1);
+	int16 x1 = this->GetSpawnX(0);
+	int16 y1 = this->GetSpawnY(0);
+	int16 x2 = this->GetSpawnX(1);
+	int16 y2 = this->GetSpawnY(1);
 
 	if ( this->GetRespawnLocation() == MONSTER_RESPAWN_NORMAL && this->GetRespawnDistance() )
 	{
@@ -438,8 +438,8 @@ void Monster::MakeRespawnLocation(bool random)
 
 	while ( count-- > 0 )
 	{
-		coord_type tmp_x = x1 + Random(x2 - x1);
-		coord_type tmp_y = y1 + Random(y2 - y1);
+		int16 tmp_x = x1 + Random(x2 - x1);
+		int16 tmp_y = y1 + Random(y2 - y1);
 
 		WorldGrid const& attr = pWorld->GetGrid(tmp_x, tmp_y);
 
@@ -750,8 +750,8 @@ void Monster::ReactionUpdate()
 						{
 							if ( !pSummoner->IsRest() )
 							{
-								coord_type tx = this->GetX();
-								coord_type ty = this->GetY();
+								int16 tx = this->GetX();
+								int16 ty = this->GetY();
 
 								if ( this->GetTargetPosition(pSummoner->GetX(), pSummoner->GetY(), tx, ty) )
 								{
@@ -1015,7 +1015,7 @@ void Monster::BuildName()
 	this->SetName(sObjectMgr->MakeText(this->GetName(), this, nullptr).c_str());
 }
 
-bool Monster::IsMoveAllowed(coord_type x, coord_type y, bool target)
+bool Monster::IsMoveAllowed(int16 x, int16 y, bool target)
 {
 	if ( this->GetAI() )
 	{

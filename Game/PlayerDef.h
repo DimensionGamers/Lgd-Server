@@ -1337,7 +1337,7 @@ struct HuntingRecordData
 };
 
 typedef std::vector<HuntingRecordData*> HuntingRecordDataList;
-typedef std::map<world_type, HuntingRecordDataList> HuntingRecordDataMap;
+typedef std::map<uint16, HuntingRecordDataList> HuntingRecordDataMap;
 
 enum PlayerLoginStep
 {
@@ -1614,7 +1614,7 @@ struct PlayerJewelBingo
 
 struct SkillTime
 {
-	SkillTime(coord_type x, coord_type y)
+	SkillTime(int16 x, int16 y)
 	{
 		this->GetTime()->Start();
 		this->SetCount(0);
@@ -1624,8 +1624,8 @@ struct SkillTime
 
 	DECLARE_STRUCT(TickTimer, Time);
 	DECLARE_PROPERTY(int32, Count);
-	DECLARE_ENUM(coord_type, X);
-	DECLARE_ENUM(coord_type, Y);
+	DECLARE_ENUM(int16, X);
+	DECLARE_ENUM(int16, Y);
 };
 
 typedef std::map<uint16, SkillTime*> SkillTimeMap;

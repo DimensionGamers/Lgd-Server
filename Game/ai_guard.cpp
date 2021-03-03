@@ -72,7 +72,7 @@ public:
 
 		bool ManageThreat() const { return false; }
 
-		bool MoveAllowed(coord_type x, coord_type y)
+		bool MoveAllowed(int16 x, int16 y)
 		{
 			World* pWorld = me()->GetWorld();
 
@@ -191,7 +191,7 @@ public:
 
 		bool ManageThreat() const { return false; }
 
-		bool MoveAllowed(coord_type x, coord_type y)
+		bool MoveAllowed(int16 x, int16 y)
 		{
 			World* pWorld = me()->GetWorld();
 

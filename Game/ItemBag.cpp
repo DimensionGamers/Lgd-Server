@@ -26,7 +26,7 @@ void ItemBag::Clear()
 	this->items.clear();
 }
 
-bool ItemBag::Execute(Unit* pUnit, int32 data_1, int32 data_2, coord_type x, coord_type y, uint16 serial_server, uint32 serial, std::string const& item_name)
+bool ItemBag::Execute(Unit* pUnit, int32 data_1, int32 data_2, int16 x, int16 y, uint16 serial_server, uint32 serial, std::string const& item_name)
 {
 	if ( !this->Valid() )
 		return false;
@@ -239,7 +239,7 @@ bool ItemBag::Execute(Unit* pUnit, int32 data_1, int32 data_2, coord_type x, coo
 	return true;
 }
 
-void ItemBag::Drop(Unit* mOwner, world_type world, coord_type x, coord_type y, uint8 attribute)
+void ItemBag::Drop(Unit* mOwner, uint16 world, int16 x, int16 y, uint8 attribute)
 {
 	if (this->IsFlag(ITEM_BAG_FLAG_FIREWORKS))
 	{
@@ -247,8 +247,8 @@ void ItemBag::Drop(Unit* mOwner, world_type world, coord_type x, coord_type y, u
 	}
 
 	int32 drop_count = this->GetDropCount();
-	coord_type r_x = x;
-	coord_type r_y = y;
+	int16 r_x = x;
+	int16 r_y = y;
 	Item item;
 
 	World* pWorld = sWorldMgr->GetWorld(world);
@@ -495,7 +495,7 @@ uint32 ItemBag::GetRandomGroup() const
 	return m_RandomValue.GetRandomValue(RANDOM_POOL_RANDOM);
 }
 
-bool ItemBag::BuildItem(ItemBagItem const* RandomItem, Item & new_item, Unit* pUnit, coord_type x, coord_type y, uint8 attribute)
+bool ItemBag::BuildItem(ItemBagItem const* RandomItem, Item & new_item, Unit* pUnit, int16 x, int16 y, uint8 attribute)
 {
 	if ( !RandomItem )
 	{
@@ -606,7 +606,7 @@ bool ItemBag::BuildItem(ItemBagItem const* RandomItem, Item & new_item, Unit* pU
 	return true;
 }
 
-bool ItemBag::BuildCurreny(Player* pPlayer, coord_type x, coord_type y)
+bool ItemBag::BuildCurreny(Player* pPlayer, int16 x, int16 y)
 {
 	if ( !pPlayer )
 	{
@@ -850,7 +850,7 @@ ItemBag * ItemBagMgr::GetItemBag(std::string const& name) const
 	return nullptr;
 }
 
-uint8 ItemBagMgr::ExecuteItemBag(ItemBagType type, Unit* pUnit, std::string const& name, int32 data_1, int32 data_2, coord_type x, coord_type y, uint16 serial_server, uint32 serial, std::string const& item_name)
+uint8 ItemBagMgr::ExecuteItemBag(ItemBagType type, Unit* pUnit, std::string const& name, int32 data_1, int32 data_2, int16 x, int16 y, uint16 serial_server, uint32 serial, std::string const& item_name)
 {
 	ItemBagListMap::const_iterator item_bag_list = this->m_item_bag_list.find(type);
 

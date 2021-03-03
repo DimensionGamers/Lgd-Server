@@ -67,11 +67,11 @@ static const EventCommonGroundData m_BloodCastleData[MAX_BLOOD_CASTLE_GROUND] =
 	WORLD_BLOOD_CASTLE_8,	271
 };
 
-static const coord_type m_BloodCastleZoneEntrance[] = { 13, 15, 15, 23 };
-static const coord_type m_BloodCastleZoneBridge[] = { 13, 70, 15, 75 };
-static const coord_type m_BloodCastleZoneDoor[] = { 13, 76, 15, 79 };
-static const coord_type m_BloodCastleZoneBossZone[] = { 11, 80, 25, 89 };
-static const coord_type m_BloodCastleZoneAltar[] = { 8, 80, 10, 83 };
+static const int16 m_BloodCastleZoneEntrance[] = { 13, 15, 15, 23 };
+static const int16 m_BloodCastleZoneBridge[] = { 13, 70, 15, 75 };
+static const int16 m_BloodCastleZoneDoor[] = { 13, 76, 15, 79 };
+static const int16 m_BloodCastleZoneBossZone[] = { 11, 80, 25, 89 };
+static const int16 m_BloodCastleZoneAltar[] = { 8, 80, 10, 83 };
 
 static const struct BloodCastleMixInfo
 {

@@ -559,7 +559,7 @@ void Party::GenKillReward(Player* pVictim)
 	pVictim->GenDeathPenalty(high_level, count);
 }
 
-uint8 Party::GetPartyMembersWithinDistance(world_type world, int32 instance, coord_type x, coord_type y, uint8 distance)
+uint8 Party::GetPartyMembersWithinDistance(uint16 world, int32 instance, int16 x, int16 y, uint8 distance)
 {
 	uint8 count = 0;
 
@@ -585,7 +585,7 @@ uint8 Party::GetPartyMembersWithinDistance(world_type world, int32 instance, coo
 	return count;
 }
 
-int16 Party::GetPartyMemberHighestLevel(world_type world, int32 instance, coord_type x, coord_type y, uint8 distance)
+int16 Party::GetPartyMemberHighestLevel(uint16 world, int32 instance, int16 x, int16 y, uint8 distance)
 {
 	int16 high_level = 0;
 

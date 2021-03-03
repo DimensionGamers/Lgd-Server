@@ -94,7 +94,7 @@ Gates a zonas -> Nars
 */
 static const struct ArkaWarZoneBasicData
 {
-	world_type world;
+	uint16 world;
 	uint16 gate;
 } g_ArkaWarZoneBasicData[MAX_ARKA_WAR_ZONES] =
 {
@@ -107,7 +107,7 @@ static const struct ArkaWarZoneBasicData
 
 static const struct ArkaWarZoneBattleData
 {
-	world_type world;
+	uint16 world;
 	uint16 gate;
 	std::string name;
 } g_ArkaWarZoneBattleData[MAX_ARKA_WAR_ZONES] =
@@ -121,9 +121,9 @@ static const struct ArkaWarZoneBattleData
 
 struct ArkaWarObeliskAuraBasicData
 {
-	DECLARE_ENUM(world_type, World);
-	DECLARE_ENUM(coord_type, X);
-	DECLARE_ENUM(coord_type, Y);
+	DECLARE_ENUM(uint16, World);
+	DECLARE_ENUM(int16, X);
+	DECLARE_ENUM(int16, Y);
 
 	ArkaWarObeliskAuraBasicData()
 	{
@@ -135,9 +135,9 @@ struct ArkaWarObeliskAuraBasicData
 
 struct ArkaWarObeliskBasicData
 {
-	DECLARE_ENUM(world_type, World);
-	DECLARE_ENUM(coord_type, X);
-	DECLARE_ENUM(coord_type, Y);
+	DECLARE_ENUM(uint16, World);
+	DECLARE_ENUM(int16, X);
+	DECLARE_ENUM(int16, Y);
 	DECLARE_ENUM(int32, Life);
 	DECLARE_ENUM(int32, OccupyLife);
 	DECLARE_ARRAY_STRUCT(ArkaWarObeliskAuraBasicData, AuraBasicData, MAX_ARKA_WAR_AURA);
@@ -260,7 +260,7 @@ struct ObeliskState
 
 struct ArkaWarMonsterInfo
 {
-	DECLARE_ENUM(world_type, World);
+	DECLARE_ENUM(uint16, World);
 	DECLARE_ENUM(int32, Count);
 	DECLARE_ENUM(int32, RespawnTime); // Minutes
 
@@ -274,10 +274,10 @@ struct ArkaWarMonsterInfo
 
 struct ArkaWarMonsterRespawnArea
 {
-	DECLARE_ENUM(coord_type, X1);
-	DECLARE_ENUM(coord_type, Y1);
-	DECLARE_ENUM(coord_type, X2);
-	DECLARE_ENUM(coord_type, Y2);
+	DECLARE_ENUM(int16, X1);
+	DECLARE_ENUM(int16, Y1);
+	DECLARE_ENUM(int16, X2);
+	DECLARE_ENUM(int16, Y2);
 };
 
 typedef std::list<ArkaWarMonsterRespawnArea*> ArkaWarMonsterRespawnAreaList;
@@ -286,11 +286,11 @@ typedef std::vector<uint16> ArkaWarMonsterList;
 
 struct ArkaWarPlayerPosition
 {
-	DECLARE_ENUM(world_type, World);
-	DECLARE_ENUM(coord_type, X1);
-	DECLARE_ENUM(coord_type, Y1);
-	DECLARE_ENUM(coord_type, X2);
-	DECLARE_ENUM(coord_type, Y2);
+	DECLARE_ENUM(uint16, World);
+	DECLARE_ENUM(int16, X1);
+	DECLARE_ENUM(int16, Y1);
+	DECLARE_ENUM(int16, X2);
+	DECLARE_ENUM(int16, Y2);
 };
 
 typedef std::list<ArkaWarPlayerPosition*> ArkaWarPlayerPositionList;
@@ -726,15 +726,15 @@ class ArkaWar: public EventMassive
 		void SendObeliskLife();
 		void SendObeliskState();
 		void CheckObeliskAuraPlayer();
-		bool GetGatePosition(Player* pPlayer, uint16 gate, world_type & world, coord_type & x, coord_type & y);
-		bool GetGuildMasterPosition(Player* pPlayer, uint16 gate, world_type & world, coord_type & x, coord_type & y);
-		bool GetPosition(uint16 gate, world_type & world, coord_type & x, coord_type & y);
+		bool GetGatePosition(Player* pPlayer, uint16 gate, uint16 & world, int16 & x, int16 & y);
+		bool GetGuildMasterPosition(Player* pPlayer, uint16 gate, uint16 & world, int16 & x, int16 & y);
+		bool GetPosition(uint16 gate, uint16 & world, int16 & x, int16 & y);
 		bool IsPkAllowed(Player* pPlayer01, Player* pPlayer02);
 		void SendStateAll();
 		void SendState(Player* pPlayer);
 		void SendPlayInfo(Player* pPlayer);
 		void SendResult();
-		bool GetBoxPosition(world_type world, coord_type ax, coord_type ay, coord_type aw, coord_type ah, coord_type & mx, coord_type & my);
+		bool GetBoxPosition(uint16 world, int16 ax, int16 ay, int16 aw, int16 ah, int16 & mx, int16 & my);
 		void PlayerKill(Player* pPlayer, Player* pVictim);
 		void BootyItemGet(Player* pPlayer);
 		int64 CalculateRewardExperience(Player* pPlayer, ArkaWarPlayer * pArkaWarPlayer);

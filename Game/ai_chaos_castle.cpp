@@ -91,15 +91,15 @@ public:
 			if ( !grid.IsLocked_2() )
 				return;
 
-			coord_type x = me()->GetX();
-			coord_type y = me()->GetY();
+			int16 x = me()->GetX();
+			int16 y = me()->GetY();
 
 			this->GetRandomSafeZone(x, y);
 			me()->PositionSend(x, y);
 			me()->ViewportCreate(VIEWPORT_CREATE_FLAG_ME);
 		}
 
-		void GetRandomSafeZone(coord_type &x, coord_type &y)
+		void GetRandomSafeZone(int16 &x, int16 &y)
 		{
 			World* pWorld = me()->GetWorld();
 
@@ -107,13 +107,13 @@ public:
 				return;
 
 			int32 count = 100;
-			coord_type x_1 = g_ChaosCastle_GroundAxis[0];
-			coord_type y_1 = g_ChaosCastle_GroundAxis[1];
-			coord_type x_2 = g_ChaosCastle_GroundAxis[2];
-			coord_type y_2 = g_ChaosCastle_GroundAxis[3];
+			int16 x_1 = g_ChaosCastle_GroundAxis[0];
+			int16 y_1 = g_ChaosCastle_GroundAxis[1];
+			int16 x_2 = g_ChaosCastle_GroundAxis[2];
+			int16 y_2 = g_ChaosCastle_GroundAxis[3];
 
-			coord_type tmp_x;
-			coord_type tmp_y;
+			int16 tmp_x;
+			int16 tmp_y;
 
 			while ( count-- > 0 )
 			{
@@ -230,15 +230,15 @@ public:
 			if ( !grid.IsLocked_2() )
 				return;
 
-			coord_type x = me()->GetX();
-			coord_type y = me()->GetY();
+			int16 x = me()->GetX();
+			int16 y = me()->GetY();
 
 			this->GetRandomSafeZone(x, y);
 			me()->PositionSend(x, y);
 			me()->ViewportCreate(VIEWPORT_CREATE_FLAG_ME);
 		}
 
-		void GetRandomSafeZone(coord_type &x, coord_type &y)
+		void GetRandomSafeZone(int16 &x, int16 &y)
 		{
 			World* pWorld = me()->GetWorld();
 
@@ -246,13 +246,13 @@ public:
 				return;
 
 			int32 count = 100;
-			coord_type x_1 = g_ChaosCastle_GroundAxis[0];
-			coord_type y_1 = g_ChaosCastle_GroundAxis[1];
-			coord_type x_2 = g_ChaosCastle_GroundAxis[2];
-			coord_type y_2 = g_ChaosCastle_GroundAxis[3];
+			int16 x_1 = g_ChaosCastle_GroundAxis[0];
+			int16 y_1 = g_ChaosCastle_GroundAxis[1];
+			int16 x_2 = g_ChaosCastle_GroundAxis[2];
+			int16 y_2 = g_ChaosCastle_GroundAxis[3];
 
-			coord_type tmp_x;
-			coord_type tmp_y;
+			int16 tmp_x;
+			int16 tmp_y;
 
 			while ( count-- > 0 )
 			{

@@ -1,4 +1,4 @@
-SkillHandler::SkillHandler(Unit* pCaster, Unit* pTarget, Skill * pSkill, skill_template const* skill_info, coord_type x, coord_type y, int32 count, int32 angle)
+SkillHandler::SkillHandler(Unit* pCaster, Unit* pTarget, Skill * pSkill, skill_template const* skill_info, int16 x, int16 y, int32 count, int32 angle)
 {
 	this->SetCaster(pCaster);
 	this->SetTarget(pTarget);
@@ -22,7 +22,7 @@ SkillHandler::SkillHandler(Unit* pCaster, Unit* pTarget, Skill * pSkill, skill_t
 	this->SetAngle(angle);
 }
 
-bool SkillHandler::SkillUseProc(bool combo, coord_type x, coord_type y, uint8 dir, uint8 dis, uint8 pos, bool duration)
+bool SkillHandler::SkillUseProc(bool combo, int16 x, int16 y, uint8 dir, uint8 dis, uint8 pos, bool duration)
 {
 	SafeRAssert(this->GetCaster(), "this->GetCaster() == nullptr", false);
 	SafeRAssert(this->GetSkill(), "this->GetSkill() == nullptr", false);
@@ -944,7 +944,7 @@ void SkillHandler::SkillSummon()
 			continue;
 		}
 
-		int16 move_level = sTeleport->GetMoveLevel(this->GetCaster()->GetWorldId(), this->GetCaster()->GetX(), this->GetCaster()->GetY(), pMember->IsSpecialCharacter());
+		int16 move_level = sTeleport->GetMoveLevel(this->GetCaster()->GetWorldId(), this->GetCaster()->GetX(), this->GetCaster()->GetY());
 		bool summon_world = pMember->SummonCheckWorld();
 		bool busy = pMember->IsBusy();
 		bool equipment = pMember->CanEnterWorld(this->GetCaster()->GetWorldId(), this->GetCaster()->GetX(), this->GetCaster()->GetY(), this->GetCaster()->GetX(), this->GetCaster()->GetY());
@@ -952,14 +952,14 @@ void SkillHandler::SkillSummon()
 		if ( pMember->GetTotalLevel() >= move_level &&
 			 move_level != -1 && summon_world && !busy && equipment )
 		{
-			coord_type x = this->GetCaster()->GetX();
-			coord_type y = this->GetCaster()->GetY();
+			int16 x = this->GetCaster()->GetX();
+			int16 y = this->GetCaster()->GetY();
 			int32 loop = 50;
 
 			while ( loop-- > 0 )
 			{
-				coord_type tmp_x = this->GetCaster()->GetX() + RANDOM(9) - 4;
-				coord_type tmp_y = this->GetCaster()->GetY() + RANDOM(9) - 4;
+				int16 tmp_x = this->GetCaster()->GetX() + RANDOM(9) - 4;
+				int16 tmp_y = this->GetCaster()->GetY() + RANDOM(9) - 4;
 
 				if ( this->GetCaster()->TeleportAreaCheck(tmp_x, tmp_y) )
 				{
@@ -1033,8 +1033,8 @@ void SkillHandler::SkillBuffStun()
 		}
 	}
 
-	coord_type pos_x = this->GetCaster()->GetX() - (8 - (this->GetAngle() & 15));
-	coord_type pos_y = this->GetCaster()->GetY() - (8 - ((this->GetAngle() & 240) >> 4));
+	int16 pos_x = this->GetCaster()->GetX() - (8 - (this->GetAngle() & 15));
+	int16 pos_y = this->GetCaster()->GetY() - (8 - ((this->GetAngle() & 240) >> 4));
 
 	int32 fangle = this->GetCaster()->GetAngle(pos_x, pos_y);
 
@@ -6173,17 +6173,17 @@ void SkillHandler::GetPartyMembers(uint8 distance)
 		party_member_count = 1;
 }
 
-bool SkillHandler::CheckSkillRange(coord_type x, coord_type y, Unit* pTarget)
+bool SkillHandler::CheckSkillRange(int16 x, int16 y, Unit* pTarget)
 {
 	return SkillHandler::CheckSkillRange(this->GetCaster(), this->GetSkillInfo() ? this->GetSkillInfo()->GetID() : 0, x, y, pTarget);
 }
 	
-bool SkillHandler::CheckSkillRadio(coord_type x, coord_type y, Unit* pTarget)
+bool SkillHandler::CheckSkillRadio(int16 x, int16 y, Unit* pTarget)
 {
 	return SkillHandler::CheckSkillRadio(this->GetCaster(), this->GetSkillInfo() ? this->GetSkillInfo()->GetID() : 0, x, y, pTarget);
 }
 
-bool SkillHandler::CheckSkillRange(Unit* pUnit, uint16 skill, coord_type x, coord_type y, Unit* pTarget)
+bool SkillHandler::CheckSkillRange(Unit* pUnit, uint16 skill, int16 x, int16 y, Unit* pTarget)
 {
 	if (!pUnit || !pTarget)
 	{
@@ -6207,7 +6207,7 @@ bool SkillHandler::CheckSkillRange(Unit* pUnit, uint16 skill, coord_type x, coor
 	}
 }
 
-bool SkillHandler::CheckSkillRadio(Unit* pUnit, uint16 skill, coord_type x, coord_type y, Unit* pTarget)
+bool SkillHandler::CheckSkillRadio(Unit* pUnit, uint16 skill, int16 x, int16 y, Unit* pTarget)
 {
 	if (!pUnit || !pTarget)
 	{
@@ -6725,8 +6725,8 @@ void SkillHandler::SkillMonsterSummon()
 		return;
 	
 	int32 summon_class = 0;
-	coord_type summoned_x = 0;
-	coord_type summoned_y = 0;
+	int16 summoned_x = 0;
+	int16 summoned_y = 0;
 	bool success = false;
 
 	switch ( this->GetCaster()->ToCreature()->GetClass() )
@@ -6786,8 +6786,8 @@ void SkillHandler::SkillMonsterInmuneToHarm()
 
 void SkillHandler::SkillAttackElectricSpark()
 {
-	coord_type TargetX = this->GetCaster()->GetX() - (8 - (this->GetAngle() & 15));
-	coord_type TargetY = this->GetCaster()->GetY() - (8 - ((this->GetAngle() & 240) >> 4));
+	int16 TargetX = this->GetCaster()->GetX() - (8 - (this->GetAngle() & 15));
+	int16 TargetY = this->GetCaster()->GetY() - (8 - ((this->GetAngle() & 240) >> 4));
 
 	int32 angle = this->GetCaster()->GetAngle(TargetX, TargetY);
 
@@ -7561,9 +7561,9 @@ void SpecialSkillHandler::SpecialSkillElementTeleport(uint8 element)
 	if ( this->GetCaster()->HasRestrictionBuff() )
 		return;
 
-	coord_type depth = RANDOM(4) + 3;
-	coord_type x = 0;
-	coord_type y = 0;
+	int16 depth = RANDOM(4) + 3;
+	int16 x = 0;
+	int16 y = 0;
 
 	if ( RANDOM(2) == 0 )
 		x = this->GetCaster()->GetX() + depth;

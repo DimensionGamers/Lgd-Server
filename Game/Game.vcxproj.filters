@@ -272,9 +272,6 @@
     <ClInclude Include="ItemBagDef.h">
       <Filter>DBInfo</Filter>
     </ClInclude>
-    <ClInclude Include="TeleportMgr.h">
-      <Filter>DBInfo</Filter>
-    </ClInclude>
     <ClInclude Include="ai_basic.h">
       <Filter>GameObject\Monster\ScriptAI</Filter>
     </ClInclude>
@@ -584,6 +581,9 @@
     <ClInclude Include="PersonalStoreScript.h">
       <Filter>GameObject\Player\Store</Filter>
     </ClInclude>
+    <ClInclude Include="TeleportManager.h">
+      <Filter>DBInfo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WorldClass.cpp">
@@ -825,9 +825,6 @@
     </ClCompile>
     <ClCompile Include="SkillHandler.cpp">
       <Filter>GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="TeleportMgr.cpp">
-      <Filter>DBInfo</Filter>
     </ClCompile>
     <ClCompile Include="MonsterAIHandler.cpp">
       <Filter>GameObject\Monster</Filter>
@@ -1134,6 +1131,9 @@
     </ClCompile>
     <ClCompile Include="PersonalStoreScript.cpp">
       <Filter>GameObject\Player\Store</Filter>
+    </ClCompile>
+    <ClCompile Include="TeleportManager.cpp">
+      <Filter>DBInfo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

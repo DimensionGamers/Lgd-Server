@@ -145,9 +145,9 @@ struct ACCOUNT_SERVER_MOVE_DATA
 	uint16 start_server;
 	uint16 cur_server;
 	uint16 dest_server;
-	world_type dest_world;
-	coord_type dest_x;
-	coord_type dest_y;
+	uint16 dest_world;
+	int16 dest_x;
+	int16 dest_y;
 };
 
 struct ACCOUNT_SERVER_MOVE_REQUEST
@@ -240,9 +240,9 @@ struct ACCOUNT_SERVER_MOVE_AUTH_RESULT
 	char account[MAX_ACCOUNT_LENGTH + 1];
 	char name[MAX_CHARACTER_LENGTH + 1];
 	uint16 start_server;
-	world_type world;
-	coord_type x;
-	coord_type y;
+	uint16 world;
+	int16 x;
+	int16 y;
 	uint8 result;
 	uint32 account_id;
 	char security_code[MAX_SECURE_CODE_LENGTH + 1];

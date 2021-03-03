@@ -301,8 +301,8 @@ public:
 				return;
 			}
 
-			coord_type x = me()->GetX();
-			coord_type y = me()->GetY();
+			int16 x = me()->GetX();
+			int16 y = me()->GetY();
 
 			if ( pWorld->GetFreeLocation(x, y, 4, 4, 10) )
 			{

@@ -26,7 +26,7 @@ class DungeonInstance
 		int32 GetCountByPC(Player* pPlayer) const;
 
 		void CreateSimpleTrap();
-		void CreateTrap(coord_type x, coord_type y, uint8 type);
+		void CreateTrap(int16 x, int16 y, uint8 type);
 
 		DECLARE_ENUM(uint8, ID);
 		DECLARE_ENUM(uint16, LevelID);

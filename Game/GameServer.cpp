@@ -1344,7 +1344,7 @@ void GameServer::UpdateNotice()
 			if ( !pPlayer )
 				continue;
 
-			if ( pNotice->GetWorld() != pPlayer->GetWorldId() && pNotice->GetWorld() != world_type(-1) )
+			if ( pNotice->GetWorld() != pPlayer->GetWorldId() && pNotice->GetWorld() != uint16(-1) )
 				continue;
 
 			if ( pNotice->IsFlag(NOTICE_FLAG_PK) && !pPlayer->IsMurder() )
@@ -1730,7 +1730,7 @@ void LOG_ITEM_BUY(Player* pPlayer, Item * item, std::string const& comment)
 	MuLogDatabase.CommitTransaction(trans);
 }
 
-void LOG_JEWEL_DROP(Player* pPlayer, world_type world, coord_type x, coord_type y, Item const* item)
+void LOG_JEWEL_DROP(Player* pPlayer, uint16 world, int16 x, int16 y, Item const* item)
 {
 	if ( item->GetItem() == JEWEL::BLESS ||
 		 item->GetItem() == JEWEL::SOUL ||
@@ -2540,7 +2540,7 @@ void GameServer::ProcessTrack(Player* pPlayer, uint8 * Packet)
 	}
 }
 
-bool GameServer::IsOfflineAttackWorld(Player* pPlayer, world_type world_id) const
+bool GameServer::IsOfflineAttackWorld(Player* pPlayer, uint16 world_id) const
 {
 	if (!pPlayer)
 	{
@@ -2570,7 +2570,7 @@ bool GameServer::IsOfflineAttackWorld(Player* pPlayer, world_type world_id) cons
 	return true;
 }
 
-bool GameServer::IsOfflineAttackZone(Player* pPlayer, world_type world_id, coord_type x, coord_type y) const
+bool GameServer::IsOfflineAttackZone(Player* pPlayer, uint16 world_id, int16 x, int16 y) const
 {
 	if (!pPlayer)
 	{

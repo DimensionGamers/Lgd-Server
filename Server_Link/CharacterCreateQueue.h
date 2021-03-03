@@ -28,9 +28,9 @@ struct CharacterCreateData
 	int32 mana;
 	uint32 points;
 	uint32 level;
-	world_type world;
-	coord_type x;
-	coord_type y;
+	uint16 world;
+	int16 x;
+	int16 y;
 	uint8 slot;
 	std::shared_ptr<ServerSocket> socket;
 

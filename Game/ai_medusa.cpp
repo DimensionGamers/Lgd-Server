@@ -173,8 +173,8 @@ public:
 
 				if ( distance > 10 && pWorld )
 				{
-					coord_type x = this->GetMedusa()->GetX();
-					coord_type y = this->GetMedusa()->GetY();
+					int16 x = this->GetMedusa()->GetX();
+					int16 y = this->GetMedusa()->GetY();
 
 					pWorld->GetFreeLocation(x, y, 3, 3, 10);
 
@@ -192,7 +192,7 @@ public:
 			this->SetMedusa((Monster*)me()->m_AdditionalDataPtr[0]);
 		}
 
-		bool MoveAllowed(coord_type x, coord_type y)
+		bool MoveAllowed(int16 x, int16 y)
 		{
 			if ( !MonsterAI::MoveAllowed(x, y) )
 				return false;

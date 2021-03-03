@@ -302,8 +302,8 @@ void MonsterAIHandler::ApplyElementMoveTarget()
 		return;
 
 	bool bFindXY = true;
-	coord_type iTargetX = this->GetAIElement()->GetX();
-	coord_type iTargetY = this->GetAIElement()->GetY();
+	int16 iTargetX = this->GetAIElement()->GetX();
+	int16 iTargetY = this->GetAIElement()->GetY();
 	int32 iTargetDistance = Util::Distance(this->GetMonster()->GetX(), this->GetMonster()->GetY(), iTargetX, iTargetY);
 
 	if ( !pWorld->m_path_list.empty() )
@@ -311,8 +311,8 @@ void MonsterAIHandler::ApplyElementMoveTarget()
 		if ( iTargetDistance > 10 )
 		{
 			int32 iMinCost = 1000000;
-			coord_type iMidX = -1;
-			coord_type iMidY = -1;
+			int16 iMidX = -1;
+			int16 iMidY = -1;
 
 			for ( WorldAIPathList::const_iterator it = pWorld->m_path_list.begin(); it != pWorld->m_path_list.end(); ++it )
 			{
@@ -404,8 +404,8 @@ void MonsterAIHandler::ApplyElementAttack()
 	
 void MonsterAIHandler::ApplyElementAttackArea()
 {
-	coord_type iTargetX = this->GetAIElement()->GetX() + Random(5) * ((Random(2) == 0) ? 1 : -1);
-	coord_type iTargetY = this->GetAIElement()->GetY() + Random(5) * ((Random(2) == 0) ? 1 : -1);
+	int16 iTargetX = this->GetAIElement()->GetX() + Random(5) * ((Random(2) == 0) ? 1 : -1);
+	int16 iTargetY = this->GetAIElement()->GetY() + Random(5) * ((Random(2) == 0) ? 1 : -1);
 
 	Player* pPlayer = nullptr;
 

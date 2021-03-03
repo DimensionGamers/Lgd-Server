@@ -33,7 +33,7 @@ bool MonsterAI::MoveAttempt()
 	return false;
 }
 
-bool MonsterAI::MoveAllowed(coord_type x, coord_type y)
+bool MonsterAI::MoveAllowed(int16 x, int16 y)
 {
 	World* pWorld = me()->GetWorld();
 	
@@ -91,8 +91,8 @@ bool MonsterAI::UpdateLocation()
 	{
 		me()->ClearPathData();
 
-		coord_type x = me()->GetSummoner()->GetX() + 1;
-		coord_type y = me()->GetSummoner()->GetY() - 1;
+		int16 x = me()->GetSummoner()->GetX() + 1;
+		int16 y = me()->GetSummoner()->GetY() - 1;
 
 		me()->GetSummoner()->GenerateRandomLocation(me()->GetSummoner()->GetWorld(), x, y, 3, WORLD_ATTRIBUTE_LOCK_1 | WORLD_ATTRIBUTE_LOCK_2 | WORLD_ATTRIBUTE_STAND, me()->GetSummoner()->GetInstance());
 

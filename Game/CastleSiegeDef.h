@@ -88,10 +88,10 @@ enum CastleSiegeMachineType
 
 static const struct CastleSiegeWeaponLocation
 {
-	coord_type x1;
-	coord_type y1;
-	coord_type x2;
-	coord_type y2;
+	int16 x1;
+	int16 y1;
+	int16 x2;
+	int16 y2;
 } g_CastleSiegeWeaponAttackData[CASTLE_SIEGE_MACHINE_ATTACK_POINTS] = {
 	{ 0x3E, 0x67, 0x48, 0x70 }, 
 	{ 0x58, 0x68, 0x7C, 0x6F }, 
@@ -106,10 +106,10 @@ static const struct CastleSiegeWeaponLocation
 
 static const struct CastleSiegeRespawnArea
 {
-	coord_type x1;
-	coord_type y1;
-	coord_type x2;
-	coord_type y2;
+	int16 x1;
+	int16 y1;
+	int16 x2;
+	int16 y2;
 } g_CastleSiegeRespawnArea[3] =
 {
 	35,		17,		144,	48,
@@ -117,7 +117,7 @@ static const struct CastleSiegeRespawnArea
 	35,		11,		144,	48
 };
 
-static const coord_type g_CastleSiegeWallStepAxisY[3] = 
+static const int16 g_CastleSiegeWallStepAxisY[3] = 
 {
 	113, 160, 203
 };

@@ -492,7 +492,7 @@ void ImperialFortressInstance::BlockReleaseZone(uint8 zone, bool block)
 
 	ImperialFortressZoneDef const& data = g_ImperialFortressZone[this->GetDay()].zone[this->GetZone()][zone];
 
-	coord_type buffer_data[4] = { data.x1, data.y1, data.x2, data.y2 };
+	int16 buffer_data[4] = { data.x1, data.y1, data.x2, data.y2 };
 
 	pWorld->ApplyAttribute(buffer_data, 16, block);
 	pWorld->ApplyAttribute(buffer_data, 8, block);
@@ -508,9 +508,9 @@ void ImperialFortressInstance::BlockReleaseZone(uint8 zone, bool block)
 
 void ImperialFortressInstance::BlockReleaseZone(Monster* pMonster)
 {
-	coord_type coords[4];
-	coord_type x = pMonster->GetX();
-	coord_type y = pMonster->GetY();
+	int16 coords[4];
+	int16 x = pMonster->GetX();
+	int16 y = pMonster->GetY();
 
 	switch (pMonster->GetDirection())
 	{
@@ -680,7 +680,7 @@ bool ImperialFortressInstance::IsZoneEmpty() const
 	return true;
 }
 
-bool ImperialFortressInstance::IsZoneReleased(coord_type x, coord_type y) const
+bool ImperialFortressInstance::IsZoneReleased(int16 x, int16 y) const
 {
 	for (ImperialFortressReleaseZoneList::const_iterator itr = this->m_ImperialFortressReleaseZoneList.begin(); itr != this->m_ImperialFortressReleaseZoneList.end(); ++itr)
 	{

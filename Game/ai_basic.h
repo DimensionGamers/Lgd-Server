@@ -31,8 +31,8 @@ struct CrownBasicAI: public MonsterAI
 {
 	DECLARE(uint8, state);
 	DECLARE_PTR(Player, Player);
-	DECLARE_ENUM(coord_type, X);
-	DECLARE_ENUM(coord_type, Y);
+	DECLARE_ENUM(int16, X);
+	DECLARE_ENUM(int16, Y);
 	DECLARE_BOOL(Available);
 
 	explicit CrownBasicAI(Monster* monster): MonsterAI(monster)
@@ -123,8 +123,8 @@ struct CastleMachineBasicAI: public MonsterAI
 	DECLARE_PTR(Player, Player);
 	DECLARE_BOOL(Active);
 	DECLARE_BOOL(Ready);
-	DECLARE_ENUM(coord_type, X);
-	DECLARE_ENUM(coord_type, Y);
+	DECLARE_ENUM(int16, X);
+	DECLARE_ENUM(int16, Y);
 	DECLARE_STRUCT(TickTimer, Time);
 	
 	struct CastleMachineTargetData
@@ -152,7 +152,7 @@ struct CastleMachineBasicAI: public MonsterAI
 		LIST_CLEAR(CastleMachineTargetDataList::iterator, this->m_target_data_list);
 	}
 
-	void Start(coord_type x, coord_type y)
+	void Start(int16 x, int16 y)
 	{
 		this->SetX(x);
 		this->SetY(y);

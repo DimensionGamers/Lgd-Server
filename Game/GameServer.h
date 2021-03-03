@@ -25,7 +25,7 @@ struct notice_data
 {
 	DECLARE_PROPERTY_STRING(Notice);
 	DECLARE_ENUM(uint8, Type);
-	DECLARE_ENUM(world_type, World);
+	DECLARE_ENUM(uint16, World);
 	DECLARE_FLAG(uint8, Flag);
 	DECLARE_ENUM(uint32, Tick);
 	DECLARE_ENUM(uint32, Time);
@@ -112,7 +112,7 @@ void LOG_ITEM_DROP(Player* pPlayer, Item * item, std::string const& comment = ""
 void LOG_ITEM_LOOT(Player* pPlayer, Item * item, std::string const& comment = "");
 void LOG_ITEM_SELL(Player* pPlayer, Item * item, std::string const& comment = "");
 void LOG_ITEM_BUY(Player* pPlayer, Item * item, std::string const& comment = "");
-void LOG_JEWEL_DROP(Player* pPlayer, world_type world, coord_type x, coord_type y, Item const* item);
+void LOG_JEWEL_DROP(Player* pPlayer, uint16 world, int16 x, int16 y, Item const* item);
 
 typedef std::map<std::string, int32> PostManageMACMap;
 
@@ -171,20 +171,20 @@ bool IsServerIN(std::string const& data);
 
 struct OfflineAttackWorld
 {
-	DECLARE_ENUM(world_type, World);
+	DECLARE_ENUM(uint16, World);
 	DECLARE_ENUM(int16, LevelMin);
 	DECLARE_ENUM(int16, LevelMax);
 };
 
-typedef std::map<world_type, OfflineAttackWorld*> OfflineAttackWorldMap;
+typedef std::map<uint16, OfflineAttackWorld*> OfflineAttackWorldMap;
 
 struct OfflineAttackZone
 {
-	DECLARE_ENUM(world_type, World);
-	DECLARE_ENUM(coord_type, X1);
-	DECLARE_ENUM(coord_type, Y1);
-	DECLARE_ENUM(coord_type, X2);
-	DECLARE_ENUM(coord_type, Y2);
+	DECLARE_ENUM(uint16, World);
+	DECLARE_ENUM(int16, X1);
+	DECLARE_ENUM(int16, Y1);
+	DECLARE_ENUM(int16, X2);
+	DECLARE_ENUM(int16, Y2);
 	DECLARE_BOOL(Enabled);
 };
 
@@ -270,8 +270,8 @@ public:
 	void ProcessTrack(Player* pPlayer);
 	void ProcessTrack(Player* pPlayer, uint8 * Packet);
 
-	bool IsOfflineAttackWorld(Player* pPlayer, world_type world_id) const;
-	bool IsOfflineAttackZone(Player* pPlayer, world_type world_id, coord_type x, coord_type y) const;
+	bool IsOfflineAttackWorld(Player* pPlayer, uint16 world_id) const;
+	bool IsOfflineAttackZone(Player* pPlayer, uint16 world_id, int16 x, int16 y) const;
 
 	bool IsDiscountWC() const;
 	bool IsDiscountGP() const;
@@ -293,9 +293,9 @@ public:
 
 	DECLARE_ENUM(uint16, NetworkPort);
 	DECLARE_STRING_FIXED(NetworkIP, 16);
-	DECLARE_ENUM(world_type, DefaultWorld);
-	DECLARE_ENUM(coord_type, DefaultX);
-	DECLARE_ENUM(coord_type, DefaultY);
+	DECLARE_ENUM(uint16, DefaultWorld);
+	DECLARE_ENUM(int16, DefaultX);
+	DECLARE_ENUM(int16, DefaultY);
 	DECLARE_FLAG(uint8, Flag);
 
 	DECLARE_ENUM(uint8, ServerMode);

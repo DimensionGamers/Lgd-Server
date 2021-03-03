@@ -45,9 +45,9 @@ static const EventCommonGroundData m_ChaosCastleData[MAX_CHAOS_CASTLE_GROUND] =
 static const int32 g_ChaosCastle_BlowOutDistance[4][2] = {3,4,3,4,2,3,0,1};
 static const int32 g_ChaosCastle_BlowOutDamage[4] = {15, 15, 10, 5};
 
-static const coord_type g_ChaosCastle_GroundAxis[4] = { 23, 75, 44, 108 };
+static const int16 g_ChaosCastle_GroundAxis[4] = { 23, 75, 44, 108 };
 
-static const coord_type g_ChaosCastle_DamageAxis[MAX_CHAOS_CASTLE_TRAP_STEP][4] = 
+static const int16 g_ChaosCastle_DamageAxis[MAX_CHAOS_CASTLE_TRAP_STEP][4] = 
 {
 	0x17, 0x4B,	0x2C, 0x6C,
 	0x19, 0x4D,	0x2A, 0x6A,
@@ -55,15 +55,15 @@ static const coord_type g_ChaosCastle_DamageAxis[MAX_CHAOS_CASTLE_TRAP_STEP][4] 
 	0x1D, 0x51,	0x26, 0x66
 };
 
-static const coord_type g_ChaosCastleSafetyZone[4] = { 23, 75, 44, 108 };
-static const coord_type g_ChaosCastleCenterHollowZone[2][4] = { 32, 84, 35, 87, 32, 96, 35, 99 };
+static const int16 g_ChaosCastleSafetyZone[4] = { 23, 75, 44, 108 };
+static const int16 g_ChaosCastleCenterHollowZone[2][4] = { 32, 84, 35, 87, 32, 96, 35, 99 };
 
 static const struct ChaosCastleMapHollowZone
 {
-	coord_type X1;
-	coord_type Y1;
-	coord_type X2;
-	coord_type Y2;
+	int16 X1;
+	int16 Y1;
+	int16 X2;
+	int16 Y2;
 } g_ChaosCastleMapHollowZone[MAX_CHAOS_CASTLE_TRAP_STEP][MAX_CHAOS_CASTLE_HOLLOW_ZONE] =
 {
 	0x17, 0x4B,	0x2C, 0x4C,

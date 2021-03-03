@@ -38,8 +38,8 @@ class WorldItem: public Object
 struct WorldItemQueued
 {
 	Item item;
-	DECLARE_ENUM(coord_type, X);
-	DECLARE_ENUM(coord_type, Y);
+	DECLARE_ENUM(int16, X);
+	DECLARE_ENUM(int16, Y);
 	DECLARE_PTR(Unit, Owner);
 	DECLARE_BOOL(OnlyOwner);
 	DECLARE_BOOL(Visible);

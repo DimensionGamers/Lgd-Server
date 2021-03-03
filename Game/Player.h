@@ -157,8 +157,8 @@ private:
 	DECLARE_PROPERTY_ARRAY(uint32, SkillAttackDelay, 2);
 	DECLARE_ENUM(uint32, OriginalPositionTime);
 
-	DECLARE_ENUM(coord_type, X);
-	DECLARE_ENUM(coord_type, Y);
+	DECLARE_ENUM(int16, X);
+	DECLARE_ENUM(int16, Y);
 
 	DECLARE_PTR(Unit, Target);
 	DECLARE_ENUM(int32, TargetRange);
@@ -454,8 +454,8 @@ class Player: public Unit
 		DECLARE_ENUM(uint16, LastDurationSkill);
 		DECLARE_ENUM(uint32, LastDurationSkillTime);
 		DECLARE_PROPERTY(uint8, LastDurationSkillCount);
-		DECLARE_ENUM(coord_type, LastDurationSkillX);
-		DECLARE_ENUM(coord_type, LastDurationSkillY);
+		DECLARE_ENUM(int16, LastDurationSkillX);
+		DECLARE_ENUM(int16, LastDurationSkillY);
 
 		DECLARE_STRUCT(PlayerHelperSetting, Helper);
 
@@ -576,20 +576,19 @@ class Player: public Unit
 		void UpdateInterface();
 		
 		void TeleportRequest(uint8 * Packet);
-		void TeleportRequest(TeleportData const* teleport, uint8 event_id = 0);
+		void TeleportRequest(TeleportData const* teleportData, uint8 eventId = 0);
 
 		void TeleportRequestSecond(uint8 * Packet);
 		void TeleportRequestTarget(uint8 * Packet);
 		void TeleportResult(uint16 id, bool regen = true);
 		bool MoveToGate(uint16 gate_id);
-		void TeleportToLocation(world_type world, coord_type x, coord_type y, uint8 direction, int32 instance); // Lo mueve a una zona definida
-		void TeleportToLocation(world_type world);
+		void TeleportToLocation(uint16 world, int16 x, int16 y, uint8 direction, int32 instance); // Lo mueve a una zona definida
+		void TeleportToLocation(uint16 world);
 		void TeleportToLocation(); // Lo mueve al ultimo lugar donde estuvo
 		void TeleportToDelayed();
 		void TeleportToGate(uint16 gate);
-		void StartRegen(world_type world, coord_type x, coord_type y, uint8 direction, int32 instance, uint16 gate_id = 0);
+		void StartRegen(uint16 world, int16 x, int16 y, uint8 direction, int32 instance, uint16 gate_id = 0);
 		void MoveFail();
-		void TeleportWorld(TeleportData const*, bool pk_check = true);
 		
 		void DataLoadingConfirm();
 
@@ -638,14 +637,14 @@ class Player: public Unit
 		void UpdateAutorecuperation();
 
 		uint8 GetKalimaLevelEntrance();
-		bool CreateKalimaGate(uint8 level, coord_type x, coord_type y);
-		bool GetKalimaGateRandomLocation(coord_type & x, coord_type & y);
+		bool CreateKalimaGate(uint8 level, int16 x, int16 y);
+		bool GetKalimaGateRandomLocation(int16 & x, int16 & y);
 
 		void PetInfoRequest(uint8 * Packet);
 		void PetInfoResult(uint8 pet, uint8 type, uint8 slot);
 		void PetInfoLevelUp(uint8 slot, uint8 pet);
 
-		bool CreateMercenary(uint8 level, coord_type x, coord_type y);
+		bool CreateMercenary(uint8 level, int16 x, int16 y);
 		bool CreateLifeStone();
 
 		void CommandSend(uint8 type, uint8 cmd1, uint8 cmd2);
@@ -781,7 +780,7 @@ class Player: public Unit
 		void AccumulateDamage(int32 & damage);
 		void PVPDamageReduction(int32 & damage, Player* pPlayer);
 
-		void SendWorldAttribute(uint8 type, uint8 attribute, uint8 count, bool apply, coord_type const* data);
+		void SendWorldAttribute(uint8 type, uint8 attribute, uint8 count, bool apply, int16 const* data);
 
 		void UpdatePowers(uint8 type, bool max = false) override;
 		void LifeSend(bool max = false);
@@ -793,7 +792,7 @@ class Player: public Unit
 
 		ViewportData* GetViewportItemByID(uint16 id);
 
-		bool CanEnterWorld(world_type world, coord_type x1, coord_type y1, coord_type x2, coord_type y2, bool send_message = false);
+		bool CanEnterWorld(uint16 world, int16 x1, int16 y1, int16 x2, int16 y2, bool send_message = false);
 
 		void OpenSealedBoxAttempt(uint8 slot);
 
@@ -1758,7 +1757,7 @@ class Player: public Unit
 		std::string BuildLogStat() const;
 		std::string BuildLogSet() const;
 		void BuildLogSet(uint8 slot, std::string & item_data) const;
-		std::string BuildLocationLog(coord_type x = -1, coord_type y = -1, bool to_db = false) const;
+		std::string BuildLocationLog(int16 x = -1, int16 y = -1, bool to_db = false) const;
 		
 		void ReduceCredits(uint32 ammount);
 		void IncreaseCredits(uint32 ammount);
@@ -1835,9 +1834,9 @@ class Player: public Unit
 		DECLARE_BOOL(InChallenge);
 
 		DECLARE_ENUM(uint16, DestServer);
-		DECLARE_ENUM(world_type, DestWorld);
-		DECLARE_ENUM(coord_type, DestX);
-		DECLARE_ENUM(coord_type, DestY);
+		DECLARE_ENUM(uint16, DestWorld);
+		DECLARE_ENUM(int16, DestX);
+		DECLARE_ENUM(int16, DestY);
 		DECLARE_ENUM(uint16, DestPort);
 		DECLARE_STRING_FIXED(DestIP, MAX_ACCOUNT_IP_LENGTH + 1);
 		DECLARE_PROPERTY_ARRAY(int32, DestAuth, 4);
@@ -1895,7 +1894,7 @@ class Player: public Unit
 		DECLARE_STRUCT(PentagramJewelOption, PentagramJewelOption);
 
 		DECLARE_BOOL(MiniMapState);
-		DECLARE_ENUM(world_type, MiniMapWorld);
+		DECLARE_ENUM(uint16, MiniMapWorld);
 
 		DECLARE_ENUM(uint8, PacketResult);
 		DECLARE_ENUM(int32, PacketData1);
@@ -1947,7 +1946,7 @@ class Player: public Unit
 		DECLARE_BOOL(HuntingRecordActive);
 		HuntingRecordDataMap hunting_record_data;
 		DECLARE_STRUCT(HuntingRecordData, CurrentHuntingData);
-		DECLARE_ENUM(world_type, HuntingRecordWorld);
+		DECLARE_ENUM(uint16, HuntingRecordWorld);
 		DECLARE_ENUM(uint16, HuntingRecordTarget);
 		DECLARE_BOOL(HuntingRecordVisible);
 
@@ -1970,7 +1969,7 @@ class Player: public Unit
 		DECLARE_ENUM(uint8, DuelRoom);
 		DECLARE_BOOL(DuelSpectatorActive);
 		DECLARE_PTR(Player, DuelTarget);
-		DECLARE_ENUM(world_type, DuelWorld);
+		DECLARE_ENUM(uint16, DuelWorld);
 		DECLARE_BOOL(DuelClassic);
 		
 		DECLARE_ENUM(uint32, GuildMatchingUpdateTime);
@@ -2054,7 +2053,7 @@ class Player: public Unit
 		void ReduceAttackHP(uint16 skill);
 
 		SkillTimeMap m_SkillTimeMap;
-		void ApplySkillTime(uint16 skill, coord_type x, coord_type y);
+		void ApplySkillTime(uint16 skill, int16 x, int16 y);
 		SkillTime* GetSkillTime(uint16 skill);
 		
 		DECLARE_ENUM(uint8, CashShopDiscountWC);

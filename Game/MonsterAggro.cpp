@@ -393,8 +393,8 @@ void Monster::DropZen()
 	{
 		for ( uint8 i = 0; i < 4; i++ )
 		{
-			coord_type x = this->GetX() - 2 + RANDOM(3);
-			coord_type y = this->GetY() - 2 + RANDOM(3);
+			int16 x = this->GetX() - 2 + RANDOM(3);
+			int16 y = this->GetY() - 2 + RANDOM(3);
 
 			FIX_COORD(x);
 			FIX_COORD(y);

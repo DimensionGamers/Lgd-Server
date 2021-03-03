@@ -617,7 +617,7 @@ bool CCastleSiege::AddDBNpc(CastleSiegeNpcData* NpcData)
 	return false;
 }
 
-void CCastleSiege::BlockReleaseCastleGate(coord_type X, coord_type Y, bool block)
+void CCastleSiege::BlockReleaseCastleGate(int16 X, int16 Y, bool block)
 {
 	World* pWorld = sWorldMgr->GetWorld(WORLD_CASTLE_SIEGE);
 
@@ -626,7 +626,7 @@ void CCastleSiege::BlockReleaseCastleGate(coord_type X, coord_type Y, bool block
 		return;
 	}
 
-	coord_type data[4] = { X - 2, Y, X + 3, Y + 1 };
+	int16 data[4] = { X - 2, Y, X + 3, Y + 1 };
 
 	pWorld->ApplyAttribute(data, WORLD_ATTRIBUTE_LOCK_3, block);
 }
@@ -834,8 +834,8 @@ void CCastleSiege::RespawnPlayers(bool defense)
 			continue;
 
 		uint8 state = pPlayer->GetCastleSiegeJoinSide();
-		coord_type x = pPlayer->GetX();
-		coord_type y = pPlayer->GetY();
+		int16 x = pPlayer->GetX();
+		int16 y = pPlayer->GetY();
 
 		if ( state == CASTLE_SIEGE_JOIN_SIDE_DEFENSE && !defense )
 			continue;
@@ -867,7 +867,7 @@ void CCastleSiege::RespawnPlayers(bool defense)
 	}
 }
 
-void CCastleSiege::GetRespawnCoord(coord_type & x, coord_type & y, uint8 type)
+void CCastleSiege::GetRespawnCoord(int16 & x, int16 & y, uint8 type)
 {
 	World* pWorld = sWorldMgr->GetWorld(WORLD_CASTLE_SIEGE);
 
@@ -877,8 +877,8 @@ void CCastleSiege::GetRespawnCoord(coord_type & x, coord_type & y, uint8 type)
 	}
 
 	int32 count = 100;
-	coord_type tx = x;
-	coord_type ty = y;
+	int16 tx = x;
+	int16 ty = y;
 
 	while ( count-- > 0 )
 	{
@@ -3341,8 +3341,8 @@ void CCastleSiege::MachineUseRequest(Player* pPlayer, uint8 * Packet)
 
 	CASTLE_SIEGE_MACHINE_USE_RESULT pMsg(1, pMonster->GetEntry(), pMachineAI->GetType(), 0, 0);
 
-	coord_type hit_x = 0;
-	coord_type hit_y = 0;
+	int16 hit_x = 0;
+	int16 hit_y = 0;
 
 	this->MachineUseGetCoord(pMachineAI->GetType(), target_id, hit_x, hit_y);
 
@@ -3406,7 +3406,7 @@ void CCastleSiege::MachineUseRequest(Player* pPlayer, uint8 * Packet)
 	pMachineAI->Start(hit_x, hit_y);
 }
 
-void CCastleSiege::MachineUseGetCoord(uint8 type, uint8 target, coord_type &x, coord_type &y)
+void CCastleSiege::MachineUseGetCoord(uint8 type, uint8 target, int16 &x, int16 &y)
 {
 	CastleSiegeWeaponLocation const& location = type == 1 ? g_CastleSiegeWeaponAttackData[target] : g_CastleSiegeWeaponDefenseData[target];
 
@@ -3450,8 +3450,8 @@ void CCastleSiege::MachineDamage(Player* pPlayer, uint8 * Packet)
 	if ( !pMachineAI->IsActive() || pMachineAI->IsReady() )
 		return;
 
-	coord_type x = pMachineAI->GetX();
-	coord_type y = pMachineAI->GetY();
+	int16 x = pMachineAI->GetX();
+	int16 y = pMachineAI->GetY();
 
 	HASH_UNIT(i)
 	{
@@ -3709,7 +3709,7 @@ void CCastleSiege::UpdateStatus(Player* pPlayer)
 	pPlayer->KillCountSend();
 }
 
-bool CCastleSiege::CheckTeleportMagicAxisY(coord_type start_y, coord_type target_x, coord_type target_y) const
+bool CCastleSiege::CheckTeleportMagicAxisY(int16 start_y, int16 target_x, int16 target_y) const
 {
 	for( int32 iSTEP = 0; iSTEP < 3; ++iSTEP )
 	{

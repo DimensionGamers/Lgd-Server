@@ -13,7 +13,7 @@ void PathFinder::Create(World* pWorld)
 	this->SetWorld(pWorld);
 }
 
-void PathFinder::SetHitMap(coord_type x, coord_type y, bool hit)
+void PathFinder::SetHitMap(int16 x, int16 y, bool hit)
 {
 	if ( !IS_COORDINATE_RANGE(x) || !IS_COORDINATE_RANGE(y) )
 	{
@@ -23,7 +23,7 @@ void PathFinder::SetHitMap(coord_type x, coord_type y, bool hit)
 	this->HitMap[WORLD_MAKE_GRID(x, y)] = hit;
 }
 
-int PathFinder::VerifyThatOnPath(coord_type x, coord_type y)
+int PathFinder::VerifyThatOnPath(int16 x, int16 y)
 {
 	for ( int32 i = 0; i < this->NumPath; ++i )
 	{
@@ -35,7 +35,7 @@ int PathFinder::VerifyThatOnPath(coord_type x, coord_type y)
 	return -1;
 }
 
-bool PathFinder::CanWeMoveForward(coord_type x, coord_type y, Unit* pUnit)
+bool PathFinder::CanWeMoveForward(int16 x, int16 y, Unit* pUnit)
 {
 	if ( !IS_COORDINATE_RANGE(x) || !IS_COORDINATE_RANGE(y) )
 	{
@@ -70,7 +70,7 @@ bool PathFinder::CanWeMoveForward(coord_type x, coord_type y, Unit* pUnit)
 	return true;
 };
 
-bool PathFinder::IsThisSpotOK(coord_type x, coord_type y)
+bool PathFinder::IsThisSpotOK(int16 x, int16 y)
 {
 	if ( !IS_COORDINATE_RANGE(x) || !IS_COORDINATE_RANGE(y) )
 	{
@@ -85,7 +85,7 @@ bool PathFinder::IsThisSpotOK(coord_type x, coord_type y)
 	return true;
 };
 
-int PathFinder::FindNextDir(coord_type sx, coord_type sy, coord_type dx, coord_type dy, int dirstart, bool first, bool error_check, Unit* pUnit)
+int PathFinder::FindNextDir(int16 sx, int16 sy, int16 dx, int16 dy, int dirstart, bool first, bool error_check, Unit* pUnit)
 {
 	int32 MinDist = 10000000;
 	int32 ldir;
@@ -96,8 +96,8 @@ int PathFinder::FindNextDir(coord_type sx, coord_type sy, coord_type dx, coord_t
 		for (int32 i = 0; i < 8; ++i )
 		{
 			ldir = i % 8;
-			coord_type endx = sx + Path::Table[ldir * 2];
-			coord_type endy = sy + Path::Table[ldir * 2 + 1];
+			int16 endx = sx + Path::Table[ldir * 2];
+			int16 endy = sy + Path::Table[ldir * 2 + 1];
 			int32 dist = Util::Distance(endx, endy, dx, dy);
 
 			if ( MinDist > dist )
@@ -115,8 +115,8 @@ int PathFinder::FindNextDir(coord_type sx, coord_type sy, coord_type dx, coord_t
 		for (int32 i = dirstart + 7; i <= dirstart + 9; ++i )
 		{
 			ldir = i % 8;
-			coord_type endx = sx + Path::Table[ldir * 2];
-			coord_type endy = sy + Path::Table[ldir * 2 + 1];
+			int16 endx = sx + Path::Table[ldir * 2];
+			int16 endy = sy + Path::Table[ldir * 2 + 1];
 			int32 dist = Util::Distance(endx, endy, dx, dy);
 
 			if ( MinDist > dist )
@@ -134,8 +134,8 @@ int PathFinder::FindNextDir(coord_type sx, coord_type sy, coord_type dx, coord_t
 			for (int32 i = dirstart + 2; i <= dirstart + 6; ++i )
 			{
 				ldir = i % 8;
-				coord_type endx = sx + Path::Table[ldir * 2];
-				coord_type endy = sy + Path::Table[ldir * 2 + 1];
+				int16 endx = sx + Path::Table[ldir * 2];
+				int16 endy = sy + Path::Table[ldir * 2 + 1];
 				int32 dist = Util::Distance(endx, endy, dx, dy);
 
 				if ( MinDist > dist )
@@ -213,7 +213,7 @@ int PathFinder::FindNextDir(coord_type sx, coord_type sy, coord_type dx, coord_t
 	return -1;
 };
 
-bool PathFinder::AssignPath(coord_type x, coord_type y)
+bool PathFinder::AssignPath(int16 x, int16 y)
 {
 	this->PathX[this->NumPath] = x;
 	this->PathY[this->NumPath] = y;
@@ -227,7 +227,7 @@ bool PathFinder::AssignPath(coord_type x, coord_type y)
 	return true;
 }
 
-bool PathFinder::FindPath(coord_type startx, coord_type starty, coord_type endx,  coord_type endy, bool error_check, Unit* pUnit)
+bool PathFinder::FindPath(int16 startx, int16 starty, int16 endx,  int16 endy, bool error_check, Unit* pUnit)
 {
 	this->NumPath = 0;
 	int32 WhichDir = 0;
@@ -304,10 +304,10 @@ bool PathFinder::FindPath(Unit* pUnit)
 
 	if ( Success && NumPath )
 	{
-		coord_type tx;
-		coord_type ty;
-		coord_type sx = pUnit->GetX();
-		coord_type sy = pUnit->GetY();
+		int16 tx;
+		int16 ty;
+		int16 sx = pUnit->GetX();
+		int16 sy = pUnit->GetY();
 		uint8 pos = 0;
 
 		memset(bPath, 0, sizeof(bPath));

@@ -174,7 +174,7 @@ public:
 			}
 		}
 
-		bool MoveAllowed(coord_type x, coord_type y)
+		bool MoveAllowed(int16 x, int16 y)
 		{
 			if ( !MonsterAI::MoveAllowed(x, y) )
 				return false;

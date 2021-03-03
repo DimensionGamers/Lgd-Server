@@ -2306,7 +2306,7 @@ void CItemMgr::_insert_serial(SerialCreateData* add_serial)
 	this->_finally_create_item(add_serial);
 }
 
-void CItemMgr::ItemSerialCreate(Unit* owner, world_type world, coord_type x, coord_type y, Item const& item, bool only_owner, bool visible, bool to_queue)
+void CItemMgr::ItemSerialCreate(Unit* owner, uint16 world, int16 x, int16 y, Item const& item, bool only_owner, bool visible, bool to_queue)
 {
 	SerialCreateData * add_serial = new SerialCreateData(serial_create_map);
 	add_serial->owner = owner;

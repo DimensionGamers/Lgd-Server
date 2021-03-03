@@ -35,7 +35,7 @@ typedef std::map<uint16, Object*> ObjectContainerMap;
 extern ObjectContainerMap ObjectContainer;
 
 typedef std::set<uint16> InvasionIndexList;
-typedef std::map<world_type, InvasionIndexList> InvasionIndexWorld;
+typedef std::map<uint16, InvasionIndexList> InvasionIndexWorld;
 typedef std::map<uint8, InvasionIndexWorld> InvasionIndexMap;
 
 typedef std::unordered_map<uint16, Object*> SessionMap;
@@ -72,7 +72,7 @@ class CObjectMgr
 
 		Player * PlayerAdd(std::shared_ptr<WorldSocket> socket, bool autologin);
 
-		Monster * MonsterTryAdd(uint16 monster, world_type world);
+		Monster * MonsterTryAdd(uint16 monster, uint16 world);
 
 		Unit * GetUnit(uint16 guid);
 		Player * FindPlayer(uint16 guid);
@@ -83,15 +83,15 @@ class CObjectMgr
 		bool CharacterOnlineCheck(const char * character);
 
 		void sendPacket(uint8 * packet, uint16 size);
-		void sendPacketWorld(world_type world, uint8 * packet, uint16 size);
+		void sendPacketWorld(uint16 world, uint8 * packet, uint16 size);
 
 		void SendNoticeToGens(const char * name, const char * msg, uint8 family);
 		void SendNoticeToAll(uint8 type, const char * msg, ...);
 		void SendNoticeToAll(CustomMessageID type, const char * msg, ...);
 		void SendEventNotification(uint8 type, const char * msg, ...);
-		void SendNoticeToAdministrator(uint8 type, world_type world, const char * msg, ...);
+		void SendNoticeToAdministrator(uint8 type, uint16 world, const char * msg, ...);
 		void SendNoticeToAllNormal(uint8 type, const char * msg);
-		void SendNoticeToMap(world_type world, uint8 type, const char * msg, ...);
+		void SendNoticeToMap(uint16 world, uint8 type, const char * msg, ...);
 		void SendPostToAll(uint16 server, const char * name, const char * msg);
 
 		void SendGuildMessageToAdmin(uint32 guild, const char * name, const char * msg);
@@ -131,7 +131,7 @@ class CObjectMgr
 
 		bool ExistKalimaGate(Player* pPlayer);
 
-		void FireworksSend(world_type world, int32 instance, coord_type x, coord_type y);
+		void FireworksSend(uint16 world, int32 instance, int16 x, int16 y);
 
 		Monster* FindAIGroupLeader(uint32 Group);
 		void ChangeAIOrder(uint32 Group, uint8 order);
@@ -143,8 +143,8 @@ class CObjectMgr
 		void KickAll();
 
 		void UpdateInvasionAnimation();
-		size_t GetInvasionAnimationCount(uint8 animation, world_type world) const;
-		void UpdateInvasionAnimation(uint8 animation, uint16 index, world_type world, bool add);
+		size_t GetInvasionAnimationCount(uint8 animation, uint16 world) const;
+		void UpdateInvasionAnimation(uint8 animation, uint16 index, uint16 world, bool add);
 		void SendInvasionAnimation(Player* pPlayer, uint8 animation, size_t animation_count);
 
 		void PersonalStoreDisconnect(const char * account);
@@ -179,8 +179,8 @@ class CObjectMgr
 
 		CRITICAL_SECTION PlayerAddCritical;
 
-		int32 GetPlayerCountOnInstance(world_type world_id, int32 instance) const;
-		void SendPacketToInstance(world_type world_id, int32 instance, uint8 * Packet, uint16 size);
+		int32 GetPlayerCountOnInstance(uint16 world_id, int32 instance) const;
+		void SendPacketToInstance(uint16 world_id, int32 instance, uint8 * Packet, uint16 size);
 
 		void CharacterAutoLogin();
 };

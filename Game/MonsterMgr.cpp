@@ -1560,7 +1560,7 @@ uint16 CMonsterMgr::GetRandomSkillSpecial(Monster* pMonster, int16 type)
 	return m_randomizer.GetRandomValue(RANDOM_POOL_RANDOM);
 }
 
-bool AllowItemDropInWorld(world_type world, Item const& item)
+bool AllowItemDropInWorld(uint16 world, Item const& item)
 {
 	if ( item.GetItem() == JEWEL::BLESS ||
 		 item.GetItem() == JEWEL::SOUL ||

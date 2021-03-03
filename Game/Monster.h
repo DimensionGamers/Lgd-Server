@@ -81,7 +81,7 @@ class Monster: public Unit
 
 		int16 GetTotalLevel() const { return this->GetLevel(); }
 
-		void SetBasicLocation(coord_type x1, coord_type y1, coord_type x2, coord_type y2);
+		void SetBasicLocation(int16 x1, int16 y1, int16 x2, int16 y2);
 
 		bool IsDelayed() { return this->GetBattleDelay() > 0; }
 
@@ -114,16 +114,16 @@ class Monster: public Unit
 		
 		void UpdateMovement() override;
 		void MoveAttempt();
-		bool MoveCheck(coord_type x, coord_type y);
+		bool MoveCheck(int16 x, int16 y);
 		bool IsOutOfMoveRange();
 		bool PathFindToMove();
 		void PathProcess(uint8 * path);
-		void MoveToLocation(coord_type x, coord_type y, bool target = false);
-		void SetMoveCoordinates(coord_type x, coord_type y);
-		bool SetMoveCoordinatesNormal(coord_type x, coord_type y);
-		bool IsMoveCoordinates(coord_type x, coord_type y);
+		void MoveToLocation(int16 x, int16 y, bool target = false);
+		void SetMoveCoordinates(int16 x, int16 y);
+		bool SetMoveCoordinatesNormal(int16 x, int16 y);
+		bool IsMoveCoordinates(int16 x, int16 y);
 				
-		bool IsMoveAllowed(coord_type x, coord_type y, bool target);
+		bool IsMoveAllowed(int16 x, int16 y, bool target);
 		void TeleportBack();
 		bool MoveBack();
 
@@ -176,8 +176,8 @@ class Monster: public Unit
 
 		float GetElementValue(uint8 element);
 
-		bool GetOwnerPosition(coord_type &tx, coord_type &ty);
-		bool GetTargetPosition(coord_type sx, coord_type sy, coord_type &tx, coord_type &ty);
+		bool GetOwnerPosition(int16 &tx, int16 &ty);
+		bool GetTargetPosition(int16 sx, int16 sy, int16 &tx, int16 &ty);
 		bool GetTargetPosition();
 		void FindEnemy();
 
@@ -240,11 +240,11 @@ class Monster: public Unit
 		DECLARE_ENUM(int32, ItemRate);
 		DECLARE_ENUM(RespawnLocation, RespawnLocation);
 		DECLARE_PROPERTY_PTR(Unit, Target);
-		DECLARE_PROPERTY(coord_type, TargetX);
-		DECLARE_PROPERTY(coord_type, TargetY);
+		DECLARE_PROPERTY(int16, TargetX);
+		DECLARE_PROPERTY(int16, TargetY);
 		DECLARE_PROPERTY(int32, TargetHitCount);
-		DECLARE_PROPERTY_ARRAY(coord_type, SpawnX, 2);
-		DECLARE_PROPERTY_ARRAY(coord_type, SpawnY, 2);
+		DECLARE_PROPERTY_ARRAY(int16, SpawnX, 2);
+		DECLARE_PROPERTY_ARRAY(int16, SpawnY, 2);
 		DECLARE_BOOL(Spawning);
 		DECLARE_ENUM(TCType, SpawnTick);
 		DECLARE_ENUM(uint32, SpawnTime);

@@ -21,7 +21,7 @@ struct SERVER_INFO_REQUEST
 	uint16 server_code;
 };
 
-typedef std::set<world_type> WorldServerList;
+typedef std::set<uint16> WorldServerList;
 typedef std::map<uint16, WorldServerList> WorldServerMap;
 
 struct ServerData
@@ -55,7 +55,7 @@ class CServerList
 		virtual ~CServerList();
 
 		bool IsServerOnlineAndFree(uint16 server);
-		bool IsWorldInList(world_type world, uint16 server_group);
+		bool IsWorldInList(uint16 world, uint16 server_group);
 
 		void Initialize(uint32 updateInterval);
 		void LoadWorldServer();
@@ -65,7 +65,7 @@ class CServerList
 		void ServerClose(uint16 server);
 		void ServerSetInfo(uint16 server, uint8 percent, uint8 flag, uint8 type);
 
-		uint16 CheckDestServer(uint16 server_group, world_type world, uint16 server, uint16 start_server);
+		uint16 CheckDestServer(uint16 server_group, uint16 world, uint16 server, uint16 start_server);
 
 		uint32   m_UpdateInterval;
 		time_t   m_NextUpdateTime;

@@ -5,8 +5,8 @@ struct WorldAIPath
 {
 	DECLARE_ENUM(uint32, ID);
 	DECLARE_ENUM(uint8, Type);
-	DECLARE_ENUM(coord_type, X);
-	DECLARE_ENUM(coord_type, Y);
+	DECLARE_ENUM(int16, X);
+	DECLARE_ENUM(int16, Y);
 };
 
 typedef std::vector<WorldAIPath*> WorldAIPathList;
@@ -21,8 +21,8 @@ typedef std::map<uint16, WorldBuff*> WorldBuffMap;
 
 struct WorldArea
 {
-	DECLARE_ENUM(coord_type, X);
-	DECLARE_ENUM(coord_type, Y);
+	DECLARE_ENUM(int16, X);
+	DECLARE_ENUM(int16, Y);
 	DECLARE_ENUM(uint8, Range);
 	DECLARE_FLAG(uint8, Flags);
 };
@@ -31,10 +31,10 @@ typedef std::vector<WorldArea*> WorldAreaList;
 
 struct WorldAreaAttribute
 {
-	DECLARE_ENUM(coord_type, X1);
-	DECLARE_ENUM(coord_type, Y1);
-	DECLARE_ENUM(coord_type, X2);
-	DECLARE_ENUM(coord_type, Y2);
+	DECLARE_ENUM(int16, X1);
+	DECLARE_ENUM(int16, Y1);
+	DECLARE_ENUM(int16, X2);
+	DECLARE_ENUM(int16, Y2);
 	DECLARE_ENUM(uint8, Attribute);
 	DECLARE_BOOL(Apply);
 	DECLARE_BOOL(Send);
@@ -106,11 +106,11 @@ class World
 
 		uint8 GetWeatherConverted() const { return (this->GetWeather() << 4) | this->GetWeatherVariation(); }
 
-		void GetRespawn(world_type & spawn_world, coord_type & x1, coord_type & y1, coord_type & x2, coord_type & y2);
-		void GetRespawn(world_type & spawn_world, coord_type & x, coord_type & y);
-		void GetRandomLocation(coord_type & x, coord_type & y, coord_type x1, coord_type y1, coord_type x2, coord_type y2);
-		bool GetFreeLocation(coord_type & x, coord_type & y, coord_type range_x, coord_type range_y, int32 count);
-		bool GetRandomLocation(coord_type & x, coord_type & y, int32 length) const;
+		void GetRespawn(uint16 & spawn_world, int16 & x1, int16 & y1, int16 & x2, int16 & y2);
+		void GetRespawn(uint16 & spawn_world, int16 & x, int16 & y);
+		void GetRandomLocation(int16 & x, int16 & y, int16 x1, int16 y1, int16 x2, int16 y2);
+		bool GetFreeLocation(int16 & x, int16 & y, int16 range_x, int16 range_y, int32 count);
+		bool GetRandomLocation(int16 & x, int16 & y, int32 length) const;
 		
 		bool IsObject(Object* pObject);
 		void AddObject(Object* pObject);
@@ -121,24 +121,24 @@ class World
 		void UpdateWeather();
 		void UpdateItemQueue();
 
-		bool add_item(Item item, Unit* owner, coord_type x, coord_type y, bool only_owner = false, bool visible = true, bool to_queue = false);
+		bool add_item(Item item, Unit* owner, int16 x, int16 y, bool only_owner = false, bool visible = true, bool to_queue = false);
 		WorldItem * GetItem(uint16 id);
 		void ClearItem();
-		WorldGrid GetGrid(coord_type x, coord_type y) const;
+		WorldGrid GetGrid(int16 x, int16 y) const;
 
-		bool GetRandomDropLocation(coord_type stx, coord_type sty, coord_type & x, coord_type & y, coord_type range_x, coord_type range_y, int32 loop) const;
-		bool AddZen(Unit* pUnit, coord_type x, coord_type y, uint32 zen);
+		bool GetRandomDropLocation(int16 stx, int16 sty, int16 & x, int16 & y, int16 range_x, int16 range_y, int32 loop) const;
+		bool AddZen(Unit* pUnit, int16 x, int16 y, uint32 zen);
 
-		bool CheckWall(coord_type sx1, coord_type sy1, coord_type sx2, coord_type sy2) const;
+		bool CheckWall(int16 sx1, int16 sy1, int16 sx2, int16 sy2) const;
 
-		void ApplyAttribute(coord_type x, coord_type y, uint8 attr, bool apply);
-		void ApplyAttribute(coord_type const* data, uint8 attr, bool apply);
+		void ApplyAttribute(int16 x, int16 y, uint8 attr, bool apply);
+		void ApplyAttribute(int16 const* data, uint8 attr, bool apply);
 
 		void statusChange(uint8 status);
 
 		void MakeItemVisible(Player* pPlayer);
 
-		bool IsAreaRestriction(coord_type x, coord_type y, uint8 flag) const;
+		bool IsAreaRestriction(int16 x, int16 y, uint8 flag) const;
 
 		WorldItem* GetItemData(uint16 item) const
 		{
@@ -162,8 +162,8 @@ class World
 	private:
 		WorldStatusData WorldStatus[MAX_WORLD_STATUS];
 
-		DECLARE_ENUM(world_type, Entry);
-		DECLARE_ENUM(world_type, Display);
+		DECLARE_ENUM(uint16, Entry);
+		DECLARE_ENUM(uint16, Display);
 		DECLARE_ENUM(uint8, Status);
 		DECLARE_ENUM(uint8, Weather);
 		DECLARE_ENUM(uint8, WeatherVariation);

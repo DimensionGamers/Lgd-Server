@@ -239,7 +239,7 @@ void AuthServer::PlayerLogout(uint32 account_id)
 	this->SendPacket((uint8*)&pMsg, pMsg.h.size);
 }
 
-void AuthServer::PlayerServerMoveRequest(Player* pPlayer, uint16 server, world_type world, coord_type x, coord_type y, bool channel)
+void AuthServer::PlayerServerMoveRequest(Player* pPlayer, uint16 server, uint16 world, int16 x, int16 y, bool channel)
 {
 	if ( !pPlayer )
 		return;

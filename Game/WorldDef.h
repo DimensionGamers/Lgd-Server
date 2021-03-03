@@ -288,10 +288,10 @@ struct WorldGrid
 
 struct WorldBlockZone
 {
-	coord_type x1;
-	coord_type y1;
-	coord_type x2;
-	coord_type y2;
+	int16 x1;
+	int16 y1;
+	int16 x2;
+	int16 y2;
 };
 
 #define URUK_MOUNTAIN_BLOCK_ZONE				6

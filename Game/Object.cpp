@@ -6,7 +6,7 @@
 *
 */
 
-ObjectLocation::ObjectLocation(world_type world, int32 instance, coord_type x, coord_type y)
+ObjectLocation::ObjectLocation(uint16 world, int32 instance, int16 x, int16 y)
 {
 	this->Reset();
 	this->SetWorldId(world);
@@ -15,7 +15,7 @@ ObjectLocation::ObjectLocation(world_type world, int32 instance, coord_type x, c
 	this->SetY(y);
 }
 
-world_type ObjectLocation::GetDisplayWorld() const
+uint16 ObjectLocation::GetDisplayWorld() const
 {
 	World* pWorld = sWorldMgr->GetWorld(this->GetWorldId());
 
@@ -100,7 +100,7 @@ bool Object::SameDimension(Object const* pObject) const
 	return true;
 }
 
-bool Object::SameDimension(world_type world, int32 instance) const
+bool Object::SameDimension(uint16 world, int32 instance) const
 {
 	if ( this->GetWorldId() != world )
 		return false;
@@ -172,12 +172,12 @@ void Object::CreateFrustrum()
 	}
 }
 
-int32 Object::Distance(coord_type x, coord_type y)
+int32 Object::Distance(int16 x, int16 y)
 {
 	return Util::Distance(this->GetX(), this->GetY(), x, y);
 }
 	
-bool Object::InRange(coord_type x, coord_type y, int32 distance)
+bool Object::InRange(int16 x, int16 y, int32 distance)
 {
 	return Distance(x, y) <= distance;
 }
@@ -435,7 +435,7 @@ bool Object::CheckWall(Object* pObject) const
 	return this->CheckWall(pObject->GetX(), pObject->GetY());
 }
 
-bool Object::CheckWall(coord_type x, coord_type y) const
+bool Object::CheckWall(int16 x, int16 y) const
 {
 	World* pWorld = this->GetWorld();
 

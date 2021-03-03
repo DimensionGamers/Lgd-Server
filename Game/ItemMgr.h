@@ -767,7 +767,7 @@ class CItemMgr
 	#define option_serial_h uint8 skill = 0, uint8 luck = 0, uint8 option = 0, uint8 exe = 0, uint8 ancient = 0, uint8 * socket = nullptr
 	#define option_serial uint8 skill, uint8 luck, uint8 option, uint8 exe, uint8 ancient, uint8 * socket
 
-		void ItemSerialCreate(Unit* owner, world_type world, coord_type x, coord_type y, Item const& item, bool only_owner, bool visible = true, bool to_queue = false);
+		void ItemSerialCreate(Unit* owner, uint16 world, int16 x, int16 y, Item const& item, bool only_owner, bool visible = true, bool to_queue = false);
 		void ItemSerialCreateItem(Unit* owner, SerialCreateType type, Item const& item, uint8 slot = -1, uint8 create_type = 0);
 		void ItemSerialCreateShop(Unit* owner, int32 shop, uint8 slot);
 		void ItemSerialCreateRuudShop(Unit* owner, int32 shop, uint8 slot);

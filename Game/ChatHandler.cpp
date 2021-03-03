@@ -1692,7 +1692,7 @@ void ChatHandler::CommandTestPacket(const char * msg)
 	int32 move_distance = 30;
 	uint32 despawn_time = 86400;
 
-	static const world_type world_list[29] = { 0, 1, 2, 3, 4, 7, 8, 10, 24, 25, 26, 27, 28, 29, 33, 36, 37, 38, 51, 56, 57, 63, 80, 81, 91, 95, 101, 110, 112 };
+	static const uint16 world_list[29] = { 0, 1, 2, 3, 4, 7, 8, 10, 24, 25, 26, 27, 28, 29, 33, 36, 37, 38, 51, 56, 57, 63, 80, 81, 91, 95, 101, 110, 112 };
 
 	Monster * mMonster = nullptr;
 
@@ -3447,7 +3447,7 @@ void ChatHandler::CommandCastleSiegeFixGate(const char * msg)
 		return;
 	}
 
-	coord_type data[4] = { pNpcData->x.get() - 2, pNpcData->y.get(), pNpcData->x.get() + 3, pNpcData->y.get() + 1 };
+	int16 data[4] = { pNpcData->x.get() - 2, pNpcData->y.get(), pNpcData->x.get() + 3, pNpcData->y.get() + 1 };
 
 	pWorld->ApplyAttribute(data, 16, false);
 

@@ -78,11 +78,11 @@ struct monster
 	DECLARE_ENUM(uint16, ID);
 	DECLARE_ENUM(uint8, Type);
 	DECLARE_STRING_FIXED(Name, MAX_MONSTER_NAME_LENGTH);
-	DECLARE_ENUM(world_type, World);
-	DECLARE_ENUM(coord_type, X1);
-	DECLARE_ENUM(coord_type, Y1);
-	DECLARE_ENUM(coord_type, X2);
-	DECLARE_ENUM(coord_type, Y2);
+	DECLARE_ENUM(uint16, World);
+	DECLARE_ENUM(int16, X1);
+	DECLARE_ENUM(int16, Y1);
+	DECLARE_ENUM(int16, X2);
+	DECLARE_ENUM(int16, Y2);
 	DECLARE_ENUM(uint8, Direction);
 	DECLARE_ENUM(uint32, SpawnDelay);
 	DECLARE_ENUM(uint8, SpawnDistance);
@@ -99,11 +99,11 @@ struct monster
 struct monster_event
 {
 	DECLARE_ENUM(uint16, ID);
-	DECLARE_ENUM(world_type, World);
-	DECLARE_ENUM(coord_type, X1);
-	DECLARE_ENUM(coord_type, Y1);
-	DECLARE_ENUM(coord_type, X2);
-	DECLARE_ENUM(coord_type, Y2);
+	DECLARE_ENUM(uint16, World);
+	DECLARE_ENUM(int16, X1);
+	DECLARE_ENUM(int16, Y1);
+	DECLARE_ENUM(int16, X2);
+	DECLARE_ENUM(int16, Y2);
 	DECLARE_ENUM(uint8, Direction);
 	DECLARE_ENUM(uint32, SpawnDelay);
 	DECLARE_ENUM(uint8, SpawnDistance);
@@ -226,8 +226,8 @@ struct monster_ai_element
 	DECLARE_ENUM(uint8, Rate);
 	DECLARE_ENUM(uint32, Delay);
 	DECLARE_ENUM(int32, Target);
-	DECLARE_ENUM(coord_type, X);
-	DECLARE_ENUM(coord_type, Y);
+	DECLARE_ENUM(int16, X);
+	DECLARE_ENUM(int16, Y);
 };
 
 struct monster_ai_state
@@ -277,11 +277,11 @@ struct AIData
 struct monster_respawn_location
 {
 	DECLARE_ENUM(uint32, Group);
-	DECLARE_ENUM(world_type, World);
-	DECLARE_ENUM(coord_type, X1);
-	DECLARE_ENUM(coord_type, Y1);
-	DECLARE_ENUM(coord_type, X2);
-	DECLARE_ENUM(coord_type, Y2);
+	DECLARE_ENUM(uint16, World);
+	DECLARE_ENUM(int16, X1);
+	DECLARE_ENUM(int16, Y1);
+	DECLARE_ENUM(int16, X2);
+	DECLARE_ENUM(int16, Y2);
 	DECLARE_ENUM(int8, Direction);
 	DECLARE_ENUM(int32, Instance);
 	DECLARE_ENUM(uint8, Rate);
@@ -479,6 +479,6 @@ class CMonsterMgr
 		uint16 GetRandomSkillSpecial(Monster* pMonster, int16 type);
 };
 
-bool AllowItemDropInWorld(world_type world, Item const& item);
+bool AllowItemDropInWorld(uint16 world, Item const& item);
 
 #endif

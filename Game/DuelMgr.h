@@ -130,7 +130,7 @@ class DuelMgr
 		DuelRoom * GetFreeRoom();
 
 		void SendDuelRoomStatus(Player* pPlayer);
-		void GenerateRespawn(Player* pPlayer, world_type & world, coord_type & x, coord_type & y);
+		void GenerateRespawn(Player* pPlayer, uint16 & world, int16 & x, int16 & y);
 
 		void ClassicScore(Player* pPlayer01, Player* pPlayer02);
 		void ClassicEnd(Player* pPlayer01, Player* pPlayer02, uint8 result);

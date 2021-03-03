@@ -1,7 +1,7 @@
 #ifndef EVENT_COMMON_H
 #define EVENT_COMMON_H
 
-typedef bool (*WORLD_RANGE)(world_type);
+typedef bool (*WORLD_RANGE)(uint16);
 
 #define FOR_EACH_GROUND(EVENT) \
 for ( int32 i = 0; i < MAX_##EVENT##_GROUND; ++i ) \
@@ -23,7 +23,7 @@ enum EventMgrState
 
 struct EventCommonGroundData
 {
-	world_type world;
+	uint16 world;
 	uint16 gate;
 };
 
@@ -353,7 +353,7 @@ class EventGroundCommon: public EventCommon
 		DECLARE_ENUM(EventID, Event);
 		DECLARE_ENUM(uint16, EnterGate);
 		DECLARE_ENUM(uint16, RespawnGate);
-		DECLARE_ENUM(world_type, WorldID);
+		DECLARE_ENUM(uint16, WorldID);
 
 		typedef std::vector<EventGroundPlayer*> EventGroundPlayerList;
 		EventGroundPlayerList player_list;

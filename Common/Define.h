@@ -14,9 +14,6 @@ typedef unsigned int uint32;
 typedef unsigned short uint16;
 typedef unsigned char uint8;
 
-#define coord_type int16
-#define world_type uint16
-
 #if UPDATE_GET_TICK_COUNT == 0
 typedef uint32 TCType;
 #define MyGetTickCount GetTickCount

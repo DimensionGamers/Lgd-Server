@@ -8,7 +8,7 @@ ServerToServer::~ServerToServer()
 
 }
 
-bool ServerToServer::IsWorldEnabled(world_type world) const
+bool ServerToServer::IsWorldEnabled(uint16 world) const
 {
 	DisabledWorldList::const_iterator it = this->disabled_world_list.find(world);
 

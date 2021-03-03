@@ -45,7 +45,7 @@ void CServerList::LoadWorldServer()
 			Field* fields = result->Fetch();
 
 			uint16 server = fields[0].GetUInt16();
-			world_type world = fields[1].GetUInt16();
+			uint16 world = fields[1].GetUInt16();
 
 			this->world_server_map[server].insert(world);
 
@@ -109,7 +109,7 @@ bool CServerList::IsServerOnlineAndFree(uint16 server)
 	return data.GetPercent() < 100;
 }
 
-bool CServerList::IsWorldInList(world_type world, uint16 server_group)
+bool CServerList::IsWorldInList(uint16 world, uint16 server_group)
 {
 	for ( WorldServerMap::const_iterator itr = this->world_server_map.begin(); itr != this->world_server_map.end(); ++itr )
 	{
@@ -125,7 +125,7 @@ bool CServerList::IsWorldInList(world_type world, uint16 server_group)
 	return false;
 }
 
-uint16 CServerList::CheckDestServer(uint16 server_group, world_type world, uint16 server, uint16 start_server)
+uint16 CServerList::CheckDestServer(uint16 server_group, uint16 world, uint16 server, uint16 start_server)
 {
 	bool is_in_list = this->IsWorldInList(world, server_group);
 	

@@ -2030,9 +2030,9 @@ void Player::CharacterLoginHandle(QueryHolder holder)
 
 void Player::CharacterSelectMapCheck()
 {
-	world_type world_id = this->GetWorldId();
-	coord_type x = this->GetX();
-	coord_type y = this->GetY();
+	uint16 world_id = this->GetWorldId();
+	int16 x = this->GetX();
+	int16 y = this->GetY();
 	CharacterBaseData const* base_data = sCharacterBase->GetCharacterBase(this->GetClass());
 	bool force_update = false;
 	bool get_from_world = true;
@@ -2232,9 +2232,9 @@ bool Player::CharacterSelectWorldSuccess()
 
 	if (this->GetWorldId() == WORLD_LABYRINTH_OF_DIMENSIONS_BATTLE)
 	{
-		world_type world_id = WORLD_LOREN_MARKET;
-		coord_type x = 0;
-		coord_type y = 0;
+		uint16 world_id = WORLD_LOREN_MARKET;
+		int16 x = 0;
+		int16 y = 0;
 
 		this->GetValidCoordinates(503, world_id, x, y);
 
@@ -2251,9 +2251,9 @@ bool Player::CharacterSelectWorldSuccess()
 	}
 	else if (this->GetWorldId() == WORLD_PLACE_OF_QUALIFICATION)
 	{
-		world_type world_id = WORLD_LABYRINTH_OF_DIMENSIONS_SAFE;
-		coord_type x = 0;
-		coord_type y = 0;
+		uint16 world_id = WORLD_LABYRINTH_OF_DIMENSIONS_SAFE;
+		int16 x = 0;
+		int16 y = 0;
 
 		this->GetValidCoordinates(537, world_id, x, y);
 
@@ -2273,10 +2273,10 @@ bool Player::CharacterSelectWorldSuccess()
 	{
 		if (this->IsAdministrator())
 		{
-			world_type world_id = WORLD_SILENT;
+			uint16 world_id = WORLD_SILENT;
 
-			coord_type x = 0;
-			coord_type y = 0;
+			int16 x = 0;
+			int16 y = 0;
 
 			if (World* pWorld = sWorldMgr->GetWorld(world_id))
 			{
@@ -2298,9 +2298,9 @@ bool Player::CharacterSelectWorldSuccess()
 
 		if (this->GetWorldId() == WORLD_LAST_MAN_STANDING || this->GetWorldId() == WORLD_SPECIAL_EVENT_MAP)
 		{
-			world_type world_id = WORLD_LOREN_MARKET;
-			coord_type x = 0;
-			coord_type y = 0;
+			uint16 world_id = WORLD_LOREN_MARKET;
+			int16 x = 0;
+			int16 y = 0;
 
 			if (World* pWorld = sWorldMgr->GetWorld(world_id))
 			{
@@ -2323,9 +2323,9 @@ bool Player::CharacterSelectWorldSuccess()
 
 	if (this->GetLevelData(LEVEL_DATA_NORMAL)->GetLevel() < 6 || !this->GetWorld())
 	{
-		world_type world_id = base_data->GetWorld();
-		coord_type x = 0;
-		coord_type y = 0;
+		uint16 world_id = base_data->GetWorld();
+		int16 x = 0;
+		int16 y = 0;
 
 		if (World* pWorld = sWorldMgr->GetWorld(world_id))
 		{
@@ -2584,8 +2584,8 @@ void Player::CharacterMove(uint8 * Packet)
 		return;
 	}
 
-	coord_type start_x = lpMsg->x;
-	coord_type start_y = lpMsg->y;
+	int16 start_x = lpMsg->x;
+	int16 start_y = lpMsg->y;
 
 
 	if (this->GetPathData()->GetCount() > 0 && !this->IsOffline() && (this->GetRegenStatus() == REGEN_NONE) && !this->IsTeleporting() && (sGameServer->GetWalkSpeedCount() > 0))
@@ -2653,8 +2653,8 @@ void Player::CharacterMove(uint8 * Packet)
 	}
 
 	int16 pathtable = 0;
-	coord_type ax = this->GetPathData()->GetPosition(0)->GetX();
-	coord_type ay = this->GetPathData()->GetPosition(0)->GetY();
+	int16 ax = this->GetPathData()->GetPosition(0)->GetX();
+	int16 ay = this->GetPathData()->GetPosition(0)->GetY();
 	///- Genero el path
 	for ( int32 n = 1; n < this->GetPathData()->GetCount(); ++n )
 	{
@@ -2821,8 +2821,8 @@ void Player::CharacterMove(uint8 * Packet)
 	this->SetTX(ax);
 	this->SetTY(ay);
 
-	coord_type nextX = this->GetX();
-	coord_type nextY = this->GetY();
+	int16 nextX = this->GetX();
+	int16 nextY = this->GetY();
 
 	if ( this->GetWorldId() == WORLD_CASTLE_SIEGE )
 	{
@@ -3957,8 +3957,8 @@ void Player::ItemUse(uint8 * Packet)
 		{
 			level_entrance++;
 
-			coord_type tmp_x = this->GetX() + RANDOM(6) - 2;
-			coord_type tmp_y = this->GetY() + RANDOM(6) - 2;
+			int16 tmp_x = this->GetX() + RANDOM(6) - 2;
+			int16 tmp_y = this->GetY() + RANDOM(6) - 2;
 
 			FIX_COORD(tmp_x);
 			FIX_COORD(tmp_y);
@@ -5753,7 +5753,7 @@ void Player::BuildLogSet(uint8 slot, std::string & item_data) const
 	}
 }
 
-std::string Player::BuildLocationLog(coord_type x, coord_type y, bool to_db) const
+std::string Player::BuildLocationLog(int16 x, int16 y, bool to_db) const
 {
 	std::ostringstream stream("");
 

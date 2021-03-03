@@ -246,7 +246,7 @@ class TormentedSquareSurvivalGround
 		DECLARE_ENUM(uint32, SecondTick);
 		DECLARE_BOOL(RankingSent);
 
-		DECLARE_ENUM(world_type, WorldID);
+		DECLARE_ENUM(uint16, WorldID);
 		DECLARE_ENUM(uint16, RespawnGate);
 		DECLARE_ENUM(uint16, EnterGate);
 

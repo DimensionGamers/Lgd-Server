@@ -34,7 +34,7 @@ enum ImperialFortressState
 	IMPERIAL_FORTRESS_STATE_END,
 };
 
-static const world_type g_ImperialFortressWorld[IMPERIAL_FORTRESS_GROUND] = {
+static const uint16 g_ImperialFortressWorld[IMPERIAL_FORTRESS_GROUND] = {
 	WORLD_IMPERIAL_FORTRESS_1,
 	WORLD_IMPERIAL_FORTRESS_2,
 	WORLD_IMPERIAL_FORTRESS_3,
@@ -58,10 +58,10 @@ static const struct ImperialFortressGates
 
 struct ImperialFortressZoneDef
 {
-	coord_type x1;
-	coord_type y1;
-	coord_type x2;
-	coord_type y2;
+	int16 x1;
+	int16 y1;
+	int16 x2;
+	int16 y2;
 };
 
 enum

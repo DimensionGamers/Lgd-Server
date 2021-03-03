@@ -115,7 +115,7 @@ void Unit::ActionSend(uint16 target, uint8 action, uint8 direction, bool me)
 	this->sendPacket_viewport(MAKE_PCT(pMsg));
 }
 
-void Unit::PositionSend(coord_type x, coord_type y)
+void Unit::PositionSend(int16 x, int16 y)
 {
 	this->SetLocation(x, y, this->GetDirection());
 	this->SetTX(x);
@@ -158,7 +158,7 @@ void Unit::StateInfoSendSingle(Player* pPlayer, uint16 buff, uint8 state)
 	}
 }
 
-void Unit::SetLocation(coord_type x, coord_type y, uint8 direction)
+void Unit::SetLocation(int16 x, int16 y, uint8 direction)
 {
 	this->SetX(x);
 	this->SetY(y);
@@ -170,7 +170,7 @@ void Unit::UpdateLastLocation()
 	this->GetLastLocation()->Set(this->GetLocation());
 }
 	
-void Unit::UpdateLastLocation(world_type world, coord_type x, coord_type y, int32 instance, uint8 direction)
+void Unit::UpdateLastLocation(uint16 world, int16 x, int16 y, int32 instance, uint8 direction)
 {
 	this->GetLastLocation()->SetWorldId(world);
 	this->GetLastLocation()->SetX(x);
@@ -343,56 +343,50 @@ bool Unit::MoveToGate(uint16 gate_id)
 	GateData const* pGate = sTeleport->GetGate(gate_id, true);
 	SafeRAssert(pGate, "pGate == nullptr", false);
 
-	coord_type tmp_x = pGate->x1;
-	coord_type tmp_y = pGate->y1;
-	world_type tmp_world = pGate->world;
+	int16 tmp_x = pGate->X1;
+	int16 tmp_y = pGate->Y1;
+	uint16 tmp_world = pGate->MapId;
 
-	this->GetValidCoordinates(pGate->id, tmp_world, tmp_x, tmp_y);
+	this->GetValidCoordinates(pGate->Id, tmp_world, tmp_x, tmp_y);
 
 	this->UpdateLastLocation();
 	this->ClearPathData();
 
-	this->SetWorldId(pGate->world);
+	this->SetWorldId(pGate->MapId);
 	this->SetX(tmp_x);
 	this->SetY(tmp_y);
 	this->SetTX(tmp_x);
 	this->SetTY(tmp_y);
-	this->SetDirection(pGate->direction);
+	this->SetDirection(pGate->Direction);
 
 	this->ViewportCreate(VIEWPORT_CREATE_FLAG_ME | VIEWPORT_CREATE_FLAG_GEN | VIEWPORT_CREATE_FLAG_GUILD | VIEWPORT_CREATE_FLAG_SIEGE);
 	return true;
 }
 
-void Unit::GetValidCoordinates(uint16 gate, world_type & world, coord_type & x, coord_type & y)
+void Unit::GetValidCoordinates(uint16 gate, uint16 & world, int16 & x, int16 & y)
 {
-	GateData const* pGate = sTeleport->GetGate(gate);
-
-	if ( !pGate )
-	{
+	auto const gate_data = sTeleport->GetGate(gate);
+	if (!gate_data)
 		return;
-	}
 
-	World* pWorld = sWorldMgr->GetWorld(pGate->world);
-
-	if ( !pWorld )
-	{
+	auto map = sWorldMgr->GetWorld(gate_data->MapId);
+	if (!map)
 		return;
-	}
 
-	world = pGate->world;
-	
-	if ( pGate->x1 == pGate->x2 && pGate->y1 == pGate->y2 )
+	world = gate_data->MapId;
+
+	if (gate_data->X1 == gate_data->X2 && gate_data->Y1 == gate_data->Y2)
 	{
-		x = pGate->x1;
-		y = pGate->y1;
+		x = gate_data->X1;
+		y = gate_data->Y1;
 	}
 	else
 	{
-		pWorld->GetRandomLocation(x, y, pGate->x1, pGate->y1, pGate->x2, pGate->y2);
+		map->GetRandomLocation(x, y, gate_data->X1, gate_data->Y1, gate_data->X2, gate_data->Y2);
 	}
 }
 
-void Unit::TeleportToLocation(world_type world, coord_type x, coord_type y, uint8 direction, int32 instance)
+void Unit::TeleportToLocation(uint16 world, int16 x, int16 y, uint8 direction, int32 instance)
 {
 	this->UpdateLastLocation();
 
@@ -406,7 +400,7 @@ void Unit::TeleportToLocation(world_type world, coord_type x, coord_type y, uint
 	this->GetRegenLocation()->Set(this->GetLocation());
 }
 
-void Unit::TeleportToLocation(world_type world)
+void Unit::TeleportToLocation(uint16 world)
 {
 	World * pWorld = sWorldMgr->GetWorld(world);
 
@@ -417,8 +411,8 @@ void Unit::TeleportToLocation(world_type world)
 
 	this->UpdateLastLocation();
 
-	coord_type x = 0;
-	coord_type y = 0;
+	int16 x = 0;
+	int16 y = 0;
 	pWorld->GetRespawn(world, x, y);
 	this->SetWorldId(world);
 	this->SetX(x);
@@ -444,7 +438,7 @@ void Unit::TeleportToObject(Unit* pUnit)
 		this->TeleportToLocation(pUnit->GetWorldId(), pUnit->GetX(), pUnit->GetY(), pUnit->GetDirection(), pUnit->GetInstance());
 }
 
-bool Unit::TeleportAreaCheck(coord_type x, coord_type y)
+bool Unit::TeleportAreaCheck(int16 x, int16 y)
 {
 	if ( !InRange(x, y, 8) )
 		return false;
@@ -1917,8 +1911,8 @@ void Unit::PushBackSimple(Unit* mTarget)
 	limitmin(target_direction, 0);
 	limitmax(target_direction, Path::Max - 1);
 
-	coord_type x = mTarget->GetX() + Path::Table[target_direction];
-	coord_type y = mTarget->GetY() + Path::Table[target_direction + 1];
+	int16 x = mTarget->GetX() + Path::Table[target_direction];
+	int16 y = mTarget->GetY() + Path::Table[target_direction + 1];
 
 	World* pWorld = mTarget->GetWorld();
 
@@ -1955,8 +1949,8 @@ void Unit::PushBackCount(Unit* mTarget, uint8 count)
 
 	int32 target_direction = GetPathPacketDirPos(mTarget->GetX() - this->GetX(), mTarget->GetY() - this->GetY()) * 2;
 	
-	coord_type x = mTarget->GetX();
-	coord_type y = mTarget->GetY();
+	int16 x = mTarget->GetX();
+	int16 y = mTarget->GetY();
 
 	for ( uint8 n = 0; n < count; ++n )
 	{
@@ -2023,11 +2017,11 @@ bool Unit::PushBackAllowed()
 	return true;
 }
 
-bool Unit::PushBackCheck(coord_type & x, coord_type & y, int32 & direction)
+bool Unit::PushBackCheck(int16 & x, int16 & y, int32 & direction)
 {
 	int32 tdir = direction / 2;
-	coord_type tx = x + Path::Table[direction];
-	coord_type ty = y + Path::Table[direction+1];
+	int16 tx = x + Path::Table[direction];
+	int16 ty = y + Path::Table[direction+1];
 
 	World* pWorld = this->GetWorld();
 
@@ -4557,7 +4551,7 @@ void Unit::SetSummonedTarget(Unit* mTarget)
 	mMonster->SetTarget(mTarget);
 }
 
-uint8 Unit::GetPathPacketDirPos(coord_type px, coord_type py)
+uint8 Unit::GetPathPacketDirPos(int16 px, int16 py)
 {
 	uint8 pos = 0;
 
@@ -4605,7 +4599,7 @@ bool Unit::IsInDragonTower() const
 	return ( (this->GetX() >= 159 && this->GetX() <= 190) && (this->GetY() >= 189 && this->GetY() <= 217) );
 }
 
-bool Unit::IsInDragonTower(coord_type x1, coord_type y1, coord_type x2, coord_type y2)
+bool Unit::IsInDragonTower(int16 x1, int16 y1, int16 x2, int16 y2)
 {
 	return ( (x1 >= 160 && x2 <= 189) && (y1 >= 190 && y2 <= 217) );
 }
@@ -4792,7 +4786,7 @@ void Unit::KillCountReset()
 	this->KillCountSend();
 }
 
-void Unit::GenerateRandomLocation(World* pWorld, coord_type &x, coord_type &y, int32 length, uint8 exclude, int32 instance)
+void Unit::GenerateRandomLocation(World* pWorld, int16 &x, int16 &y, int32 length, uint8 exclude, int32 instance)
 {
 	if ( !pWorld )
 		return;
@@ -4805,8 +4799,8 @@ void Unit::GenerateRandomLocation(World* pWorld, coord_type &x, coord_type &y, i
 	
 	while( count-- > 0 )
 	{
-		coord_type px = (x - length) + Random(max_length);
-		coord_type py = (y - length) + Random(max_length);
+		int16 px = (x - length) + Random(max_length);
+		int16 py = (y - length) + Random(max_length);
 
 		if ( !(pWorld->GetGrid(px, py).attribute & exclude) )
 		{
@@ -5935,7 +5929,7 @@ void Unit::ProcessReflect(Unit* pTarget, int32 damage)
 	pTarget->Unit::AfterHitCheck(this, send_damage, shield_damage, DAMAGE_TYPE_REFLECT);
 }
 
-void Unit::MoveSend(coord_type x, coord_type y, uint8 dir)
+void Unit::MoveSend(int16 x, int16 y, uint8 dir)
 {
 	MOVE_RESULT pMsg(this->GetEntry(), x, y, dir);
 	this->sendPacket_viewport(MAKE_PCT(pMsg));

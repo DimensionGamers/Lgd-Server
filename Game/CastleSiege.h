@@ -66,8 +66,8 @@ class CastleSiegeNpcData
 		DECLARE(uint8, defense_level);
 		DECLARE(uint8, regen_level);
 		DECLARE(uint8, life_level);
-		DECLARE(coord_type, x);
-		DECLARE(coord_type, y);
+		DECLARE(int16, x);
+		DECLARE(int16, y);
 		DECLARE(uint8, direction);
 		DECLARE(int32, current_life);
 		DECLARE_BOOL(Active);
@@ -251,7 +251,7 @@ class CCastleSiege: public EventMassive
 		void CreateNonDBNpc();
 		void ClearNonDBNpc();
 		bool AddDBNpc(CastleSiegeNpcData* NpcData);
-		void BlockReleaseCastleGate(coord_type x, coord_type y, bool block);
+		void BlockReleaseCastleGate(int16 x, int16 y, bool block);
 		void CloseCastleGate();
 
 		CrownBasicAI* GetCrown() const;
@@ -269,7 +269,7 @@ class CCastleSiege: public EventMassive
 		void UnlockCrown();
 
 		void RespawnPlayers(bool defense);
-		void GetRespawnCoord(coord_type & x, coord_type & y, uint8 type);
+		void GetRespawnCoord(int16 & x, int16 & y, uint8 type);
 
 		void UpdateTime();
 
@@ -385,7 +385,7 @@ class CCastleSiege: public EventMassive
 		void MoneyOutResult(Player* pPlayer, uint8 result, int64 money);
 
 		void MachineUseRequest(Player* pPlayer, uint8 * Packet);
-		void MachineUseGetCoord(uint8 type, uint8 target, coord_type &x, coord_type &y);
+		void MachineUseGetCoord(uint8 type, uint8 target, int16 &x, int16 &y);
 		void MachineDamage(Player* pPlayer, uint8 * Packet);
 
 		// MINI MAP
@@ -397,7 +397,7 @@ class CCastleSiege: public EventMassive
 
 		void MiniMapUpdate();
 
-		bool CheckTeleportMagicAxisY(coord_type start_y, coord_type target_x, coord_type target_y) const;
+		bool CheckTeleportMagicAxisY(int16 start_y, int16 target_x, int16 target_y) const;
 
 		void UpdateStatus(Player* pPlayer);
 

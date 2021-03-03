@@ -458,12 +458,12 @@ void ChaosCastle::GiveItemToWinner(Player* pPlayer, int32 score)
 	this->Log("Giving Winner item to %s", pPlayer->GetName());
 }
 
-void ChaosCastle::BlowObjects(coord_type x, coord_type y)
+void ChaosCastle::BlowObjects(int16 x, int16 y)
 {
-	coord_type min_x = x - 3;
-	coord_type max_x = x + 3;
-	coord_type min_y = y - 3;
-	coord_type max_y = y + 3;
+	int16 min_x = x - 3;
+	int16 max_x = x + 3;
+	int16 min_y = y - 3;
+	int16 max_y = y + 3;
 
 	FIX_COORD(min_x);
 	FIX_COORD(min_y);
@@ -493,7 +493,7 @@ void ChaosCastle::BlowObjects(coord_type x, coord_type y)
 	}
 }
 
-void ChaosCastle::BlowObjectsFromPoint(Unit* mUnit, coord_type x, coord_type y)
+void ChaosCastle::BlowObjectsFromPoint(Unit* mUnit, int16 x, int16 y)
 {
 	World* pWorld = mUnit->GetWorld();
 
@@ -505,10 +505,10 @@ void ChaosCastle::BlowObjectsFromPoint(Unit* mUnit, coord_type x, coord_type y)
 	if ( distance >= 4 )
 		return;
 
-	coord_type iSIGN_X = 1;
-	coord_type iSIGN_Y = 1;
-	coord_type iUX = mUnit->GetX();
-	coord_type iUY = mUnit->GetY();
+	int16 iSIGN_X = 1;
+	int16 iSIGN_Y = 1;
+	int16 iUX = mUnit->GetX();
+	int16 iUY = mUnit->GetY();
 
 	(iUX > x)?iSIGN_X = 1:(iUX < x)?iSIGN_X = -1:(!(Random(2)))?iSIGN_X = 1:iSIGN_X = -1;
 	(iUY > y)?iSIGN_Y = 1:(iUY < y)?iSIGN_Y = -1:(!(Random(2)))?iSIGN_Y = 1:iSIGN_Y = -1;
@@ -517,8 +517,8 @@ void ChaosCastle::BlowObjectsFromPoint(Unit* mUnit, coord_type x, coord_type y)
 	{
 		int32 iBLOW_MIN = g_ChaosCastle_BlowOutDistance[distance][0];
 		int32 iBLOW_MAX = g_ChaosCastle_BlowOutDistance[distance][1];
-		coord_type iBLOW_X = Random(iBLOW_MAX - iBLOW_MIN + 1) + iBLOW_MIN;
-		coord_type iBLOW_Y = Random(iBLOW_MAX - iBLOW_MIN + 1) + iBLOW_MIN;
+		int16 iBLOW_X = Random(iBLOW_MAX - iBLOW_MIN + 1) + iBLOW_MIN;
+		int16 iBLOW_Y = Random(iBLOW_MAX - iBLOW_MIN + 1) + iBLOW_MIN;
 		int32 iRND = Random(2);
 
 		if ( iRND )
@@ -541,8 +541,8 @@ void ChaosCastle::BlowObjectsFromPoint(Unit* mUnit, coord_type x, coord_type y)
 				iBLOW_X = 0;
 		}
 
-		coord_type iTX = mUnit->GetX() + iBLOW_X * iSIGN_X;
-		coord_type iTY = mUnit->GetY() + iBLOW_Y * iSIGN_Y;
+		int16 iTX = mUnit->GetX() + iBLOW_X * iSIGN_X;
+		int16 iTY = mUnit->GetY() + iBLOW_Y * iSIGN_Y;
 
 		FIX_COORD(iTX);
 		FIX_COORD(iTY);
@@ -660,9 +660,9 @@ void ChaosCastle::SetTrapHollow(uint8 trap)
 
 	for ( int32 a = 0; a < MAX_CHAOS_CASTLE_HOLLOW_ZONE; a++ )
 	{
-		for ( coord_type x = g_ChaosCastleMapHollowZone[trap][a].X1; x <= g_ChaosCastleMapHollowZone[trap][a].X2; x++ )
+		for ( int16 x = g_ChaosCastleMapHollowZone[trap][a].X1; x <= g_ChaosCastleMapHollowZone[trap][a].X2; x++ )
 		{
-			for ( coord_type y = g_ChaosCastleMapHollowZone[trap][a].Y1; y <= g_ChaosCastleMapHollowZone[trap][a].Y2; y++ )
+			for ( int16 y = g_ChaosCastleMapHollowZone[trap][a].Y1; y <= g_ChaosCastleMapHollowZone[trap][a].Y2; y++ )
 			{
 				mWorld->ApplyAttribute(x, y, WORLD_ATTRIBUTE_LOCK_2, true);
 			}
@@ -689,8 +689,8 @@ void ChaosCastle::DeleteItemsOnTrap(uint8 trap)
 		if ( !mWorld->GetItemData(i)->item.IsItem() )
 			continue;
 
-		coord_type x = mWorld->GetItemData(i)->GetLocation()->GetX();
-		coord_type y = mWorld->GetItemData(i)->GetLocation()->GetY();
+		int16 x = mWorld->GetItemData(i)->GetLocation()->GetX();
+		int16 y = mWorld->GetItemData(i)->GetLocation()->GetY();
 
 		if ( x < g_ChaosCastle_DamageAxis[trap][0] || x > g_ChaosCastle_DamageAxis[trap][2] ||
 			 y < g_ChaosCastle_DamageAxis[trap][1] || y > g_ChaosCastle_DamageAxis[trap][3] )
@@ -897,9 +897,9 @@ void ChaosCastle::RestoreCastleZone()
 	{
 		for ( int32 a = 0; a < MAX_CHAOS_CASTLE_HOLLOW_ZONE; ++a )
 		{
-			for ( coord_type x = g_ChaosCastleMapHollowZone[iTRAP_STEP][a].X1; x <= g_ChaosCastleMapHollowZone[iTRAP_STEP][a].X2; x++ )
+			for ( int16 x = g_ChaosCastleMapHollowZone[iTRAP_STEP][a].X1; x <= g_ChaosCastleMapHollowZone[iTRAP_STEP][a].X2; x++ )
 			{
-				for ( coord_type y = g_ChaosCastleMapHollowZone[iTRAP_STEP][a].Y1; y <= g_ChaosCastleMapHollowZone[iTRAP_STEP][a].Y2; y++ )
+				for ( int16 y = g_ChaosCastleMapHollowZone[iTRAP_STEP][a].Y1; y <= g_ChaosCastleMapHollowZone[iTRAP_STEP][a].Y2; y++ )
 				{
 					pWorld->ApplyAttribute(x, y, WORLD_ATTRIBUTE_LOCK_2, false);
 				}

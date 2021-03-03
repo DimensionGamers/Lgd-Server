@@ -40,8 +40,8 @@ void WorldMgr::LoadWorldList()
 		{
 			Field* fields = result->Fetch();
 
-			world_type entry = fields[0].GetUInt16();
-			world_type display_entry = fields[1].GetUInt16();
+			uint16 entry = fields[0].GetUInt16();
+			uint16 display_entry = fields[1].GetUInt16();
 			uint8 status = fields[2].GetUInt8();
 			std::string file = "World/" + fields[3].GetString();
 			uint16 spawn_gate = fields[5].GetUInt16();
@@ -115,8 +115,8 @@ void WorldMgr::LoadWorldData()
 		{
 			Field* fields = result->Fetch();
 
-			world_type entry = fields[0].GetUInt16();
-			world_type display_entry = fields[1].GetUInt16();
+			uint16 entry = fields[0].GetUInt16();
+			uint16 display_entry = fields[1].GetUInt16();
 			uint8 status = fields[2].GetUInt8();
 			std::string file = "World/" + fields[3].GetString();
 			uint16 spawn_gate = fields[5].GetUInt16();
@@ -299,7 +299,7 @@ void WorldMgr::LoadWorldServer()
 			Field* fields = result->Fetch();
 
 			uint16 server = fields[0].GetUInt16();
-			world_type world = fields[1].GetUInt16();
+			uint16 world = fields[1].GetUInt16();
 
 			if ( (server / MAX_SERVER_PER_GROUP) != sGameServer->GetServerGroup() )
 				continue;
@@ -433,7 +433,7 @@ void WorldMgr::LoadWorldAreaAttribute()
 				
 				pWorld->m_attribute.push_back(area);
 
-				coord_type coord[4] = { area->GetX1(), area->GetY1(), area->GetX2(), area->GetY2() };
+				int16 coord[4] = { area->GetX1(), area->GetY1(), area->GetX2(), area->GetY2() };
 				pWorld->ApplyAttribute(coord, area->GetAttribute(), area->IsApply());
 
 				++count;
@@ -536,7 +536,7 @@ void WorldMgr::MakeItemVisible(Player* pPlayer)
 	}
 }
 
-uint16 WorldMgr::AllowMoveToWorld(Player* pPlayer, world_type world)
+uint16 WorldMgr::AllowMoveToWorld(Player* pPlayer, uint16 world)
 {
 	if ( !pPlayer )
 		return -1;
@@ -570,7 +570,7 @@ uint16 WorldMgr::AllowMoveToWorld(Player* pPlayer, world_type world)
 	return sGameServer->GetServerCode();
 }
 
-bool WorldMgr::AllowMoveToWorld(Player* pPlayer, world_type world, uint16 server)
+bool WorldMgr::AllowMoveToWorld(Player* pPlayer, uint16 world, uint16 server)
 {
 	if ( !pPlayer )
 		return false;
@@ -593,7 +593,7 @@ bool WorldMgr::AllowMoveToWorld(Player* pPlayer, world_type world, uint16 server
 	return true;
 }
 
-bool WorldMgr::IsWorldAllowed(world_type world)
+bool WorldMgr::IsWorldAllowed(uint16 world)
 {
 	for ( WorldServerMap::const_iterator itr = this->world_server_map.begin(); itr != this->world_server_map.end(); ++itr )
 	{
@@ -620,12 +620,12 @@ bool WorldMgr::IsWorldAllowed(world_type world)
 	return true;
 }
 
-bool WorldMgr::IsWorld(world_type world)
+bool WorldMgr::IsWorld(uint16 world)
 {
 	return this->GetWorld(world) != nullptr;
 }
 
-World* WorldMgr::GetWorld(world_type world)
+World* WorldMgr::GetWorld(uint16 world)
 {
 	WorldMap::iterator itr = this->world_map.find(world);
 
@@ -658,7 +658,7 @@ void WorldMgr::UpdateUrukMountainZone(bool apply)
 
 	for ( int32 i = 0; i < URUK_MOUNTAIN_BLOCK_ZONE; ++i )
 	{
-		coord_type coords[4] = { g_UrukMountainBlock[i].x1, g_UrukMountainBlock[i].y1, g_UrukMountainBlock[i].x2, g_UrukMountainBlock[i].y2 };
+		int16 coords[4] = { g_UrukMountainBlock[i].x1, g_UrukMountainBlock[i].y1, g_UrukMountainBlock[i].x2, g_UrukMountainBlock[i].y2 };
 		pWorld->ApplyAttribute(coords, URUK_MOUNTAIN_BLOCK_ATTRIBUTE, apply);
 	}
 
@@ -709,7 +709,7 @@ void WorldMgr::SendUrukMountainZone(Player* pPlayer)
 		return;
 	}
 
-	coord_type coords[4 * URUK_MOUNTAIN_BLOCK_ZONE];
+	int16 coords[4 * URUK_MOUNTAIN_BLOCK_ZONE];
 
 	for ( int32 i = 0; i < URUK_MOUNTAIN_BLOCK_ZONE; ++i )
 	{
@@ -763,7 +763,7 @@ void WorldMgr::UpdateFereaZone(bool apply)
 
 	for ( int32 i = 0; i < FEREA_BLOCK_ZONE; ++i )
 	{
-		coord_type coords[4] = { g_FereaBlock[i].x1, g_FereaBlock[i].y1, g_FereaBlock[i].x2, g_FereaBlock[i].y2 };
+		int16 coords[4] = { g_FereaBlock[i].x1, g_FereaBlock[i].y1, g_FereaBlock[i].x2, g_FereaBlock[i].y2 };
 		pWorld->ApplyAttribute(coords, FEREA_BLOCK_ATTRIBUTE, apply);
 	}
 
@@ -814,7 +814,7 @@ void WorldMgr::SendFereaZone(Player* pPlayer)
 		return;
 	}
 
-	coord_type coords[4 * FEREA_BLOCK_ZONE];
+	int16 coords[4 * FEREA_BLOCK_ZONE];
 
 	for ( int32 i = 0; i < FEREA_BLOCK_ZONE; ++i )
 	{
@@ -827,7 +827,7 @@ void WorldMgr::SendFereaZone(Player* pPlayer)
 	pPlayer->SendWorldAttribute(0, FEREA_BLOCK_ATTRIBUTE, FEREA_BLOCK_ZONE, g_FereaBlockStatus, coords);
 }
 
-int32 WorldMgr::GetWorldExperienceRate(world_type world, uint8 count)
+int32 WorldMgr::GetWorldExperienceRate(uint16 world, uint8 count)
 {
 	if ( count == 0 )
 	{
@@ -853,7 +853,7 @@ int32 WorldMgr::GetWorldExperienceRate(world_type world, uint8 count)
 	}
 }
 
-void WorldMgr::SetPKBoss(world_type world, bool enabled)
+void WorldMgr::SetPKBoss(uint16 world, bool enabled)
 {
 	World * pWorld = this->GetWorld(world);
 
@@ -866,7 +866,7 @@ void WorldMgr::SetPKBoss(world_type world, bool enabled)
 	pWorld->GetPKBossTime()->Start();
 }
 
-bool WorldMgr::IsPKBoss(world_type world)
+bool WorldMgr::IsPKBoss(uint16 world)
 {
 	if ( !sGameServer->IsPKBossEnabled() )
 	{
@@ -888,7 +888,7 @@ bool WorldMgr::IsPKBoss(world_type world)
 	return pWorld->IsPKBossEnabled();
 }
 
-bool WorldMgr::IsItemDropAllowed(Player* pPlayer, World* pWorld, coord_type x, coord_type y)
+bool WorldMgr::IsItemDropAllowed(Player* pPlayer, World* pWorld, int16 x, int16 y)
 {
 	if ( !pPlayer || !pWorld )
 	{
@@ -911,7 +911,7 @@ bool WorldMgr::IsItemDropAllowed(Player* pPlayer, World* pWorld, coord_type x, c
 	return true;
 }
 
-bool WorldMgr::IsFreePK(world_type world, coord_type x, coord_type y) const
+bool WorldMgr::IsFreePK(uint16 world, int16 x, int16 y) const
 {
 	for (WorldFreePKList::const_iterator itr = this->m_WorldFreePKList.begin(); itr != this->m_WorldFreePKList.end(); ++itr)
 	{

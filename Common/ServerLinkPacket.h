@@ -318,9 +318,9 @@ struct SL_CHARACTER_CREATE_REQUEST
 	int32 mana;
 	uint32 points;
 	int16 level;
-	world_type world;
-	coord_type x;
-	coord_type y;
+	uint16 world;
+	int16 x;
+	int16 y;
 	uint8 slot;
 };
 
@@ -717,9 +717,9 @@ struct SL_ADMIN_COMMAND_LOCATION
 	uint16 entry;
 	uint32 guid;
 	char target_name[MAX_CHARACTER_LENGTH + 1];
-	world_type world;
-	coord_type x;
-	coord_type y;
+	uint16 world;
+	int16 x;
+	int16 y;
 	uint8 direction;
 	uint16 server;
 	bool online;

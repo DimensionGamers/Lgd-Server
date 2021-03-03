@@ -104,8 +104,8 @@ class NarsBossCommon: public MonsterAI
 				{
 					this->pSupport[i] = pMonster;
 
-					coord_type x = me()->GetX();
-					coord_type y = me()->GetY();
+					int16 x = me()->GetX();
+					int16 y = me()->GetY();
 
 					pWorld->GetRandomLocation(x, y, 10);
 
@@ -466,8 +466,8 @@ public:
 
 					if ( this->Summoned[i] )
 					{
-						coord_type x = me()->GetX();
-						coord_type y = me()->GetY();
+						int16 x = me()->GetX();
+						int16 y = me()->GetY();
 
 						pWorld->GetRandomLocation(x, y, 3);
 

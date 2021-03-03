@@ -104,8 +104,8 @@ bool Monster::FollowOwner()
 {
 	if ( this->GetSummoner() && this->GetSummoner()->IsPlaying() && !this->GetSummoner()->IsRest() && this->GetSummoner() != this )
 	{
-		coord_type tx = 0;
-		coord_type ty = 0;
+		int16 tx = 0;
+		int16 ty = 0;
 
 		if ( this->GetOwnerPosition(tx, ty) )
 		{
@@ -121,15 +121,15 @@ bool Monster::FollowOwner()
 	return false;
 }
 
-bool Monster::GetOwnerPosition(coord_type &tx, coord_type &ty)
+bool Monster::GetOwnerPosition(int16 &tx, int16 &ty)
 {
 	int32 dis = Viewport::MAX_DISTANCE;
 
-	coord_type tpx = this->GetSummoner()->GetX();
-	coord_type tpy = this->GetSummoner()->GetY();
+	int16 tpx = this->GetSummoner()->GetX();
+	int16 tpy = this->GetSummoner()->GetY();
 
-	coord_type mtx = this->GetSummoner()->GetX();
-	coord_type mty = this->GetSummoner()->GetY();
+	int16 mtx = this->GetSummoner()->GetX();
+	int16 mty = this->GetSummoner()->GetY();
 
 	if ( this->GetX() < mtx )
 	{
@@ -178,15 +178,15 @@ bool Monster::GetOwnerPosition(coord_type &tx, coord_type &ty)
 	return false;
 }
 
-bool Monster::GetTargetPosition(coord_type sx, coord_type sy, coord_type &tx, coord_type &ty)
+bool Monster::GetTargetPosition(int16 sx, int16 sy, int16 &tx, int16 &ty)
 {
 	int32 dis = this->GetAttackRange();
 
-	coord_type tpx = sx;
-	coord_type tpy = sy;
+	int16 tpx = sx;
+	int16 tpy = sy;
 
-	coord_type mtx = tpx;
-	coord_type mty = tpy;
+	int16 mtx = tpx;
+	int16 mty = tpy;
 
 	if ( this->GetX() < mtx )
 	{
@@ -251,11 +251,11 @@ bool Monster::GetTargetPosition()
 	if ( !this->ViewportIsCharacter(pTarget) )
 		return false;
 
-	coord_type tpx = pTarget->GetX();
-	coord_type tpy = pTarget->GetY();
+	int16 tpx = pTarget->GetX();
+	int16 tpy = pTarget->GetY();
 
-	coord_type mtx = tpx;
-	coord_type mty = tpy;
+	int16 mtx = tpx;
+	int16 mty = tpy;
 
 	int32 dis = this->GetAttackRange();
 
@@ -318,8 +318,8 @@ void Monster::MoveAttempt()
 
 	int32 maxmoverange = this->GetMoveRange() * 2 + 1;
 	this->SetNextActionTime(1000);
-	coord_type tpx;
-	coord_type tpy;
+	int16 tpx;
+	int16 tpy;
 
 	for ( int32 i = 0; i < 10; ++i )
 	{
@@ -340,7 +340,7 @@ void Monster::MoveAttempt()
 	}
 }
 
-bool Monster::MoveCheck(coord_type x, coord_type y)
+bool Monster::MoveCheck(int16 x, int16 y)
 {
 	if ( this->GetAction()->Emotion == EMOTION_ATTACK )
 	{
@@ -367,8 +367,8 @@ bool Monster::MoveCheck(coord_type x, coord_type y)
 
 bool Monster::IsOutOfMoveRange()
 {
-	coord_type x = this->GetX();
-	coord_type y = this->GetY();
+	int16 x = this->GetX();
+	int16 y = this->GetY();
 
 	x -= this->GetRegenLocation()->GetX();
 	y -= this->GetRegenLocation()->GetY();
@@ -427,8 +427,8 @@ void Monster::PathProcess(uint8 * path)
 		this->GetPathData()->GetPosition(i)->Reset();
 	}
 	
-	coord_type ax = GetX();
-	coord_type ay = GetY();
+	int16 ax = GetX();
+	int16 ay = GetY();
 	int16 pathtable = 0;
 	this->GetPathData()->GetPosition(0)->SetX(this->GetX());
 	this->GetPathData()->GetPosition(0)->SetY(this->GetY());
@@ -461,8 +461,8 @@ void Monster::PathProcess(uint8 * path)
 
 	if ( this->GetPathData()->GetCount() > 0 )
 	{
-		coord_type nextX = this->GetPathData()->GetPosition(1)->GetX();
-		coord_type nextY = this->GetPathData()->GetPosition(1)->GetY();
+		int16 nextX = this->GetPathData()->GetPosition(1)->GetX();
+		int16 nextY = this->GetPathData()->GetPosition(1)->GetY();
 
 		WorldGrid const& attr = pWorld->GetGrid(nextX, nextY);
 
@@ -482,7 +482,7 @@ void Monster::PathProcess(uint8 * path)
 	this->SetViewState(0);
 }
 
-void Monster::MoveToLocation(coord_type x, coord_type y, bool target)
+void Monster::MoveToLocation(int16 x, int16 y, bool target)
 {
 	this->SetTempX(x);
 	this->SetTempY(y);
@@ -508,8 +508,8 @@ bool Monster::GetXYToPatrol()
 {
 	int32 maxmoverange = this->GetMoveRange() * 2 + 1;
 	this->SetNextActionTime(1000);
-	coord_type tpx = this->GetX();
-	coord_type tpy = this->GetY();
+	int16 tpx = this->GetX();
+	int16 tpy = this->GetY();
 
 	for ( int32 i = 0; i < 10; ++i )
 	{
@@ -530,12 +530,12 @@ bool Monster::GetXYToEscape()
 	if ( !pTarget )
 		return false;
 
-	coord_type tpx = pTarget->GetX();
-	coord_type tpy = pTarget->GetY();
-	coord_type mtx = tpx;
-	coord_type mty = tpy;
-	coord_type tx = GetX();
-	coord_type ty = GetY();
+	int16 tpx = pTarget->GetX();
+	int16 tpy = pTarget->GetY();
+	int16 mtx = tpx;
+	int16 mty = tpy;
+	int16 tx = GetX();
+	int16 ty = GetY();
 	int32 dis = this->GetAttackRange() / sqrt(2.0);
 
 	Path::FixCoordinate(tx, mtx, dis);
@@ -571,10 +571,10 @@ bool Monster::GetXYToChase()
 	if ( !pTarget )
 		return false;
 
-	coord_type tpx = pTarget->GetX();
-	coord_type tpy = pTarget->GetY();
-	coord_type mtx = tpx;
-	coord_type mty = tpy;
+	int16 tpx = pTarget->GetX();
+	int16 tpy = pTarget->GetY();
+	int16 mtx = tpx;
+	int16 mty = tpy;
 
 	int32 dis = this->GetAttackRange() / sqrt(2.0);
 
@@ -621,7 +621,7 @@ bool Monster::GetXYToChase()
 	return false;
 }
 
-void Monster::SetMoveCoordinates(coord_type x, coord_type y)
+void Monster::SetMoveCoordinates(int16 x, int16 y)
 {
 	this->GetAction()->Emotion = EMOTION_REST;
 	this->SetTempX(x);
@@ -630,7 +630,7 @@ void Monster::SetMoveCoordinates(coord_type x, coord_type y)
 	this->SetNextActionTime(500);
 }
 
-bool Monster::SetMoveCoordinatesNormal(coord_type x, coord_type y)
+bool Monster::SetMoveCoordinatesNormal(int16 x, int16 y)
 {
 	if ( this->IsMoveCoordinates(x, y) )
 	{
@@ -642,7 +642,7 @@ bool Monster::SetMoveCoordinatesNormal(coord_type x, coord_type y)
 	return false;
 }
 
-bool Monster::IsMoveCoordinates(coord_type x, coord_type y)
+bool Monster::IsMoveCoordinates(int16 x, int16 y)
 {
 	World* pWorld = this->GetWorld();
 

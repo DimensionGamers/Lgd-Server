@@ -267,8 +267,8 @@ void CBattleSoccerMgr::UpdateBall(Monster* Ball)
 	if ( this->GetState() != BATTLE_SOCCER_STATE_PLAYING )
 		return;
 
-	coord_type x = Ball->GetX();
-	coord_type y = Ball->GetY();
+	int16 x = Ball->GetX();
+	int16 y = Ball->GetY();
 
 	GUILD_WAR_TEAM_LOOP(i)
 	{
@@ -313,13 +313,13 @@ bool CBattleSoccerMgr::IsInField(Player const* pPlayer) const
 	return false;
 }
 
-bool CBattleSoccerMgr::GetRespawnLocation(coord_type & x, coord_type & y, Player* pPlayer)
+bool CBattleSoccerMgr::GetRespawnLocation(int16 & x, int16 & y, Player* pPlayer)
 {
 	if ( !this->IsInField(pPlayer) )
 		return false;
 
-	coord_type px = g_BattleSoccerGround.x2 - g_BattleSoccerGround.x1;
-	coord_type py = g_BattleSoccerGround.y2 - g_BattleSoccerGround.y1;
+	int16 px = g_BattleSoccerGround.x2 - g_BattleSoccerGround.x1;
+	int16 py = g_BattleSoccerGround.y2 - g_BattleSoccerGround.y1;
 
 	if ( px < 1 )
 		px = 1;

@@ -82,9 +82,9 @@ void ArkaWar::Load()
 				{
 					uint8 id = file.GetUInt8();
 
-					file.GetToken();	world_type world = file.GetUInt16();
-					file.GetToken();	coord_type x = file.GetInt16();
-					file.GetToken();	coord_type y = file.GetInt16();
+					file.GetToken();	uint16 world = file.GetUInt16();
+					file.GetToken();	int16 x = file.GetInt16();
+					file.GetToken();	int16 y = file.GetInt16();
 					file.GetToken();	int32 life = file.GetInt32();
 					file.GetToken();	int32 occupy_life = file.GetInt32();
 
@@ -103,9 +103,9 @@ void ArkaWar::Load()
 					uint8 id = file.GetUInt8();
 					file.GetToken();	uint8 aura_id = file.GetUInt8();
 
-					file.GetToken();	world_type world = file.GetUInt16();
-					file.GetToken();	coord_type x = file.GetInt16();
-					file.GetToken();	coord_type y = file.GetInt16();
+					file.GetToken();	uint16 world = file.GetUInt16();
+					file.GetToken();	int16 x = file.GetInt16();
+					file.GetToken();	int16 y = file.GetInt16();
 
 					if ( id < MAX_ARKA_WAR_ZONES && aura_id < MAX_ARKA_WAR_AURA )
 					{
@@ -119,7 +119,7 @@ void ArkaWar::Load()
 				{
 					uint8 id = file.GetUInt8();
 
-					file.GetToken();	world_type world = file.GetUInt16();
+					file.GetToken();	uint16 world = file.GetUInt16();
 					file.GetToken();	int32 count = file.GetInt32();
 					file.GetToken();	int32 respawn_time = file.GetInt32();
 
@@ -135,10 +135,10 @@ void ArkaWar::Load()
 				{
 					uint8 id = file.GetUInt8();
 
-					file.GetToken();	coord_type x1 = file.GetInt16();
-					file.GetToken();	coord_type y1 = file.GetInt16();
-					file.GetToken();	coord_type x2 = file.GetInt16();
-					file.GetToken();	coord_type y2 = file.GetInt16();
+					file.GetToken();	int16 x1 = file.GetInt16();
+					file.GetToken();	int16 y1 = file.GetInt16();
+					file.GetToken();	int16 x2 = file.GetInt16();
+					file.GetToken();	int16 y2 = file.GetInt16();
 
 					if ( id < MAX_ARKA_WAR_ZONES )
 					{
@@ -168,11 +168,11 @@ void ArkaWar::Load()
 				{
 					uint8 id = file.GetUInt8();
 
-					file.GetToken();	world_type world = file.GetUInt16();
-					file.GetToken();	coord_type x1 = file.GetInt16();
-					file.GetToken();	coord_type y1 = file.GetInt16();
-					file.GetToken();	coord_type x2 = file.GetInt16();
-					file.GetToken();	coord_type y2 = file.GetInt16();
+					file.GetToken();	uint16 world = file.GetUInt16();
+					file.GetToken();	int16 x1 = file.GetInt16();
+					file.GetToken();	int16 y1 = file.GetInt16();
+					file.GetToken();	int16 x2 = file.GetInt16();
+					file.GetToken();	int16 y2 = file.GetInt16();
 
 					if ( id < MAX_ARKA_WAR_ZONES )
 					{
@@ -1399,7 +1399,7 @@ void ArkaWar::SetRandomObeliskAttribute()
 			continue;
 		}
 
-		if ( g_ArkaWarZoneBattleData[random_zone].world == world_type(-1) )
+		if ( g_ArkaWarZoneBattleData[random_zone].world == uint16(-1) )
 		{
 			continue;
 		}
@@ -1930,7 +1930,7 @@ void ArkaWar::SendResult()
 	}
 }
 
-bool ArkaWar::GetBoxPosition(world_type world, coord_type ax, coord_type ay, coord_type aw, coord_type ah, coord_type & mx, coord_type & my)
+bool ArkaWar::GetBoxPosition(uint16 world, int16 ax, int16 ay, int16 aw, int16 ah, int16 & mx, int16 & my)
 {
 	World* pWorld = sWorldMgr->GetWorld(world);
 
@@ -1940,10 +1940,10 @@ bool ArkaWar::GetBoxPosition(world_type world, coord_type ax, coord_type ay, coo
 	}
 
 	int32 count = 99; 
-	coord_type w;
-	coord_type h;
-	coord_type tx; 
-	coord_type ty;
+	int16 w;
+	int16 h;
+	int16 tx; 
+	int16 ty;
 
 	while( count-- > 0 )
 	{
@@ -2101,7 +2101,7 @@ int64 ArkaWar::CalculateRewardExperience(Player* pPlayer, ArkaWarPlayer * pArkaW
 	return 0;
 }
 
-bool ArkaWar::GetGatePosition(Player* pPlayer, uint16 gate, world_type & world, coord_type & x, coord_type & y)
+bool ArkaWar::GetGatePosition(Player* pPlayer, uint16 gate, uint16 & world, int16 & x, int16 & y)
 {
 	if ( !sGameServer->IsArkaWarEnabled() )
 	{
@@ -2144,7 +2144,7 @@ bool ArkaWar::GetGatePosition(Player* pPlayer, uint16 gate, world_type & world, 
 	return true;
 }
 
-bool ArkaWar::GetGuildMasterPosition(Player* pPlayer, uint16 gate, world_type & world, coord_type & x, coord_type & y)
+bool ArkaWar::GetGuildMasterPosition(Player* pPlayer, uint16 gate, uint16 & world, int16 & x, int16 & y)
 {
 	Guild* pGuild = pPlayer->GuildGet();
 
@@ -2197,7 +2197,7 @@ bool ArkaWar::GetGuildMasterPosition(Player* pPlayer, uint16 gate, world_type & 
 	return this->GetBoxPosition(pMaster->GetWorldId(), pMaster->GetX(), pMaster->GetY(), pMaster->GetX() + 3, pMaster->GetY() + 3, x, y);
 }
 
-bool ArkaWar::GetPosition(uint16 gate, world_type & world, coord_type & x, coord_type & y)
+bool ArkaWar::GetPosition(uint16 gate, uint16 & world, int16 & x, int16 & y)
 {
 	for ( int32 i = 0; i < MAX_ARKA_WAR_ZONES; ++i )
 	{

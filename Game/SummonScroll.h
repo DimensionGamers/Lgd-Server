@@ -34,7 +34,7 @@ class SummonScroll
 
 		bool CheckSummonScroll(uint16 item) const;
 		SummonScrollInfo const* GetSummonScrollInfo(uint16 item) const;
-		bool CreateSummonScrollMonster(Player* pPlayer, uint16 item, world_type map, coord_type x, coord_type y);
+		bool CreateSummonScrollMonster(Player* pPlayer, uint16 item, uint16 map, int16 x, int16 y);
 
 	private:
 		SummonScrollInfoList m_SummonScrollInfo;

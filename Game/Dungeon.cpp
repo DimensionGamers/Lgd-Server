@@ -223,7 +223,7 @@ bool Dungeon::IsDungeon(uint16 world) const
 	return false;
 }
 
-void Dungeon::GetDungeonRespawn(Player* pPlayer, uint16 & world, coord_type & x, coord_type & y)
+void Dungeon::GetDungeonRespawn(Player* pPlayer, uint16 & world, int16 & x, int16 & y)
 {
 	for (DungeonInstanceDataMap::const_iterator itr = this->m_DungeonInstanceDataMap.begin(); itr != this->m_DungeonInstanceDataMap.end(); ++itr)
 	{

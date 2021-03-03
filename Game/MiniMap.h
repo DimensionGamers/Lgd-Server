@@ -56,8 +56,8 @@ struct MiniMapInfo
 	DECLARE_ENUM(uint8, Index);
 	DECLARE_ENUM(uint8, Group);
 	DECLARE_ENUM(uint8, Type);
-	DECLARE_ENUM(coord_type, X);
-	DECLARE_ENUM(coord_type, Y);
+	DECLARE_ENUM(int16, X);
+	DECLARE_ENUM(int16, Y);
 	DECLARE_STRING_FIXED(Text, 32);
 };
 

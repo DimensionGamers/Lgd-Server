@@ -70,10 +70,10 @@ void Invasion::GenerateRespawnLocation()
 	}
 
 	int32 count = 100;
-	coord_type x1 = pGroup->GetX1();
-	coord_type y1 = pGroup->GetY1();
-	coord_type x2 = pGroup->GetX2();
-	coord_type y2 = pGroup->GetY2();
+	int16 x1 = pGroup->GetX1();
+	int16 y1 = pGroup->GetY1();
+	int16 x2 = pGroup->GetX2();
+	int16 y2 = pGroup->GetY2();
 
 	FIX_COORD(x1);
 	FIX_COORD(y1);
@@ -83,8 +83,8 @@ void Invasion::GenerateRespawnLocation()
 	limitmin(x2, x1);
 	limitmin(y2, y1);
 
-	coord_type finalx = -1;
-	coord_type finaly = -1;
+	int16 finalx = -1;
+	int16 finaly = -1;
 
 	while ( count-- > 0 )
 	{

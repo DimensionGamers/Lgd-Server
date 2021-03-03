@@ -223,8 +223,8 @@ public:
 
 				if (distance > 10 && pWorld)
 				{
-					coord_type x = this->GetBoss()->GetX();
-					coord_type y = this->GetBoss()->GetY();
+					int16 x = this->GetBoss()->GetX();
+					int16 y = this->GetBoss()->GetY();
 
 					pWorld->GetFreeLocation(x, y, 3, 3, 10);
 
@@ -242,7 +242,7 @@ public:
 			this->SetBoss((Monster*)me()->m_AdditionalDataPtr[0]);
 		}
 
-		bool MoveAllowed(coord_type x, coord_type y)
+		bool MoveAllowed(int16 x, int16 y)
 		{
 			if (!MonsterAI::MoveAllowed(x, y))
 				return false;

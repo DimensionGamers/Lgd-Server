@@ -133,8 +133,8 @@ class Party
 		void QuestMUObjectiveUpdate(QuestMUObjectiveType type, Unit* pUnit = nullptr, int32 data = 0);
 		void QuestGuidedMonsterKill(Monster* pMonster);
 		void GenKillReward(Player* pVictim);
-		uint8 GetPartyMembersWithinDistance(world_type world, int32 instance, coord_type x, coord_type y, uint8 distance);
-		int16 GetPartyMemberHighestLevel(world_type world, int32 instance, coord_type x, coord_type y, uint8 distance);
+		uint8 GetPartyMembersWithinDistance(uint16 world, int32 instance, int16 x, int16 y, uint8 distance);
+		int16 GetPartyMemberHighestLevel(uint16 world, int32 instance, int16 x, int16 y, uint8 distance);
 		void IncreaseAggroAround(Player* pPlayer, Monster* pMonster, int64 value);
 		uint8 GetPKLevel() const;
 

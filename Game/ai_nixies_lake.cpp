@@ -121,8 +121,8 @@ struct NixiesCircle
 		this->SetY(0);
 	}
 
-	DECLARE_ENUM(coord_type, X);
-	DECLARE_ENUM(coord_type, Y);
+	DECLARE_ENUM(int16, X);
+	DECLARE_ENUM(int16, Y);
 };
 
 enum
@@ -155,8 +155,8 @@ public:
 
 		DECLARE_BOOL(IceBoom);
 		DECLARE_STRUCT(TickTimer, IceBoomTime);
-		DECLARE_ENUM(coord_type, IceBoomX);
-		DECLARE_ENUM(coord_type, IceBoomY);
+		DECLARE_ENUM(int16, IceBoomX);
+		DECLARE_ENUM(int16, IceBoomY);
 
 		DECLARE_ENUM(uint16, LastSkill);
 		DECLARE_STRUCT(TickTimer, LastSkillTime);
@@ -233,7 +233,7 @@ public:
 			return false;
 		}
 
-		bool MoveAllowed(coord_type x, coord_type y)
+		bool MoveAllowed(int16 x, int16 y)
 		{
 			if ( this->IsAbsorbKnowledge() )
 			{
@@ -788,8 +788,8 @@ Use ice lane skill for 3 minutes.
 
 				if ( pMonster )
 				{
-					coord_type x = me()->GetX();
-					coord_type y = me()->GetY();
+					int16 x = me()->GetX();
+					int16 y = me()->GetY();
 
 					pWorld->GetRandomLocation(x, y, 5);
 
@@ -824,8 +824,8 @@ Use ice lane skill for 3 minutes.
 
 				if ( pMonster )
 				{
-					coord_type x = me()->GetX();
-					coord_type y = me()->GetY();
+					int16 x = me()->GetX();
+					int16 y = me()->GetY();
 
 					pWorld->GetRandomLocation(x, y, 10);
 
@@ -852,8 +852,8 @@ Use ice lane skill for 3 minutes.
 
 			for ( int32 i = 0; i < MAX_NIXIES_LAKE_MAGIC_CIRCLE; ++i )
 			{
-				coord_type x = me()->GetX();
-				coord_type y = me()->GetY();
+				int16 x = me()->GetX();
+				int16 y = me()->GetY();
 
 				pWorld->GetFreeLocation(x, y, 7, 7, 20);
 

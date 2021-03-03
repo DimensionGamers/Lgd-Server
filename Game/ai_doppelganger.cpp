@@ -59,8 +59,8 @@ void DoppelgangerBasicAI::FindPath()
 		return;
 	}
 
-	coord_type tx = me()->GetX();
-	coord_type ty = me()->GetY();
+	int16 tx = me()->GetX();
+	int16 ty = me()->GetY();
 
 	int32 maxmoverange = me()->GetMoveRange() * 2 + 1;
 

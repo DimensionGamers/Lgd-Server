@@ -1688,11 +1688,11 @@ void Player::HelperOfflineMoveToTarget(Unit* pUnit, int32 range)
 		return;
 	}
 
-	coord_type tpx = pUnit->GetX();
-	coord_type tpy = pUnit->GetY();
+	int16 tpx = pUnit->GetX();
+	int16 tpy = pUnit->GetY();
 
-	coord_type mtx = tpx;
-	coord_type mty = tpy;
+	int16 mtx = tpx;
+	int16 mty = tpy;
 
 	int32 dis = range;
 

@@ -396,9 +396,9 @@ void DoppelgangerZone::UpdateWorldAttribute(DoppelgangerWorldAttribute type, boo
 
 	if ( pWorld )
 	{
-		for ( coord_type x = pDoppelgangerAttribute->x1; x <= pDoppelgangerAttribute->x2; ++x )
+		for ( int16 x = pDoppelgangerAttribute->x1; x <= pDoppelgangerAttribute->x2; ++x )
 		{
-			for ( coord_type y = pDoppelgangerAttribute->y1; y <= pDoppelgangerAttribute->y2; ++y )
+			for ( int16 y = pDoppelgangerAttribute->y1; y <= pDoppelgangerAttribute->y2; ++y )
 			{
 				pWorld->ApplyAttribute(x, y, 4, apply);
 			}
@@ -427,7 +427,7 @@ void DoppelgangerZone::UpdateWorldAttribute(Player* pPlayer, DoppelgangerWorldAt
 		return;
 	}
 
-	coord_type coord[4] = { pDoppelgangerAttribute->x1, pDoppelgangerAttribute->y1, pDoppelgangerAttribute->x2, pDoppelgangerAttribute->y2 };
+	int16 coord[4] = { pDoppelgangerAttribute->x1, pDoppelgangerAttribute->y1, pDoppelgangerAttribute->x2, pDoppelgangerAttribute->y2 };
 
 	pPlayer->SendWorldAttribute(0, 4, 1, apply, coord);
 }

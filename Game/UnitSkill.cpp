@@ -79,7 +79,7 @@ void Unit::SkillAngleCalculate(float angle, float tx, float ty, float sx, float 
 	}*/
 }
 
-bool Unit::SkillInAngle(coord_type x, coord_type y)
+bool Unit::SkillInAngle(int16 x, int16 y)
 {
 	uint8 j = 3;
 
@@ -169,7 +169,7 @@ void VectorRotate (const vec3_t in1, const float in2[3][4], vec3_t out)
 	out[2] = DotProduct(in1, in2[2]);
 }
 
-int32 Unit::GetAngle(coord_type x, coord_type y)
+int32 Unit::GetAngle(int16 x, int16 y)
 {
 	double diffX = this->GetX() - x;
 	double diffY = this->GetY() - y;
@@ -210,7 +210,7 @@ void Unit::RunNova()
 	SkillHandler(this, nullptr, this->MagicGet(this->GetNova()->GetSkill())).SkillUseProc();
 }
 
-void Unit::SkillTeleportUse(coord_type x, coord_type y)
+void Unit::SkillTeleportUse(int16 x, int16 y)
 {
 	if ( this->IsTeleporting() )
 		return;

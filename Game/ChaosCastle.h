@@ -70,8 +70,8 @@ class ChaosCastle: public EventGroundCommon
 		void RestoreCastleZone();
 		void UnsafetyCastleZone();
 		void SendSafetyCastleZone(bool apply);
-		void BlowObjects(coord_type x, coord_type y);
-		void BlowObjectsFromPoint(Unit* mUnit, coord_type x, coord_type y);
+		void BlowObjects(int16 x, int16 y);
+		void BlowObjectsFromPoint(Unit* mUnit, int16 x, int16 y);
 		void KillPlayersOnDieTile();
 		void UpdateTraps();
 		void SetTrapHollow(uint8 trap);

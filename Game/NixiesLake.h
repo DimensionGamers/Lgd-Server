@@ -20,8 +20,8 @@ enum NixiesLakeState
 
 static const struct NixiesLakeZone
 {
-	coord_type x;
-	coord_type y;
+	int16 x;
+	int16 y;
 } g_NixiesLakeZone[2] = {
 	{10, 200},
 	{50, 240},
@@ -230,7 +230,7 @@ class NixiesLake
 		void CreateBoss();
 		void ClearPlayer();
 		bool IsPlayerInSanctuary(Player* pPlayer) const;
-		bool IsInSanctuary(world_type world, coord_type x1, coord_type y1, coord_type x2, coord_type y2) const;
+		bool IsInSanctuary(uint16 world, int16 x1, int16 y1, int16 x2, int16 y2) const;
 		bool IsPlayerAllowed(Player* pPlayer) const;
 		void ReadyToMove();
 

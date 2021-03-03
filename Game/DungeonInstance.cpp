@@ -412,7 +412,7 @@ void DungeonInstance::CreateSimpleTrap()
 	this->CreateTrap(pPlayer->GetX(), pPlayer->GetY(), 0);
 }
 
-void DungeonInstance::CreateTrap(coord_type x, coord_type y, uint8 type)
+void DungeonInstance::CreateTrap(int16 x, int16 y, uint8 type)
 {
 	DungeonInstanceData const* pData = sDungeon->GetInstanceData(this->GetID());
 

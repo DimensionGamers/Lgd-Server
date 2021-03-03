@@ -171,7 +171,7 @@ class MuRoomyInfo;
 #include "GuildMgr.h"
 #include "GuildWar.h"
 #include "ShopMgr.h"
-#include "TeleportMgr.h"
+#include "TeleportManager.h"
 #include "CashShop.h"
 #include "CharacterBase.h"
 #include "VIPMgr.h"
@@ -298,7 +298,7 @@ class MuRoomyInfo;
 #define sDevilSquareMgr DevilSquareMgr::instance()
 #define sImperialFortressMgr ImperialFortressMgr::instance()
 #define sDoppelganger SingNull(Doppelganger)
-#define sTeleport TeleportMgr::instance()
+#define sTeleport TeleportManager::instance()
 #define sIllusionTempleMgr SingNull(IllusionTempleMgr)
 #define sEventMgr SingNull(CEventMgr)
 #define sInvasionMgr SingNull(InvasionMgr)

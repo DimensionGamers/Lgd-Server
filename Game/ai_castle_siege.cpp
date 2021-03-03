@@ -191,12 +191,12 @@ public:
 				if ( me()->GetCastleSiegeJoinSide() == pObject->ToUnit()->GetCastleSiegeJoinSide() )
 					continue;
 
-				coord_type distance_x = me()->GetX() - pObject->GetX();
-				coord_type distance_y = me()->GetY() - pObject->GetY();
+				int16 distance_x = me()->GetX() - pObject->GetX();
+				int16 distance_y = me()->GetY() - pObject->GetY();
 
 				if ( me()->GetDirection() == 1 && abs(distance_x) <= 2 )
 				{
-					coord_type cy = me()->GetY() - me()->GetAttackRange();
+					int16 cy = me()->GetY() - me()->GetAttackRange();
 
 					if ( cy <= pObject->GetY() && me()->GetY() >= pObject->GetY() )
 					{
@@ -207,7 +207,7 @@ public:
 
 				if ( me()->GetDirection() == 3 && abs(distance_y) <= 2 )
 				{
-					coord_type cx = me()->GetX() - me()->GetAttackRange();
+					int16 cx = me()->GetX() - me()->GetAttackRange();
 
 					if ( cx <= pObject->GetX() && me()->GetX() >= pObject->GetX())
 					{

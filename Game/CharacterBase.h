@@ -20,7 +20,7 @@ struct CharacterBaseData
 	DECLARE_FLOAT(VitalityToLife);
 	DECLARE_FLOAT(EnergyToMana);
 
-	DECLARE_ENUM(world_type, World);
+	DECLARE_ENUM(uint16, World);
 
 	DECLARE_ENUM(int16, Level);
 	DECLARE_ENUM(int32, Points);

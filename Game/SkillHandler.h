@@ -4,10 +4,10 @@
 class SkillHandler
 {
 	public:
-		explicit SkillHandler(Unit* pCaster, Unit* pTarget, Skill * pSkill, skill_template const* skill_info = nullptr, coord_type x = 0, coord_type y = 0, int32 count = 0, int32 angle = 0);
+		explicit SkillHandler(Unit* pCaster, Unit* pTarget, Skill * pSkill, skill_template const* skill_info = nullptr, int16 x = 0, int16 y = 0, int32 count = 0, int32 angle = 0);
 		virtual ~SkillHandler() {}
 
-		bool SkillUseProc(bool combo = false, coord_type x = 0, coord_type y = 0, uint8 dir = 0, uint8 dis = 0, uint8 pos = 0, bool duration = false);
+		bool SkillUseProc(bool combo = false, int16 x = 0, int16 y = 0, uint8 dir = 0, uint8 dis = 0, uint8 pos = 0, bool duration = false);
 
 		void SkillShieldDefense();
 		void SkillBuffManaShield();
@@ -183,10 +183,10 @@ class SkillHandler
 		bool SkillBuffFree();
 		void GetPartyMembers(uint8 distance = 0);
 
-		bool CheckSkillRange(coord_type x, coord_type y, Unit* pTarget);
-		bool CheckSkillRadio(coord_type x, coord_type y, Unit* pTarget);
-		static bool CheckSkillRange(Unit* pUnit, uint16 skill, coord_type x, coord_type y, Unit* pTarget);
-		static bool CheckSkillRadio(Unit* pUnit, uint16 skill, coord_type x, coord_type y, Unit* pTarget);
+		bool CheckSkillRange(int16 x, int16 y, Unit* pTarget);
+		bool CheckSkillRadio(int16 x, int16 y, Unit* pTarget);
+		static bool CheckSkillRange(Unit* pUnit, uint16 skill, int16 x, int16 y, Unit* pTarget);
+		static bool CheckSkillRadio(Unit* pUnit, uint16 skill, int16 x, int16 y, Unit* pTarget);
 		static int32 GetSkillRange(Unit* pUnit, uint16 skill);
 		static int32 GetSkillRadio(Unit* pUnit, uint16 skill);
 
@@ -194,8 +194,8 @@ class SkillHandler
 		DECLARE_PROPERTY_PTR(Skill, Skill);
 		DECLARE_PROPERTY_PTR(skill_template const, SkillInfo);
 		DECLARE_PROPERTY_PTR(Unit, Target);
-		DECLARE_ENUM(coord_type, AttackX);
-		DECLARE_ENUM(coord_type, AttackY);
+		DECLARE_ENUM(int16, AttackX);
+		DECLARE_ENUM(int16, AttackY);
 		DECLARE_ENUM(uint8, Angle);
 		DECLARE_ENUM(uint8, SpecialValue);
 		DECLARE_BOOL(Combo);

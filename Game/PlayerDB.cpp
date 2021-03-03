@@ -1042,7 +1042,7 @@ void Player::LoadDBHuntingRecord(PreparedQueryResult result)
 	{
 		Field* fields = result->Fetch();
 		int32 loop = 0;
-		world_type world = fields[loop++].GetUInt16();
+		uint16 world = fields[loop++].GetUInt16();
 
 		HuntingRecordData* pData = new HuntingRecordData;
 		pData->SetYear(fields[loop++].GetUInt16());

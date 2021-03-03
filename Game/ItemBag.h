@@ -127,8 +127,8 @@ class ItemBag
 		DECLARE(uint32, drop_min);
 		DECLARE(uint32, drop_max);
 		DECLARE_FLAG(uint8, Flag);
-		DECLARE(coord_type, range_x);
-		DECLARE(coord_type, range_y);
+		DECLARE(int16, range_x);
+		DECLARE(int16, range_y);
 
 		ItemBagItemGroup items;
 
@@ -163,14 +163,14 @@ class ItemBag
 			return true;
 		}
 
-		bool Execute(Unit* pUnit, int32 data_1, int32 data_2, coord_type x, coord_type y, uint16 serial_server, uint32 serial, std::string const& item_name);
-		void Drop(Unit* mOwner, world_type world, coord_type x, coord_type y, uint8 attribute);
+		bool Execute(Unit* pUnit, int32 data_1, int32 data_2, int16 x, int16 y, uint16 serial_server, uint32 serial, std::string const& item_name);
+		void Drop(Unit* mOwner, uint16 world, int16 x, int16 y, uint8 attribute);
 		void Create(Player* pPlayer, uint8 attribute);
 		ItemBagItem* GetRandomItem(Player* pPlayer) const;
 		bool IsItemClass(Player* pPlayer, ItemBagItem const* pItemBagItem) const;
 		uint32 GetRandomGroup() const;
-		bool BuildItem(ItemBagItem const* RandomItem, Item & item, Unit* pUnit, coord_type x, coord_type y, uint8 attribute);
-		bool BuildCurreny(Player* pPlayer, coord_type x, coord_type y);
+		bool BuildItem(ItemBagItem const* RandomItem, Item & item, Unit* pUnit, int16 x, int16 y, uint8 attribute);
+		bool BuildCurreny(Player* pPlayer, int16 x, int16 y);
 
 		bool IsEmpty() const { return this->items.empty(); }
 };
@@ -195,7 +195,7 @@ class ItemBagMgr
 		ItemBag * GetItemBag(uint32 guid);
 		ItemBag * GetItemBag(std::string const& name) const;
 
-		uint8 ExecuteItemBag(ItemBagType type, Unit* pUnit, std::string const& name, int32 data_1 = 0, int32 data_2 = 0, coord_type x = 0, coord_type y = 0, uint16 serial_server = 0, uint32 serial = 0, std::string const& item_name = "");
+		uint8 ExecuteItemBag(ItemBagType type, Unit* pUnit, std::string const& name, int32 data_1 = 0, int32 data_2 = 0, int16 x = 0, int16 y = 0, uint16 serial_server = 0, uint32 serial = 0, std::string const& item_name = "");
 
 		bool RunItemBag(Player* pPlayer, std::string const& name, Item & item, bool gremory_case = false, uint8 gremory_case_type = 0);
 	private:

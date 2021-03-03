@@ -1317,8 +1317,8 @@ void LabyrinthDimensions::CreateGoblin(Player* pPlayer, LabyrinthAreaData const*
 
 	if (pMonster)
 	{
-		coord_type x = g_LabyrinthOfDimensionsWorldData[0].x;
-		coord_type y = g_LabyrinthOfDimensionsWorldData[0].y;
+		int16 x = g_LabyrinthOfDimensionsWorldData[0].x;
+		int16 y = g_LabyrinthOfDimensionsWorldData[0].y;
 
 		pWorld->GetRandomLocation(x, y, 10);
 
@@ -1611,8 +1611,8 @@ void LabyrinthDimensions::StartMission(Player* pPlayer, PlayerLabyrinthGate * pG
 
 			if (pMonster)
 			{
-				coord_type x = g_LabyrinthOfDimensionsWorldData[0].x;
-				coord_type y = g_LabyrinthOfDimensionsWorldData[0].y;
+				int16 x = g_LabyrinthOfDimensionsWorldData[0].x;
+				int16 y = g_LabyrinthOfDimensionsWorldData[0].y;
 
 				pWorld->GetRandomLocation(x, y, 10);
 
@@ -1772,8 +1772,8 @@ void LabyrinthDimensions::SpawnMonsters(Player* pPlayer, PlayerLabyrinthGate * p
 
 			if (pMonster)
 			{
-				coord_type x = g_LabyrinthOfDimensionsWorldData[0].x;
-				coord_type y = g_LabyrinthOfDimensionsWorldData[0].y;
+				int16 x = g_LabyrinthOfDimensionsWorldData[0].x;
+				int16 y = g_LabyrinthOfDimensionsWorldData[0].y;
 
 				pWorld->GetRandomLocation(x, y, 10);
 

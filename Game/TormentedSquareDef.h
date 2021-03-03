@@ -15,7 +15,7 @@
 
 static const struct TormentedSquareZone
 {
-	world_type world;
+	uint16 world;
 	uint16 gate;
 } g_TormentedSquareZone[MAX_TORMENTED_SQUARE_GROUND] =
 {

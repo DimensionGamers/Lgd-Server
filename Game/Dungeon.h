@@ -8,10 +8,10 @@ struct DungeonInstanceData
 	DECLARE_ENUM(uint32, Flags);
 	DECLARE_ENUM(uint16, Gate);
 
-	DECLARE_ENUM(coord_type, MainChestX);
-	DECLARE_ENUM(coord_type, MainChestY);
-	DECLARE_PROPERTY_ARRAY(coord_type, ChestX, MAX_DUNGEON_SECONDARY_CHEST);
-	DECLARE_PROPERTY_ARRAY(coord_type, ChestY, MAX_DUNGEON_SECONDARY_CHEST);
+	DECLARE_ENUM(int16, MainChestX);
+	DECLARE_ENUM(int16, MainChestY);
+	DECLARE_PROPERTY_ARRAY(int16, ChestX, MAX_DUNGEON_SECONDARY_CHEST);
+	DECLARE_PROPERTY_ARRAY(int16, ChestY, MAX_DUNGEON_SECONDARY_CHEST);
 };
 
 struct DungeonInstanceLevel
@@ -62,7 +62,7 @@ class Dungeon
 		DungeonInstanceLevel const* GetInstanceLevel(uint16 level) const;
 		DungeonInstanceLevel const* GetInstanceByLevel(int16 level) const;
 		bool IsDungeon(uint16 world) const;
-		void GetDungeonRespawn(Player* pPlayer, uint16 & world, coord_type & x, coord_type & y);
+		void GetDungeonRespawn(Player* pPlayer, uint16 & world, int16 & x, int16 & y);
 		DungeonInstance * FindInstance(int32 id) const;
 		DungeonInstance * FindInstanceByParty(uint16 id) const;
 		DungeonInstanceSaved * FindPlayerInstance(uint32 id) const;

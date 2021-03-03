@@ -109,9 +109,9 @@ struct QuestGuidedData
 	DECLARE_ENUM(int16, MonsterMaxLevel);
 	DECLARE_ENUM(uint16, DropRate);
 	DECLARE_ENUM(uint16, GateNumber);
-	DECLARE_ENUM(world_type, World);
-	DECLARE_ENUM(coord_type, X);
-	DECLARE_ENUM(coord_type, Y);
+	DECLARE_ENUM(uint16, World);
+	DECLARE_ENUM(int16, X);
+	DECLARE_ENUM(int16, Y);
 	DECLARE_ENUM(uint32, RewardExp);
 	DECLARE_ENUM(uint32, RewardZen);
 	DECLARE_ENUM(uint8, RewardItemType01);

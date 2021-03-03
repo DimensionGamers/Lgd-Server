@@ -1900,16 +1900,16 @@ struct SOLD_ITEM_LIST_HEAD
 	uint8 countL;
 };
 
-struct WARP_RESULT
+struct WARP_RESULT : C1_HEADER
 {
 	WARP_RESULT()
 	{
-		this->h.set(HEADCODE_MOVE_REQUEST, sizeof(WARP_RESULT));
+		this->Set(HEADCODE_MOVE_REQUEST, sizeof(WARP_RESULT));
 		this->result = 0x03;
 		this->unk[0] = 0;
 		this->unk[1] = 0;
 	}
-	PBMSG_HEAD h;
+
 	uint8 result;
 	uint8 unk[2];
 };
@@ -4265,7 +4265,7 @@ struct TELEPORT_REQUEST_TARGET
 
 struct TELEPORT_RESULT
 {
-	TELEPORT_RESULT(uint16 id, world_type world, uint8 x, uint8 y, uint8 direction)
+	TELEPORT_RESULT(uint16 id, uint16 world, uint8 x, uint8 y, uint8 direction)
 	{
 		this->h.setE(HEADCODE_TELEPORT, sizeof(TELEPORT_RESULT));
 		//this->junk = 0x48;

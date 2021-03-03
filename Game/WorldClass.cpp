@@ -118,112 +118,89 @@ World::~World()
 
 const char* World::GetCurrentStatusName()  const
 {
-	if ( this->GetStatus() >= MAX_WORLD_STATUS )
-	{
+	if (GetStatus() >= MAX_WORLD_STATUS)
 		return "";
-	}
-
-	return this->WorldStatus[this->GetStatus()].GetName();
+	else
+		return WorldStatus[GetStatus()].GetName();
 }
 
 bool World::IsCurrentStatusFlag(uint32 flags) const
 {
-	if ( this->GetStatus() >= MAX_WORLD_STATUS )
-	{
+	if (GetStatus() >= MAX_WORLD_STATUS)
 		return false;
-	}
-
-	return (this->WorldStatus[this->GetStatus()].GetFlags() & flags) != 0;
+	else
+		return (WorldStatus[GetStatus()].GetFlags() & flags) != 0;
 }
 	
 uint32 World::GetCurrentStatusExperienceRate() const
 {
-	if ( this->GetStatus() >= MAX_WORLD_STATUS )
-	{
+	if (GetStatus() >= MAX_WORLD_STATUS)
 		return 0;
-	}
-
-	return this->WorldStatus[this->GetStatus()].GetExperienceRate();
+	else
+		return WorldStatus[GetStatus()].GetExperienceRate();
 }
 	
 uint32 World::GetCurrentStatusZenRate() const
 {
-	if ( this->GetStatus() >= MAX_WORLD_STATUS )
-	{
+	if (GetStatus() >= MAX_WORLD_STATUS)
 		return 0;
-	}
-
-	return this->WorldStatus[this->GetStatus()].GetZenRate();
+	else
+		return WorldStatus[GetStatus()].GetZenRate();
 }
 
 uint16 World::GetCurrentGate() const
 {
-	if (this->GetStatus() >= MAX_WORLD_STATUS)
-	{
+	if (GetStatus() >= MAX_WORLD_STATUS)
 		return 0;
-	}
-
-	return this->WorldStatus[this->GetStatus()].GetSpawnGate();
+	else
+		return WorldStatus[GetStatus()].GetSpawnGate();
 }
 
-void World::GetRespawn(world_type & spawn_world, coord_type & x1, coord_type & y1, coord_type & x2, coord_type & y2)
+void World::GetRespawn(uint16 & spawn_world, int16 & x1, int16 & y1, int16 & x2, int16 & y2)
 {
-	if ( this->GetStatus() >= MAX_WORLD_STATUS )
-	{
+	if (GetStatus() >= MAX_WORLD_STATUS)
 		return;
-	}
 
-	WorldStatusData const& StatusData = this->WorldStatus[this->GetStatus()];
-
-	if ( !StatusData.IsActive() )
-	{
+	auto const& status_data = WorldStatus[GetStatus()];
+	if (!status_data.IsActive())
 		return;
-	}
 
-	GateData const* pGate = sTeleport->GetGate(StatusData.GetSpawnGate());
-
-	if ( pGate )
+	auto gate_data = sTeleport->GetGate(status_data.GetSpawnGate());
+	if (gate_data)
 	{
-		spawn_world = pGate->world;
-		x1 = pGate->x1;
-		y1 = pGate->y1;
-		x2 = pGate->x2;
-		y2 = pGate->y2;
+		spawn_world = gate_data->MapId;
+		x1 = gate_data->X1;
+		y1 = gate_data->Y1;
+		x2 = gate_data->X2;
+		y2 = gate_data->Y2;
 	}
 }
 
-void World::GetRespawn(world_type & spawn_world, coord_type & x, coord_type & y)
+void World::GetRespawn(uint16 & spawn_world, int16 & x, int16 & y)
 {
-	if ( this->GetStatus() >= MAX_WORLD_STATUS )
-	{
+	if (GetStatus() >= MAX_WORLD_STATUS)
 		return;
-	}
 
-	WorldStatusData const& StatusData = this->WorldStatus[this->GetStatus()];
-
-	if ( !StatusData.IsActive() )
-	{
+	auto const& status_data = WorldStatus[GetStatus()];
+	if (!status_data.IsActive())
 		return;
-	}
 
-	GateData const* pGate = sTeleport->GetGate(StatusData.GetSpawnGate());
-
-	if ( pGate )
+	auto gate_data = sTeleport->GetGate(status_data.GetSpawnGate());
+	if (gate_data)
 	{
-		if ( World* pWorld = sWorldMgr->GetWorld(pGate->world) )
+		if (World* pWorld = sWorldMgr->GetWorld(gate_data->MapId))
 		{
-			spawn_world = pGate->world;
-
-			pWorld->GetRandomLocation(x, y, pGate->x1, pGate->y1, pGate->x2, pGate->y2);
+			spawn_world = gate_data->MapId;
+			pWorld->GetRandomLocation(x, y, gate_data->X1, gate_data->Y1, gate_data->X2, gate_data->Y2);
 		}
 	}
 }
 
-void World::GetRandomLocation(coord_type & x, coord_type & y, coord_type x1, coord_type y1, coord_type x2, coord_type y2)
+void World::GetRandomLocation(int16 & x, int16 & y, int16 x1, int16 y1, int16 x2, int16 y2)
 {
 	int32 loopcount = 50;
-	coord_type tx = x;
-	coord_type ty = y;
+	int16 tx = x;
+	int16 ty = y;
 
 	x = x1;
 	y = y1;
@@ -258,10 +235,10 @@ void World::GetRandomLocation(coord_type & x, coord_type & y, coord_type x1, coo
 	}
 }
 
-bool World::GetFreeLocation(coord_type & x, coord_type & y, coord_type range_x, coord_type range_y, int32 count)
+bool World::GetFreeLocation(int16 & x, int16 & y, int16 range_x, int16 range_y, int32 count)
 {
-	coord_type tx = x;
-	coord_type ty = y;
+	int16 tx = x;
+	int16 ty = y;
 
 	while ( count-- > 0 )
 	{
@@ -284,7 +261,7 @@ bool World::GetFreeLocation(coord_type & x, coord_type & y, coord_type range_x, 
 	return false;
 }
 
-bool World::GetRandomLocation(coord_type & x, coord_type & y, int32 length) const
+bool World::GetRandomLocation(int16 & x, int16 & y, int32 length) const
 {
 	int32 count = 10;
 	
@@ -295,8 +272,8 @@ bool World::GetRandomLocation(coord_type & x, coord_type & y, int32 length) cons
 		
 	while ( count-- > 0 )
 	{
-		coord_type px = (x - length) + Random(max_length);
-		coord_type py = (y - length) + Random(max_length);
+		int16 px = (x - length) + Random(max_length);
+		int16 py = (y - length) + Random(max_length);
 
 		WorldGrid const& grid = this->GetGrid(px, py);
 
@@ -498,7 +475,7 @@ void World::UpdateItemQueue()
 	}
 }
 
-bool World::add_item(Item item, Unit* owner, coord_type x, coord_type y, bool only_owner, bool visible, bool to_queue)
+bool World::add_item(Item item, Unit* owner, int16 x, int16 y, bool only_owner, bool visible, bool to_queue)
 {
 	if ( this->GetGrid(x, y).IsLocked_1() || this->GetGrid(x, y).IsLocked_2() )
 	{
@@ -602,7 +579,7 @@ void World::ClearItem()
 	this->m_world_item_loop = 0;
 }
 
-WorldGrid World::GetGrid(coord_type x, coord_type y) const
+WorldGrid World::GetGrid(int16 x, int16 y) const
 {
 	if ( !IS_COORDINATE_RANGE(x) || !IS_COORDINATE_RANGE(y) )
 	{
@@ -638,14 +615,14 @@ WorldGrid World::GetGrid(coord_type x, coord_type y) const
 	return *Grid;
 }
 
-bool World::GetRandomDropLocation(coord_type stx, coord_type sty, coord_type & x, coord_type & y, coord_type range_x, coord_type range_y, int32 loop) const
+bool World::GetRandomDropLocation(int16 stx, int16 sty, int16 & x, int16 & y, int16 range_x, int16 range_y, int32 loop) const
 {
 	limitmin(range_x, 1);
 	limitmin(range_y, 1);
 	limitmin(loop, 1);
 
-	coord_type tmp_x = stx;
-	coord_type tmp_y = sty;
+	int16 tmp_x = stx;
+	int16 tmp_y = sty;
 
 	while ( loop-- > 0 )
 	{
@@ -666,7 +643,7 @@ bool World::GetRandomDropLocation(coord_type stx, coord_type sty, coord_type & x
 	return false;
 }
 
-bool World::AddZen(Unit* pUnit, coord_type x, coord_type y, uint32 zen)
+bool World::AddZen(Unit* pUnit, int16 x, int16 y, uint32 zen)
 {
 	WorldGrid const& attr = this->GetGrid(x, y);
 
@@ -679,7 +656,7 @@ bool World::AddZen(Unit* pUnit, coord_type x, coord_type y, uint32 zen)
 	return this->add_item(item, pUnit, x, y, false);
 }
 
-bool World::CheckWall(coord_type sx1, coord_type sy1, coord_type sx2, coord_type sy2) const
+bool World::CheckWall(int16 sx1, int16 sy1, int16 sx2, int16 sy2) const
 {
 	if ( this->GetStatus() >= MAX_WORLD_STATUS )
 	{
@@ -694,14 +671,14 @@ bool World::CheckWall(coord_type sx1, coord_type sy1, coord_type sx2, coord_type
 	}
 
 	int32 Index = WORLD_MAKE_GRID(sx1, sy1);
-	coord_type nx1;
-	coord_type ny1;
-	coord_type d1;
-	coord_type d2;
-	coord_type len1;
-	coord_type len2;
-	coord_type px1 = sx2 - sx1;
-	coord_type py1 = sy2 - sy1;
+	int16 nx1;
+	int16 ny1;
+	int16 d1;
+	int16 d2;
+	int16 len1;
+	int16 len2;
+	int16 px1 = sx2 - sx1;
+	int16 py1 = sy2 - sy1;
 
 	if ( px1 < 0 )
 	{
@@ -769,7 +746,7 @@ bool World::CheckWall(coord_type sx1, coord_type sy1, coord_type sx2, coord_type
 	return true;
 }
 
-void World::ApplyAttribute(coord_type x, coord_type y, uint8 attr, bool apply)
+void World::ApplyAttribute(int16 x, int16 y, uint8 attr, bool apply)
 {
 	if ( !IS_COORDINATE_RANGE(x) || !IS_COORDINATE_RANGE(y) )
 	{
@@ -798,11 +775,11 @@ void World::ApplyAttribute(coord_type x, coord_type y, uint8 attr, bool apply)
 	}
 }
 
-void World::ApplyAttribute(coord_type const* data, uint8 attr, bool apply)
+void World::ApplyAttribute(int16 const* data, uint8 attr, bool apply)
 {
-	for ( coord_type x = data[0]; x <= data[2]; ++x )
+	for ( int16 x = data[0]; x <= data[2]; ++x )
 	{
-		for ( coord_type y = data[1]; y <= data[3]; ++y )
+		for ( int16 y = data[1]; y <= data[3]; ++y )
 		{
 			this->ApplyAttribute(x, y, attr, apply);
 		}
@@ -831,17 +808,17 @@ void World::MakeItemVisible(Player* pPlayer)
 	}
 }
 
-bool World::IsAreaRestriction(coord_type x, coord_type y, uint8 flag) const
+bool World::IsAreaRestriction(int16 x, int16 y, uint8 flag) const
 {
 	for ( WorldAreaList::const_iterator it = this->m_area.begin(); it != this->m_area.end(); ++it )
 	{
 		if ( !(*it)->IsFlags(flag) )
 			continue;
 
-		coord_type x1 = (*it)->GetX() - (*it)->GetRange();
-		coord_type y1 = (*it)->GetY() - (*it)->GetRange();
-		coord_type x2 = (*it)->GetX() + (*it)->GetRange();
-		coord_type y2 = (*it)->GetY() + (*it)->GetRange();
+		int16 x1 = (*it)->GetX() - (*it)->GetRange();
+		int16 y1 = (*it)->GetY() - (*it)->GetRange();
+		int16 x2 = (*it)->GetX() + (*it)->GetRange();
+		int16 y2 = (*it)->GetY() + (*it)->GetRange();
 
 		FIX_COORD(x1);
 		FIX_COORD(y1);

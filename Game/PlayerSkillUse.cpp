@@ -239,8 +239,8 @@ void Player::DurationMagicAttack(uint8 * Packet)
 		lpMsg->y = lpMsg->y / 100;
 	}
 
-	coord_type x = lpMsg->x;
-	coord_type y = lpMsg->y;
+	int16 x = lpMsg->x;
+	int16 y = lpMsg->y;
 
 	/*if (target)
 	{
@@ -334,8 +334,8 @@ void Player::MultiTargetMagicAttack(uint8 * Packet)
 		return;*/
 
 	int32 max_count = sGameServer->GetMultiAttackCount();
-	coord_type x = this->GetLastDurationSkillX();
-	coord_type y = this->GetLastDurationSkillY();
+	int16 x = this->GetLastDurationSkillX();
+	int16 y = this->GetLastDurationSkillY();
 
 	if (skill_info->GetBaseSkill() == SKILL_PLASMA_BALL)
 	{
@@ -2188,7 +2188,7 @@ void Player::GetSkillDarkSideTargets(Unit* pTarget, skill_template const* skill_
 	this->SetRageFighterSkillTarget(target[0]);
 }
 
-void Player::ApplySkillTime(uint16 skill, coord_type x, coord_type y)
+void Player::ApplySkillTime(uint16 skill, int16 x, int16 y)
 {
 	SkillTime* pSkillTime = this->GetSkillTime(skill);
 

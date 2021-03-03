@@ -136,8 +136,8 @@ class BloodCastle: public EventGroundCommon
 		DECLARE_BOOL(StatueKilled);
 		DECLARE_PROPERTY_PTR(Player, WeaponOwner);
 		DECLARE_STRING_FIXED(WeaponOwnerName, MAX_CHARACTER_LENGTH + 1);
-		DECLARE_ENUM(coord_type, WeaponOwnerX);
-		DECLARE_ENUM(coord_type, WeaponOwnerY);
+		DECLARE_ENUM(int16, WeaponOwnerX);
+		DECLARE_ENUM(int16, WeaponOwnerY);
 		
 		DECLARE_PROPERTY(uint8, WeaponLevel);
 		DECLARE_PROPERTY(uint32, Duration);

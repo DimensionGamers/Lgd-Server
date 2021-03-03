@@ -405,7 +405,7 @@ void Guild::UpdateMemberStatus(uint32 guid, int32 server, const char * name)
 	}
 }
 
-bool Guild::LifeStoneTeleport(Player* pPlayer, coord_type & x, coord_type & y)
+bool Guild::LifeStoneTeleport(Player* pPlayer, int16 & x, int16 & y)
 {
 	if ( !this->GetLifeStone() || !this->GetLifeStone()->AIGroup(CS_LIFE_STONE_AI) )
 		return false;

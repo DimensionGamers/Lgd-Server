@@ -240,8 +240,8 @@ public:
 
 static const struct NightmareTeleportData
 {
-	coord_type x;
-	coord_type y;
+	int16 x;
+	int16 y;
 } NightmareTeleport[MAX_NIGHTMARE_STATE] =
 {
 	{79, 100},

@@ -26,7 +26,7 @@ struct MonsterAI
 		virtual bool Update();
 		virtual bool UpdateMovement();
 		virtual bool MoveAttempt();
-		virtual bool MoveAllowed(coord_type x, coord_type y);
+		virtual bool MoveAllowed(int16 x, int16 y);
 
 		virtual void OnCreate() { }
 		virtual void OnRespawn() { }

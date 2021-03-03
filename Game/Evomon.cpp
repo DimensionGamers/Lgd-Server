@@ -214,7 +214,7 @@ uint8 Evomon::ScrollDrop(Player* pPlayer, Item const* pItem, uint8 x, uint8 y)
 	return 1;
 }
 
-void Evomon::ScrollDropResult(Player* pPlayer, uint8 result, world_type world, coord_type x, coord_type y, uint32 duration)
+void Evomon::ScrollDropResult(Player* pPlayer, uint8 result, uint16 world, int16 x, int16 y, uint32 duration)
 {
 	if ( !pPlayer )
 	{

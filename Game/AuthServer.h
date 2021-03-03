@@ -26,7 +26,7 @@ class AuthServer: public TCPClientMgr<AuthServerSocket>
 		void SendPlayerPercent();
 		void PlayerLoginRequest(Player* pPlayer, PlayerLoginStep step);
 		void PlayerLoginResult(uint8 * Packet);
-		void PlayerServerMoveRequest(Player* pPlayer, uint16 server, world_type world, coord_type x, coord_type y, bool channel = false);
+		void PlayerServerMoveRequest(Player* pPlayer, uint16 server, uint16 world, int16 x, int16 y, bool channel = false);
 		void PlayerServerMoveResult(uint8 * Packet);
 		void PlayerServerMoveAuth(Player* pPlayer, uint8 * Packet);
 		void PlayerServerMoveAuthResult(Player* pPlayer, uint8 result);

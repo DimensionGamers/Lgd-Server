@@ -16,17 +16,17 @@ public:
 private:
 	DECLARE_ENUM(uint8, Zone);
 	DECLARE_PROPERTY(int32, CompletedZones);
-	DECLARE_ENUM(world_type, World);
-	DECLARE_ENUM(coord_type, X);
-	DECLARE_ENUM(coord_type, Y);
+	DECLARE_ENUM(uint16, World);
+	DECLARE_ENUM(int16, X);
+	DECLARE_ENUM(int16, Y);
 };
 
 struct ImperialFortressReleaseZone
 {
-	DECLARE_ENUM(coord_type, X1);
-	DECLARE_ENUM(coord_type, Y1);
-	DECLARE_ENUM(coord_type, X2);
-	DECLARE_ENUM(coord_type, Y2);
+	DECLARE_ENUM(int16, X1);
+	DECLARE_ENUM(int16, Y1);
+	DECLARE_ENUM(int16, X2);
+	DECLARE_ENUM(int16, Y2);
 };
 
 typedef std::vector<ImperialFortressReleaseZone*> ImperialFortressReleaseZoneList;
@@ -87,7 +87,7 @@ class ImperialFortressInstance
 		ImperialFortressPlayer* FindPlayer(Player* pPlayer);
 
 		bool IsZoneEmpty() const;
-		bool IsZoneReleased(coord_type x, coord_type y) const;
+		bool IsZoneReleased(int16 x, int16 y) const;
 };
 
 #endif

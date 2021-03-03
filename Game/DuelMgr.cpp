@@ -651,7 +651,7 @@ void DuelMgr::SendDuelRoomStatus(Player* mPlayer)
 	mPlayer->sendPacket(MAKE_PCT(pMsg));
 }
 
-void DuelMgr::GenerateRespawn(Player* pPlayer, world_type & world, coord_type & x, coord_type & y)
+void DuelMgr::GenerateRespawn(Player* pPlayer, uint16 & world, int16 & x, int16 & y)
 {
 	if ( !pPlayer->IsDuelClassic() )
 	{

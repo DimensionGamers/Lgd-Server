@@ -63,7 +63,7 @@ enum DoppelgangerWorldAttribute
 
 static const struct DoppelgangerZoneData
 {
-	world_type world;
+	uint16 world;
 	uint16 gate;
 	uint16 middle;
 } g_DoppelgangerZoneData[MAX_DOPPELGANGER_GROUND][MAX_DOPPELGANGER_ZONE] =
@@ -81,10 +81,10 @@ static const struct DoppelgangerZoneData
 
 struct DoppelgangerAttribute
 {
-	coord_type x1;
-	coord_type y1;
-	coord_type x2;
-	coord_type y2;
+	int16 x1;
+	int16 y1;
+	int16 x2;
+	int16 y2;
 };
 
 static const DoppelgangerAttribute g_DoppelgangerStartAttribute[MAX_DOPPELGANGER_ZONE] =
@@ -110,10 +110,10 @@ static const DoppelgangerAttribute g_DoppelgangerMiddleAttribute =
 
 static const struct DoppelgangerPosition
 {
-	coord_type start_x;
-	coord_type start_y;
-	coord_type end_x;
-	coord_type end_y;
+	int16 start_x;
+	int16 start_y;
+	int16 end_x;
+	int16 end_y;
 } g_DoppelgangerPosition[MAX_DOPPELGANGER_ZONE] =
 {
 	{63, 66, 119, 126},
@@ -130,7 +130,7 @@ MOBS ZONA 4 -> 128, 116
 */
 
 static const uint8 g_DoppelgangerMessage[DOPPELGANGER_MESSAGE_MAX] = { EVENT_MESSAGE_DOPPELGANGER_START, EVENT_MESSAGE_DOPPELGANGER_BOSS, EVENT_MESSAGE_DOPPELGANGER_END };
-static const coord_type g_DoppelgangerGoldenChest[2] = {128, 126};
+static const int16 g_DoppelgangerGoldenChest[2] = {128, 126};
 
 struct DoppelgangerMonster
 {

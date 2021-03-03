@@ -29,11 +29,11 @@ struct InvasionGroupDB
 	DECLARE_ENUM(uint32, ID);
 	DECLARE_ENUM(uint8, Rate);
 	DECLARE_FLAG(uint32, Flag);
-	DECLARE_ENUM(world_type, World);
-	DECLARE_ENUM(coord_type, X1);
-	DECLARE_ENUM(coord_type, Y1);
-	DECLARE_ENUM(coord_type, X2);
-	DECLARE_ENUM(coord_type, Y2);
+	DECLARE_ENUM(uint16, World);
+	DECLARE_ENUM(int16, X1);
+	DECLARE_ENUM(int16, Y1);
+	DECLARE_ENUM(int16, X2);
+	DECLARE_ENUM(int16, Y2);
 };
 
 typedef std::list<InvasionGroupDB*> InvasionGroupListDB;
@@ -96,8 +96,8 @@ class Invasion
 		DECLARE_ENUM(uint32, Group);
 		DECLARE_ENUM(uint32, SubGroup);
 		MonsterDataMap monsters;
-		DECLARE_ENUM(coord_type, X);
-		DECLARE_ENUM(coord_type, Y);
+		DECLARE_ENUM(int16, X);
+		DECLARE_ENUM(int16, Y);
 };
 
 typedef std::vector<Invasion*> InvasionList;

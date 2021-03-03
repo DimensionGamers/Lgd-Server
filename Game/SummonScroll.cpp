@@ -101,7 +101,7 @@ SummonScrollInfo const* SummonScroll::GetSummonScrollInfo(uint16 item) const
 	return nullptr;
 }
 
-bool SummonScroll::CreateSummonScrollMonster(Player* pPlayer, uint16 item, world_type map, coord_type x, coord_type y)
+bool SummonScroll::CreateSummonScrollMonster(Player* pPlayer, uint16 item, uint16 map, int16 x, int16 y)
 {
 	SummonScrollInfo const* pSummonScrollInfo = this->GetSummonScrollInfo(item);
 
@@ -157,8 +157,8 @@ bool SummonScroll::CreateSummonScrollMonster(Player* pPlayer, uint16 item, world
 
 		if( pSummonScrollMonsterInfo )
 		{
-			coord_type px = x;
-			coord_type py = y;
+			int16 px = x;
+			int16 py = y;
 
 			if( !pWorld->GetRandomDropLocation(x, y, px, py, 3, 3, 50) )
 			{

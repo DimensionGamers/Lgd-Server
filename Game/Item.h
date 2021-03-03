@@ -396,9 +396,9 @@ class SerialCreateData
 		DECLARE_ENUM(uint8, CreateType);
 
 		class Unit * owner;
-		world_type world;
-		DECLARE(coord_type, x);
-		DECLARE(coord_type, y);
+		uint16 world;
+		DECLARE(int16, x);
+		DECLARE(int16, y);
 
 		uint16 server;
 		uint32 serial;

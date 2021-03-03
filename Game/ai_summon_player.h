@@ -7,7 +7,7 @@ struct SummonPlayerAI: public MonsterAI
 	virtual ~SummonPlayerAI() {}
 	bool ViewportListAddConditions(Unit* pAdd);
 	virtual bool MoveAttempt();
-	virtual bool MoveAllowed(coord_type x, coord_type y);
+	virtual bool MoveAllowed(int16 x, int16 y);
 	virtual bool SearchEnemy();
 	virtual void OnDie();
 	bool ManageThreat() const { return false; }

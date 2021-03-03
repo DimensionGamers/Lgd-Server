@@ -14,8 +14,8 @@ enum SwampOfDarknessState
 
 static const struct SwampOfDarknessZone
 {
-	coord_type x;
-	coord_type y;
+	int16 x;
+	int16 y;
 } g_SwampOfDarkness[2] = {
 	{ 160, 0 },
 	{ 210, 40 },
@@ -137,7 +137,7 @@ private:
 
 public:
 		bool IsBossZone(Player* pPlayer) const;
-		bool IsBossZone(world_type world, coord_type x1, coord_type y1, coord_type x2, coord_type y2) const;
+		bool IsBossZone(uint16 world, int16 x1, int16 y1, int16 x2, int16 y2) const;
 
 		int32 GetPlayerCount() const;
 		bool IsAllowedToEnter(Player* pPlayer) const;
@@ -152,8 +152,8 @@ public:
 		DECLARE_STRUCT(TickTimer, Time);
 		DECLARE_STRUCT(TickTimer, SecondTimer);
 
-		DECLARE_ENUM(coord_type, WaterMonsterX);
-		DECLARE_ENUM(coord_type, WaterMonsterY);
+		DECLARE_ENUM(int16, WaterMonsterX);
+		DECLARE_ENUM(int16, WaterMonsterY);
 };
 
 #endif

@@ -48,7 +48,7 @@ class Evomon
 		int32 GetEvomonScore(uint8 id, uint16 monster) const;
 		uint8 GetNextEvomon(uint8 id, uint16 monster) const;
 		uint8 ScrollDrop(Player* pPlayer, Item const* pItem, uint8 x, uint8 y);
-		void ScrollDropResult(Player* pPlayer, uint8 result, world_type world = 0, coord_type x = 0, coord_type y = 0, uint32 duration = 0);
+		void ScrollDropResult(Player* pPlayer, uint8 result, uint16 world = 0, int16 x = 0, int16 y = 0, uint32 duration = 0);
 		void SendScore(Player* pPlayer, uint8 result, int32 score);
 		void GiveReward(Player* pPlayer, int32 score);
 		void GiveSpecialReward(Player* pPlayer);

@@ -80,7 +80,7 @@ public:
 		{
 			Object * pObject = nullptr;
 			me()->SetTarget(nullptr);
-			coord_type pos = me()->GetX();
+			int16 pos = me()->GetX();
 			int32 count = me()->GetAttackRange() + 1;
 
 			for( int32 n = 0; n < count; ++n )
@@ -109,7 +109,7 @@ public:
 		{
 			Object * pObject = nullptr;
 			me()->SetTarget(nullptr);
-			coord_type pos = me()->GetY();
+			int16 pos = me()->GetY();
 			int32 count = me()->GetAttackRange() + 1;
 
 			for( int32 n = 0; n < count; ++n )

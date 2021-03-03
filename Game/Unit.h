@@ -10,10 +10,10 @@
 
 struct PathPosition
 {
-	DECLARE_ENUM(coord_type, Ori);
-	DECLARE_ENUM(coord_type, X);
-	DECLARE_ENUM(coord_type, Y);
-	DECLARE_ENUM(coord_type, Dir);
+	DECLARE_ENUM(int16, Ori);
+	DECLARE_ENUM(int16, X);
+	DECLARE_ENUM(int16, Y);
+	DECLARE_ENUM(int16, Dir);
 
 	void Reset()
 	{
@@ -340,14 +340,14 @@ class Unit: public Object
 		void SendCustomObjectData();
 
 		void ActionSend(uint16 target, uint8 action, uint8 direction, bool me = false);
-		void PositionSend(coord_type x, coord_type y);
+		void PositionSend(int16 x, int16 y);
 		void EffectSend(uint8 effect);
 		void StateInfoSend(uint16 buff, uint8 state);
 		void StateInfoSendSingle(Player* pPlayer, uint16 buff, uint8 state);
 
-		void SetLocation(coord_type x, coord_type y, uint8 direction);
+		void SetLocation(int16 x, int16 y, uint8 direction);
 		void UpdateLastLocation();
-		void UpdateLastLocation(world_type world_id, coord_type x, coord_type y, int32 instance, uint8 direction);
+		void UpdateLastLocation(uint16 world_id, int16 x, int16 y, int32 instance, uint8 direction);
 		virtual void UpdateDelayedTeleport();
 		void CancelDelayedTeleport();
 		
@@ -362,7 +362,7 @@ class Unit: public Object
 		virtual void UpdatePowers(uint8 type, bool max = false) = 0;
 
 		virtual bool MoveToGate(uint16 gate);
-		virtual void GetValidCoordinates(uint16 gate, world_type & world, coord_type & x, coord_type & y);
+		virtual void GetValidCoordinates(uint16 gate, uint16 & world, int16 & x, int16 & y);
 
 		int32 MagicAdd(uint16 skill, uint8 level, bool weapon = false);
 		int32 MagicRemove(uint16 skill);
@@ -384,19 +384,19 @@ class Unit: public Object
 			return (GetTickCount() - this->GetShieldTick()) < (4 * IN_MILLISECONDS);
 		}
 
-		virtual void TeleportToLocation(world_type world, coord_type x, coord_type y, uint8 direction, int32 instance); // Lo mueve a una zona definida
-		virtual void TeleportToLocation(world_type world);
+		virtual void TeleportToLocation(uint16 world, int16 x, int16 y, uint8 direction, int32 instance); // Lo mueve a una zona definida
+		virtual void TeleportToLocation(uint16 world);
 		virtual void TeleportToLocation(); // Lo mueve al ultimo lugar donde estuvo
 		virtual void TeleportToObject(Unit* pUnit);
-		virtual bool TeleportAreaCheck(coord_type x, coord_type y);
-		virtual void StartRegen(world_type world, coord_type x, coord_type y, uint8 direction, int32 instance, uint16 gate_id = 0) { }
+		virtual bool TeleportAreaCheck(int16 x, int16 y);
+		virtual void StartRegen(uint16 world, int16 x, int16 y, uint8 direction, int32 instance, uint16 gate_id = 0) { }
 
-		static uint8 GetPathPacketDirPos(coord_type px, coord_type py);
+		static uint8 GetPathPacketDirPos(int16 px, int16 py);
 
 		bool IsRest() const { return this->GetRest() != 0; }
 
 		bool IsInDragonTower() const;
-		static bool IsInDragonTower(coord_type x1, coord_type y1, coord_type x2, coord_type y2);
+		static bool IsInDragonTower(int16 x1, int16 y1, int16 x2, int16 y2);
 
 		virtual int32 GetBookHitCount() const { return 5; }
 
@@ -416,7 +416,7 @@ class Unit: public Object
 		void KillCountDecrease(uint8 count);
 		void KillCountReset();
 
-		void GenerateRandomLocation(World* pWorld, coord_type &x, coord_type &y, int32 length, uint8 exclude, int32 instance);
+		void GenerateRandomLocation(World* pWorld, int16 &x, int16 &y, int32 length, uint8 exclude, int32 instance);
 
 		int32 PowerGetTotal(uint8 id) const;
 		int32 PowerGet(uint8 id) const;
@@ -490,7 +490,7 @@ class Unit: public Object
 		void PushBackSimple(Unit* mTarget);
 		void PushBackCount(Unit* mTarget, uint8 count);
 		bool PushBackAllowed();
-		bool PushBackCheck(coord_type & x, coord_type & y, int32 & direction);
+		bool PushBackCheck(int16 & x, int16 & y, int32 & direction);
 
 		bool MissCheck(Unit * pTarget, Skill* pSkill, bool send, int32 count, bool & miss_all);
 		bool MissCheckNormal(Unit * pTarget, Skill* pSkill, bool send, int32 count, bool & miss_all);
@@ -507,8 +507,8 @@ class Unit: public Object
 		int32 GetMajesticSpecialDamage(int32 t_defense, uint16 & damage_type, Skill const* mSkill, Unit* pTarget);
 		
 		void SkillAngleCalculate(float angle, float tx, float ty, float sx, float sy, bool convert = true, int32 add_x = -1, int32 add_y = -1);
-		bool SkillInAngle(coord_type x, coord_type y);
-		int32 GetAngle(coord_type x, coord_type y);
+		bool SkillInAngle(int16 x, int16 y);
+		int32 GetAngle(int16 x, int16 y);
 
 		virtual void GetPartyMembers(Unit* mMember[MAX_PARTY_MEMBERS], uint8 & count, uint8 distance);
 
@@ -518,7 +518,7 @@ class Unit: public Object
 
 		virtual void SkillGetDamage(uint16 skill, int32 & damage_min, int32 & damage_max);
 		void RunNova();
-		void SkillTeleportUse(coord_type x, coord_type y);
+		void SkillTeleportUse(int16 x, int16 y);
 		void UpdateTeleport();
 		
 		void MissSend(Unit* pTarget, Skill* pSkill, bool send, int32 count, uint16 effect = 0);
@@ -566,7 +566,7 @@ class Unit: public Object
 		void UpdateOldPower();
 		void ApplyOldPower();
 
-		void MoveSend(coord_type x, coord_type y, uint8 dir);
+		void MoveSend(int16 x, int16 y, uint8 dir);
 
 		virtual bool InmuneToRadiance() const = 0;
 		virtual bool InmuneToPunish(Player* pPlayer) = 0;
@@ -584,8 +584,8 @@ class Unit: public Object
 
 		DECLARE_ENUM(RegenStatus, RegenStatus);
 
-		DECLARE_PROPERTY(coord_type, TX);
-		DECLARE_PROPERTY(coord_type, TY);
+		DECLARE_PROPERTY(int16, TX);
+		DECLARE_PROPERTY(int16, TY);
 
 		DECLARE_BOOL(DelayedTeleport);
 		DECLARE_PROPERTY(int16, DelayedTeleportTime);
@@ -602,8 +602,8 @@ class Unit: public Object
 		DECLARE_PROPERTY(uint8, CastleSiegeJoinSide);
 		DECLARE_PROPERTY(uint8, KillCount);
 		DECLARE_BOOL(ForceUpgrade);
-		DECLARE_PROPERTY_ARRAY(coord_type, SkillAngleX, MAX_ARRAY_FRUSTRUM);
-		DECLARE_PROPERTY_ARRAY(coord_type, SkillAngleY, MAX_ARRAY_FRUSTRUM);
+		DECLARE_PROPERTY_ARRAY(int16, SkillAngleX, MAX_ARRAY_FRUSTRUM);
+		DECLARE_PROPERTY_ARRAY(int16, SkillAngleY, MAX_ARRAY_FRUSTRUM);
 		DECLARE_STRUCT(PathData, PathData);
 		DECLARE_PROPERTY_PTR(Unit, Killer);
 
@@ -627,8 +627,8 @@ class Unit: public Object
 		DECLARE_PTR(Unit, LastAttacker);
 
 		// Almacena las coordenadas hacia donde tiene intencion de moverse
-		DECLARE_ENUM(coord_type, TempX);
-		DECLARE_ENUM(coord_type, TempY);
+		DECLARE_ENUM(int16, TempX);
+		DECLARE_ENUM(int16, TempY);
 
 		UnitPunishMap punish_map;
 };

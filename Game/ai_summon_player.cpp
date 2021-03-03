@@ -17,7 +17,7 @@ bool SummonPlayerAI::MoveAttempt()
 	return true;
 }
 
-bool SummonPlayerAI::MoveAllowed(coord_type x, coord_type y)
+bool SummonPlayerAI::MoveAllowed(int16 x, int16 y)
 {
 	return me()->GetWorld()->GetGrid(x, y).IsSummonedMoveAllowed();
 }
