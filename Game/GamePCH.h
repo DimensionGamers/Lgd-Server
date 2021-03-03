@@ -121,7 +121,6 @@ class MuRoomyInfo;
 #include "WorldPath.h"
 #include "Object.h"
 #include "BuffDef.h"
-#include "MuunDef.h"
 #include "QuestDef.h"
 #include "LabyrinthDimensionsDef.h"
 #include "PlayerDef.h"
