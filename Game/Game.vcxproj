@@ -219,7 +219,6 @@
     <ClInclude Include="MonsterThreat.h" />
     <ClInclude Include="MossMerchant.h" />
     <ClInclude Include="MuRoomy.h" />
-    <ClInclude Include="MuunDef.h" />
     <ClInclude Include="MuunScript.h" />
     <ClInclude Include="MuunSystem.h" />
     <ClInclude Include="NixiesLake.h" />

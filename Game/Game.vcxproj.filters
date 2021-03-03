@@ -458,9 +458,6 @@
     <ClInclude Include="MiningSystem.h">
       <Filter>Misc</Filter>
     </ClInclude>
-    <ClInclude Include="MuunDef.h">
-      <Filter>Misc</Filter>
-    </ClInclude>
     <ClInclude Include="MuunSystem.h">
       <Filter>Misc</Filter>
     </ClInclude>
