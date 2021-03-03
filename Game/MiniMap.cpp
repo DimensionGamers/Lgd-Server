@@ -5,101 +5,84 @@ MiniMap::MiniMap()
 
 MiniMap::~MiniMap()
 {
-	for ( MiniMapInfoMap::iterator it = this->m_MiniMapInfo.begin(); it != this->m_MiniMapInfo.end(); ++it )
+	for (auto it = _miniMapInfo.begin(); it != _miniMapInfo.end(); ++it)
 	{
-		LIST_CLEAR(MiniMapInfoList::iterator, it->second);
+		CLEAR_LIST(it->second);
 	}
 
-	this->m_MiniMapInfo.clear();
+	_miniMapInfo.clear();
 }
 
 void MiniMap::Load()
 {
-	sLog->outInfo(LOG_DEFAULT, "Loading Mini Map...");
+	sLog->outLoad(true, "Loading Mini Map...");
 
-	for ( MiniMapInfoMap::iterator it = this->m_MiniMapInfo.begin(); it != this->m_MiniMapInfo.end(); ++it )
+	for (auto it = _miniMapInfo.begin(); it != _miniMapInfo.end(); ++it)
 	{
-		LIST_CLEAR(MiniMapInfoList::iterator, it->second);
+		CLEAR_LIST(it->second);
 	}
 
-	this->m_MiniMapInfo.clear();
+	_miniMapInfo.clear();
 
 	uint32 count = 0;
 
-	QueryResult result = GameServerDatabase.PQuery("SELECT * FROM mini_map i WHERE i.server = '%u'", sGameServer->GetTransferServer());
-
-	if ( result )
+	auto result = GameServerDatabase.PQuery("SELECT * FROM mini_map i WHERE i.server = '%u'", sGameServer->GetTransferServer());
+	if (result)
 	{
 		do
 		{
-			Field* fields = result->Fetch();
-			int32 i = 0;
+			FieldReader reader(result->Fetch());
 
 			MiniMapInfo * info = new MiniMapInfo;
 
-			info->SetWorld(fields[i++].GetUInt16());
-			info->SetIndex(fields[i++].GetUInt8());
-			info->SetGroup(fields[i++].GetUInt8());
-			info->SetType(fields[i++].GetUInt8());
-			info->SetX(fields[i++].GetInt16());
-			info->SetY(fields[i++].GetInt16());
-			info->SetText(fields[i++].GetString().c_str());
+			info->SetWorld(reader.GetUInt16());
+			info->SetIndex(reader.GetUInt8());
+			info->SetGroup(reader.GetUInt8());
+			info->SetType(reader.GetUInt8());
+			info->SetX(reader.GetInt16());
+			info->SetY(reader.GetInt16());
+			info->SetText(reader.GetString().c_str());
 
-			this->m_MiniMapInfo[info->GetWorld()].push_back(info);
+			_miniMapInfo[info->GetWorld()].push_back(info);
 			count++;
-		}
-		while(result->NextRow());
+		} while (result->NextRow());
 	}
-	
-	sLog->outInfo(LOG_DEFAULT, ">> Loaded %u mini map definitions", count);
-	sLog->outInfo(LOG_DEFAULT, " ");
+
+	sLog->outLoad(false, ">> Loaded %u mini map definitions", count);
 }
 
-void MiniMap::CGMiniMapStartPartyInfoRecv(Player* pPlayer)
+void MiniMap::CGMiniMapStartPartyInfoRecv(Player* player)
 {
-	if ( !pPlayer )
-	{
+	if (!player)
 		return;
-	}
 
-	pPlayer->SetMiniMapState(true);
+	player->SetMiniMapState(true);
 
-	this->GCMiniMapInfoSend(pPlayer);
+	GCMiniMapInfoSend(player);
 }
 
-void MiniMap::CGMiniMapClosePartyInfoRecv(Player* pPlayer)
+void MiniMap::CGMiniMapClosePartyInfoRecv(Player* player)
 {
-	if ( !pPlayer )
-	{
+	if (!player)
 		return;
-	}
 
-	pPlayer->SetMiniMapState(false);
+	player->SetMiniMapState(false);
 }
 
-void MiniMap::CGMiniMapInfoRecv(Player* pPlayer, uint8 * Packet)
+void MiniMap::CGMiniMapInfoRecv(Player* player, uint8 * packet)
 {
-	if ( !pPlayer )
-	{
+	if (!player)
 		return;
-	}
-
-	
 }
 
-void MiniMap::GCMiniMapPartyInfoSend(Player* pPlayer)
+void MiniMap::GCMiniMapPartyInfoSend(Player* player)
 {
-	if (!pPlayer || !pPlayer->IsMiniMapState())
-	{
+	if (!player || !player->IsMiniMapState())
 		return;
-	}
 
-	Party* pParty = pPlayer->GetParty();
-
-	if (!pParty)
-	{
+	auto party = player->GetParty();
+	if (!party)
 		return;
-	}
 
 	uint8 buffer[256];
 	POINTER_PCT(MINI_MAP_PARTY_HEAD, head, buffer, 0);
@@ -108,58 +91,48 @@ void MiniMap::GCMiniMapPartyInfoSend(Player* pPlayer)
 
 	for (int32 n = 0; n < MAX_PARTY_MEMBERS; ++n)
 	{
-		if (pParty->GetMember(n)->GetStatus() != PARTY_USER_FLAG_PLAYING)
-		{
+		if (party->GetMember(n)->GetStatus() != PARTY_USER_FLAG_PLAYING)
 			continue;
-		}
 
-		auto pMember = pParty->GetMember(n)->GetPlayer();
-		if (!pMember)
-		{
+		auto member = party->GetMember(n)->GetPlayer();
+		if (!member)
 			continue;
-		}
 
 		auto & data = body[head->count++];
 
-		memcpy(data.name, pMember->GetName(), MAX_CHARACTER_LENGTH + 1);
-		data.map = pMember->GetDisplayWorld();
-		data.x = pMember->GetX();
-		data.y = pMember->GetY();
+		memcpy(data.name, member->GetName(), MAX_CHARACTER_LENGTH + 1);
+		data.map = member->GetDisplayWorld();
+		data.x = member->GetX();
+		data.y = member->GetY();
 	}
 
 	head->Set(0xE7, 0x01, sizeof(MINI_MAP_PARTY_HEAD)+(head->count * sizeof(MINI_MAP_PARTY_BODY)));
-	pPlayer->sendPacket(buffer);
+	player->sendPacket(buffer);
 }
 
-void MiniMap::GCMiniMapInfoSend(Player* pPlayer)
+void MiniMap::GCMiniMapInfoSend(Player* player)
 {
-	if( pPlayer->GetMiniMapWorld() == pPlayer->GetWorldId() )
-	{
+	if (player->GetMiniMapWorld() == player->GetWorldId())
 		return;
-	}
 
-	pPlayer->SetMiniMapWorld(pPlayer->GetWorldId());
+	player->SetMiniMapWorld(player->GetWorldId());
 
-	MiniMapInfoMap::const_iterator itr = this->m_MiniMapInfo.find(pPlayer->GetWorldId());
-
-	if ( itr == this->m_MiniMapInfo.end() )
-	{
+	auto itr = _miniMapInfo.find(player->GetWorldId());
+	if (itr == _miniMapInfo.end())
 		return;
-	}
 
-	for( MiniMapInfoList::const_iterator it = itr->second.begin(); it != itr->second.end(); ++it )
+	for (auto & info : itr->second)
 	{
 		PMSG_MINI_MAP_INFO_SEND pMsg;
-		pMsg.index = (*it)->GetIndex();
-		pMsg.group = (*it)->GetGroup();
-		pMsg.type = (*it)->GetType();
+		pMsg.index = info->GetIndex();
+		pMsg.group = info->GetGroup();
+		pMsg.type = info->GetType();
 		pMsg.flag = 0;
-		pMsg.x = (*it)->GetX();
-		pMsg.y = (*it)->GetY();
-		memcpy(pMsg.text, (*it)->GetText(), 32);
+		pMsg.x = info->GetX();
+		pMsg.y = info->GetY();
+		memcpy(pMsg.text, info->GetText(), 32);
 		pMsg.text[32] = 0;
 
-
-		pPlayer->SEND_PCT(pMsg);
+		player->SendPacket(&pMsg);
 	}
 }
