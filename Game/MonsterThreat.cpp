@@ -122,7 +122,7 @@ void MonsterThreat::Update()
 		if ( pPlayer->HasBuff(BUFF_INVISIBILITY) )
 			continue;
 
-		if ( !IN_RANGE(GetOwner(), pPlayer, (GetOwner()->GetViewRange() + 2)) )
+		if ( !IN_RANGE(GetOwner(), pPlayer, (GetOwner()->GetMonsterTemplate()->ViewRange + 2)) )
 			continue;
 
 		this->AddThreat(pPlayer, 0);
@@ -190,7 +190,7 @@ void MonsterThreat::UpdateThreat()
 			continue;
 		}
 
-		if (!IN_RANGE(GetOwner(), pPlayer, (GetOwner()->GetViewRange() + 2)))
+		if (!IN_RANGE(GetOwner(), pPlayer, (GetOwner()->GetMonsterTemplate()->ViewRange + 2)))
 		{
 			delete it->second;
 			this->m_ThreatMap.erase(it++);

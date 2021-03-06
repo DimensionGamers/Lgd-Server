@@ -217,38 +217,31 @@ int32 TormentedSquareGround::GetStageScore() const
 
 void TormentedSquareGround::AddMonster()
 {
-	for ( MonsterEventList::const_iterator it = sMonsterMgr->monster_event_list.begin(); it != sMonsterMgr->monster_event_list.end(); ++it )
+	auto event_monsters = sMonsterManager->GetEventMonsters(EVENT_TORMENTED_SQUARE);
+	for (auto itr = event_monsters.first; itr != event_monsters.second; ++itr)
 	{
-		if ( (*it)->GetEventID() != EVENT_TORMENTED_SQUARE )
-		{
+		auto const& event_monster = itr->second;
+
+		if (event_monster->tormented_square.ground != GetGround())
 			continue;
-		}
 
-		if ( (*it)->tormented_square.ground != this->GetGround() )
-		{
+		if (event_monster->tormented_square.stage != (GetStage() - 1))
 			continue;
-		}
 
-		if ( (*it)->tormented_square.stage != (this->GetStage() - 1) )
+		auto monster = sObjectMgr->MonsterTryAdd(event_monster->MonsterId, event_monster->MapId);
+		if (monster)
 		{
-			continue;
-		}
+			monster->SetEventDBData(event_monster);
+			monster->SetRespawnType(event_monster->tormented_square.boss != 0 ? GAME_OBJECT_RESPAWN_DELETE : GAME_OBJECT_RESPAWN_NORMAL);
+			monster->SetEventGround(event_monster->tormented_square.ground);
+			monster->SetEventStage(event_monster->tormented_square.stage);
+			monster->SetMoveDistance(60);
+			monster->AddToWorld();
 
-		Monster* pMonster = sObjectMgr->MonsterTryAdd((*it)->GetID(), (*it)->GetWorld());
-
-		if ( pMonster )
-		{
-			pMonster->SetEventDBData(*it);
-			pMonster->SetRespawnType((*it)->tormented_square.boss != 0 ? GAME_OBJECT_RESPAWN_DELETE : GAME_OBJECT_RESPAWN_NORMAL);
-			pMonster->SetEventGround((*it)->tormented_square.ground);
-			pMonster->SetEventStage((*it)->tormented_square.stage);
-			pMonster->SetMoveDistance(60);
-			pMonster->AddToWorld();
-
-			if ( pMonster->GetClass() == 709 ||
-				 pMonster->GetClass() == 710 ||
-				 pMonster->GetClass() == 711 ||
-				 pMonster->GetClass() == 712 )
+			if (monster->GetClass() == 709 ||
+				monster->GetClass() == 710 ||
+				monster->GetClass() == 711 ||
+				monster->GetClass() == 712)
 			{
 				TORMENTED_SQUARE_CHAOS_GOBLIN pMsg;
 				this->SendPacket((uint8*)&pMsg, pMsg.h.get_size());

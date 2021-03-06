@@ -308,21 +308,20 @@ bool MainApplication::Run()
 
 	sScriptAI->LoadScriptAI();
 
-	sMonsterMgr->LoadMonsterTemplate();
-	sMonsterMgr->LoadMonsterTemplateCustom();
-	sMonsterMgr->LoadMonsterItems();
-	sMonsterMgr->LoadMonsterSkill();
-	sMonsterMgr->LoadMonsterSkillSpecial();
-	sMonsterMgr->LoadMonsterAIElement();
-	sMonsterMgr->LoadMonsterAIAutomata();
-	sMonsterMgr->LoadMonsterAIUnit();
-	sMonsterMgr->LoadMonsterAIGroup();
-	sMonsterMgr->LoadMonsterRespawnLocation();
-	sMonsterMgr->LoadMonsterEquipment();
-	sMonsterMgr->LoadMonsterExclusive();
-	sMonsterMgr->LoadMonster();
-	sMonsterMgr->LoadMonsterEvent();
-	sMonsterMgr->SetLastUpdate(time(nullptr));
+	sMonsterManager->LoadMonsterTemplate();
+	sMonsterManager->LoadMonsterItems();
+	sMonsterManager->LoadMonsterSkill();
+	sMonsterManager->LoadMonsterSkillSpecial();
+	sMonsterManager->LoadMonsterAIElement();
+	sMonsterManager->LoadMonsterAIAutomata();
+	sMonsterManager->LoadMonsterAIUnit();
+	sMonsterManager->LoadMonsterAIGroup();
+	sMonsterManager->LoadMonsterRespawnLocation();
+	sMonsterManager->LoadMonsterEquipment();
+	sMonsterManager->LoadMonsterExclusive();
+	sMonsterManager->LoadMonster();
+	sMonsterManager->LoadMonsterEvent();
+	sMonsterManager->SetLastUpdate(time(nullptr));
 
 	sTeleport->LoadGateTemplate();
 	sTeleport->LoadTeleportTemplate();

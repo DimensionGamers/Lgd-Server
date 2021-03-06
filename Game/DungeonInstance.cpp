@@ -157,34 +157,29 @@ void DungeonInstance::AddPlayer(Player* pPlayer)
 
 void DungeonInstance::AddMonster()
 {
-	for (MonsterEventList::const_iterator it = sMonsterMgr->monster_event_list.begin(); it != sMonsterMgr->monster_event_list.end(); ++it)
+	auto event_monsters = sMonsterManager->GetEventMonsters(EVENT_INSTANCED_DUNGEON);
+	for (auto itr = event_monsters.first; itr != event_monsters.second; ++itr)
 	{
-		if ((*it)->GetEventID() != EVENT_INSTANCED_DUNGEON)
-		{
+		auto const& event_monster = itr->second;
+
+		if (event_monster->dungeon.id != this->GetID())
 			continue;
-		}
 
-		if ((*it)->dungeon.id != this->GetID())
+		auto monster = sObjectMgr->MonsterTryAdd(event_monster->MonsterId, event_monster->MapId);
+		if (monster)
 		{
-			continue;
-		}
+			monster->SetEventDBData(event_monster);
+			monster->SetRespawnType(GAME_OBJECT_RESPAWN_DELETE);
+			monster->SetRespawnLocation(MONSTER_RESPAWN_ZONE);
+			monster->SetRespawn(IN_MILLISECONDS);
 
-		Monster* pMonster = sObjectMgr->MonsterTryAdd((*it)->GetID(), (*it)->GetWorld());
+			monster->AddAdditionalDataInt(0, GetInstance());
+			monster->AddAdditionalDataInt(1, GetLevelID());
 
-		if (pMonster)
-		{
-			pMonster->SetEventDBData(*it);
-			pMonster->SetRespawnType(GAME_OBJECT_RESPAWN_DELETE);
-			pMonster->SetRespawnLocation(MONSTER_RESPAWN_ZONE);
-			pMonster->SetRespawn(IN_MILLISECONDS);
+			monster->SetInstance(GetInstance());
+			monster->AddToWorld();
 
-			pMonster->AddAdditionalDataInt(0, this->GetInstance());
-			pMonster->AddAdditionalDataInt(1, this->GetLevelID());
-
-			pMonster->SetInstance(this->GetInstance());
-			pMonster->AddToWorld();
-
-			sLog->outInfo("instanced_dungeon", "%s (%d) :: Added Monster [%u][%u].", __FUNCTION__, this->GetInstance(), pMonster->GetEntry(), pMonster->GetClass());
+			sLog->outInfo("instanced_dungeon", "%s (%d) :: Added Monster [%u][%u].", __FUNCTION__, GetInstance(), monster->GetEntry(), monster->GetClass());
 		}
 	}
 }

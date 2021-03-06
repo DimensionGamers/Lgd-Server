@@ -180,7 +180,7 @@ bool Monster::GetOwnerPosition(int16 &tx, int16 &ty)
 
 bool Monster::GetTargetPosition(int16 sx, int16 sy, int16 &tx, int16 &ty)
 {
-	int32 dis = this->GetAttackRange();
+	int32 dis = _monsterTemplate->AttackRange;
 
 	int16 tpx = sx;
 	int16 tpy = sy;
@@ -242,7 +242,7 @@ bool Monster::GetTargetPosition()
 	if ( !pTarget )
 		return false;
 
-	if ( this->GetMoveRange() <= 0 || this->HasRestrictionBuff() )
+	if (_monsterTemplate->MovementRange <= 0 || this->HasRestrictionBuff())
 		return false;
 
 	if ( pTarget->IsInTeleportInmuneState() )
@@ -257,7 +257,7 @@ bool Monster::GetTargetPosition()
 	int16 mtx = tpx;
 	int16 mty = tpy;
 
-	int32 dis = this->GetAttackRange();
+	int32 dis = _monsterTemplate->AttackRange;
 
 	if ( this->GetX() < mtx )
 	{
@@ -316,15 +316,15 @@ void Monster::MoveAttempt()
 
 	AI_CONTROL(MoveAttempt());
 
-	int32 maxmoverange = this->GetMoveRange() * 2 + 1;
+	int32 maxmoverange = _monsterTemplate->MovementRange * 2 + 1;
 	this->SetNextActionTime(1000);
 	int16 tpx;
 	int16 tpy;
 
 	for ( int32 i = 0; i < 10; ++i )
 	{
-		tpx = (this->GetX() - this->GetMoveRange()) + Random(maxmoverange);
-		tpy = (this->GetY() - this->GetMoveRange()) + Random(maxmoverange);
+		tpx = (this->GetX() - _monsterTemplate->MovementRange) + Random(maxmoverange);
+		tpy = (this->GetY() - _monsterTemplate->MovementRange) + Random(maxmoverange);
 
 		FIX_COORD(tpx);
 		FIX_COORD(tpy);
@@ -506,15 +506,15 @@ bool Monster::MoveBack()
 
 bool Monster::GetXYToPatrol()
 {
-	int32 maxmoverange = this->GetMoveRange() * 2 + 1;
+	int32 maxmoverange = _monsterTemplate->MovementRange * 2 + 1;
 	this->SetNextActionTime(1000);
 	int16 tpx = this->GetX();
 	int16 tpy = this->GetY();
 
 	for ( int32 i = 0; i < 10; ++i )
 	{
-		tpx = (this->GetX() - this->GetMoveRange()) + Random(maxmoverange);
-		tpy = (this->GetY() - this->GetMoveRange()) + Random(maxmoverange);
+		tpx = (this->GetX() - _monsterTemplate->MovementRange) + Random(maxmoverange);
+		tpy = (this->GetY() - _monsterTemplate->MovementRange) + Random(maxmoverange);
 
 		if ( this->SetMoveCoordinatesNormal(tpx, tpy) )
 			return true;
@@ -536,7 +536,7 @@ bool Monster::GetXYToEscape()
 	int16 mty = tpy;
 	int16 tx = GetX();
 	int16 ty = GetY();
-	int32 dis = this->GetAttackRange() / sqrt(2.0);
+	int32 dis = _monsterTemplate->AttackRange / sqrt(2.0);
 
 	Path::FixCoordinate(tx, mtx, dis);
 	Path::FixCoordinate(ty, mty, dis);
@@ -576,7 +576,7 @@ bool Monster::GetXYToChase()
 	int16 mtx = tpx;
 	int16 mty = tpy;
 
-	int32 dis = this->GetAttackRange() / sqrt(2.0);
+	int32 dis = _monsterTemplate->AttackRange / sqrt(2.0);
 
 	if ( GetX() < mtx )
 	{

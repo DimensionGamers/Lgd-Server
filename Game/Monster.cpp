@@ -26,11 +26,9 @@ void Monster::reset()
 	this->SetSendType(MAIN_OBJECT_MONSTER);
 	this->ResetName();
 	this->SetClass(uint16(-1));
-	this->SetModel(-1);
 	this->ResetSpawnX(0);
 	this->ResetSpawnY(0);
 	this->SetRespawnDistance(0);
-	this->SetMoveRange(0);
 	this->SetRespawnType(GAME_OBJECT_RESPAWN_NONE);
 	this->SetRespawnLocation(MONSTER_RESPAWN_NORMAL);
 	this->SetMoveDistance(0);
@@ -47,8 +45,6 @@ void Monster::reset()
 	this->SetLevel(0);
 
 	this->SetZen(0);
-	this->SetZenRate(0);
-	this->SetItemRate(0);
 	this->SetBattleDelay(0);
 	this->SetDespawnType(MONSTER_DESPAWN_NONE);
 
@@ -62,8 +58,6 @@ void Monster::reset()
 		this->GetSkillElement(i)->Reset();
 	}
 
-	this->ResetRegenPower(0.0f);
-	this->ResetRefillTime(0);
 	this->ResetRefillTick(0);
 
 	this->talk_reference_list.clear();
@@ -73,7 +67,6 @@ void Monster::reset()
 
 	this->EraseAI();
 
-	this->SetCustom(false);
 	this->ResetItemBag();
 	this->ResetScriptName();
 
@@ -124,11 +117,6 @@ void Monster::reset()
 
 	this->SetKillID(0);
 	this->GetTeleportOutOfRangeTime()->Reset();
-
-	this->SetRadianceImmune(0);
-
-	this->SetElite(false);
-	this->SetDamageAbsorb(0);
 
 	this->Unit::Init();
 }
@@ -183,33 +171,25 @@ void Monster::UpdateTalkReference()
 
 void Monster::PowerRefill()
 {
-	if ( !this->IsViewportEmpty() )
-	{
+	if (!IsViewportEmpty())
 		return;
-	}
 
-	if ( this->HasBuff(BUFF_NARS_CLONE) )
-	{
+	if (HasBuff(BUFF_NARS_CLONE))
 		return;
-	}
 
-	if ( MyGetTickCount() < this->GetRegenPowerTime() )
-	{
+	if (MyGetTickCount() < GetRegenPowerTime())
 		return;
-	}
-
-	TCType cur_time = MyGetTickCount();
 
 	POWER_LOOP(i)
 	{
-		if ( this->PowerGet(i) >= this->PowerGetTotal(i) || !this->GetRefillTime(i) || this->GetRegenPower(i) <= 0.0f )
+		if (this->PowerGet(i) >= this->PowerGetTotal(i) || !_monsterTemplate->StatRecoveryTime[i] || _monsterTemplate->StatRecovery[i] <= 0.0f)
 			continue;
 
-		if ( (cur_time - this->GetRefillTick(i)) > this->GetRefillTime(i) )
+		if ((MyGetTickCount() - this->GetRefillTick(i)) > _monsterTemplate->StatRecoveryTime[i])
 		{
-			this->SetRefillTick(i, cur_time);
+			this->SetRefillTick(i, MyGetTickCount());
 
-			this->PowerIncrease(i, this->PowerGetMax(i) * this->GetRegenPower(i) / 100.0f, true);
+			this->PowerIncrease(i, this->PowerGetMax(i) * _monsterTemplate->StatRecovery[i] / 100.0f, true);
 		}
 	}
 }
@@ -252,7 +232,7 @@ void Monster::Respawn()
 {
 	AI_CONTROL(StopRespawn());
 		
-	if ( this->GetLastUpdate() != sMonsterMgr->GetLastUpdate() && this->GetEventId() == EVENT_NONE )
+	if ( this->GetLastUpdate() != sMonsterManager->GetLastUpdate() && this->GetEventId() == EVENT_NONE )
 	{
 		if ( !this->SetTemplateInfo() )
 		{
@@ -315,8 +295,6 @@ void Monster::Respawn()
 	this->SetMiningStage(0);
 	this->IncreaseKillID(1);
 
-	this->punish_map.clear();
-
 	this->SetDeadStatus(DEAD_NONE);
 	this->SetState(OBJECT_STATE_STAND_BY);
 	this->SetLive(true);
@@ -373,25 +351,13 @@ void Monster::UpdateStatus()
 	{
 		this->SetTeleportStatus(TELEPORT_NONE);
 	}
-
-	for ( UnitPunishMap::const_iterator itr = this->punish_map.begin(); itr != this->punish_map.end(); )
-	{
-		if ( (MyGetTickCount() > (itr->second + sGameServer->GetSkillPunishFrequencyPVM())) )
-		{
-			this->punish_map.erase(itr++);
-		}
-		else
-		{
-			++itr;
-		}
-	}
 }
 
 void Monster::MakeRespawnLocation(bool random)
 {
 	if ( random )
 	{
-		sMonsterMgr->GenerateRespawnLocation(this);
+		sMonsterManager->GenerateRespawnLocation(this);
 	}
 
 	World* pWorld = this->GetWorld();
@@ -456,114 +422,82 @@ void Monster::MakeRespawnLocation(bool random)
 
 bool Monster::SetTemplateInfo()
 {
-	monster_template const* monster_info = sMonsterMgr->GetMonsterTemplate(this->GetClass());
-
-	if ( !monster_info )
+	_monsterTemplate = sMonsterManager->GetMonsterTemplate(GetClass());
+	if (!_monsterTemplate)
 		return false;
 
-	this->SetName(monster_info->GetName());
-	this->SetLevel(monster_info->min_level.get());
-	this->SetSendType((MainObjectType)monster_info->type.get());
-	this->SetModel(monster_info->model.get());
-	this->SetRespawnTimeRangeMin(monster_info->respawn_time_min.get() * IN_MILLISECONDS);
-	this->SetRespawnTimeRangeMax(monster_info->respawn_time_max.get() * IN_MILLISECONDS);
-	this->SetRespawnTime(this->GetRandomRespawnTimeRange());
-	this->SetSize(monster_info->size.get());
-	
-	Util::copy(this->power_max, monster_info->power, POWER_MAX);
-	Util::copy(this->power, monster_info->power, POWER_MAX);
+	SetName(_monsterTemplate->Name.c_str());
+	SetLevel(_monsterTemplate->Level);
+	SetSendType((MainObjectType)_monsterTemplate->Type);
+	SetRespawnTimeRangeMin(_monsterTemplate->RespawnTimeMin * IN_MILLISECONDS);
+	SetRespawnTimeRangeMax(_monsterTemplate->RespawnTimeMax * IN_MILLISECONDS);
+	SetRespawnTime(GetRandomRespawnTimeRange());
+	SetSize(_monsterTemplate->Size);
 
-	POWER_LOOP(i)
-		this->SetScriptMaxPower(i, monster_info->power[i].get());
-	
-	this->SetIntData(UNIT_INT_PHYSICAL_DAMAGE_MIN, monster_info->attack_min_damage.get());
-	this->SetIntData(UNIT_INT_PHYSICAL_DAMAGE_MAX, monster_info->attack_max_damage.get());
-	this->SetIntData(UNIT_INT_MAGIC_DAMAGE_MIN, monster_info->magic_min_damage.get());
-	this->SetIntData(UNIT_INT_MAGIC_DAMAGE_MAX, monster_info->magic_max_damage.get());
-	this->SetIntData(UNIT_INT_CURSE_DAMAGE_MIN, monster_info->magic_min_damage.get());
-	this->SetIntData(UNIT_INT_CURSE_DAMAGE_MAX, monster_info->magic_max_damage.get());
-	this->SetAttackRange(monster_info->attack_range.get());
-	this->SetViewRange(monster_info->view_range.get());
-	this->SetIntData(UNIT_INT_ATTACK_SPEED, monster_info->attack_speed.get());
-	this->SetIntData(UNIT_INT_MAGIC_SPEED, monster_info->attack_speed.get());
-	this->SetIntData(UNIT_INT_ATTACK_RATE, monster_info->attack_success.get());
-	this->SetIntData(UNIT_INT_DEFENSE, monster_info->defense.get());
-	this->SetIntData(UNIT_INT_DEFENSE_MAGIC, monster_info->defense_magic.get());
-	this->SetIntData(UNIT_INT_DEFENSE_RATE, monster_info->defense_success.get());
-	this->SetFloatData(UNIT_FLOAT_CRITICAL_DAMAGE_RATE, monster_info->critical_damage_rate.get());
-	this->SetIntData(UNIT_INT_CRITICAL_DAMAGE_ADD, monster_info->critical_damage_add.get());
-	this->SetFloatData(UNIT_FLOAT_EXCELLENT_DAMAGE_RATE, monster_info->excellent_damage_rate.get());
-	this->SetIntData(UNIT_INT_EXCELLENT_DAMAGE_ADD, monster_info->excellent_damage_add.get());
-
-	this->SetItemRate(monster_info->item_rate.get());
-	this->SetZenRate(monster_info->zen_rate.get());
-
-	this->SetIntData(UNIT_INT_MOVE_SPEED, monster_info->move_speed.get());
-	this->SetMoveRange(monster_info->move_range.get());
-
-	this->SetCustom(monster_info->custom.get());
-	
-	this->SetRegenPower(monster_info->regen_power);
-	
-	POWER_LOOP(i)
+	for (int32 i = 0; i < POWER_MAX; ++i)
 	{
-		this->SetRefillTime(i, monster_info->regen_time[i].get());
+		power[i].set(_monsterTemplate->Stat[i]);
+		power_max[i].set(_monsterTemplate->Stat[i]);
+		SetScriptMaxPower(i, _monsterTemplate->Stat[i]);
 	}
 
-	this->GetGen()->SetFamily(monster_info->faction.get());
-	this->GetGen()->SetLevel(monster_info->faction_level.get());
-	this->SetScriptName(monster_info->GetScriptName());
+	SetIntData(UNIT_INT_PHYSICAL_DAMAGE_MIN, _monsterTemplate->DamageMin);
+	SetIntData(UNIT_INT_PHYSICAL_DAMAGE_MAX, _monsterTemplate->DamageMax);
+	SetIntData(UNIT_INT_MAGIC_DAMAGE_MIN, _monsterTemplate->DamageMin);
+	SetIntData(UNIT_INT_MAGIC_DAMAGE_MAX, _monsterTemplate->DamageMax);
+	SetIntData(UNIT_INT_CURSE_DAMAGE_MIN, _monsterTemplate->DamageMin);
+	SetIntData(UNIT_INT_CURSE_DAMAGE_MAX, _monsterTemplate->DamageMax);
+	SetIntData(UNIT_INT_ATTACK_SPEED, _monsterTemplate->AttackSpeed);
+	SetIntData(UNIT_INT_MAGIC_SPEED, _monsterTemplate->AttackSpeed);
+	SetIntData(UNIT_INT_ATTACK_RATE, _monsterTemplate->AttackSuccessRate);
+	SetIntData(UNIT_INT_DEFENSE, _monsterTemplate->Defense);
+	SetIntData(UNIT_INT_DEFENSE_MAGIC, _monsterTemplate->Defense);
+	SetIntData(UNIT_INT_DEFENSE_RATE, _monsterTemplate->DefenseSuccessRate);
+	SetFloatData(UNIT_FLOAT_CRITICAL_DAMAGE_RATE, _monsterTemplate->CriticalDamageRate);
+	SetIntData(UNIT_INT_CRITICAL_DAMAGE_ADD, _monsterTemplate->CriticalDamageAdd);
+	SetFloatData(UNIT_FLOAT_EXCELLENT_DAMAGE_RATE, _monsterTemplate->ExcellentDamageRate);
+	SetIntData(UNIT_INT_EXCELLENT_DAMAGE_ADD, _monsterTemplate->ExcellentDamageAdd);
+	SetIntData(UNIT_INT_MOVE_SPEED, _monsterTemplate->MovementSpeed);
 
-	for ( uint32 i = 0; i < Element::MAX; i++ )
-	{
-		this->SetResistance(i, monster_info->GetResistance(i));
-	}
+	SetScriptName(_monsterTemplate->ScriptName);
 
-	this->SetScriptElementalAttribute(monster_info->GetElementalAttribute());
-	this->SetElementalAttribute(monster_info->GetElementalAttribute());
-	this->SetElementalPattern(monster_info->GetElementalPattern());
-	this->SetIntData(UNIT_INT_ELEMENTAL_DEFENSE, monster_info->GetElementalDefense());
-	this->SetIntData(UNIT_INT_ELEMENTAL_DAMAGE_MIN, monster_info->GetElementalDamageMin());
-	this->SetIntData(UNIT_INT_ELEMENTAL_DAMAGE_MAX, monster_info->GetElementalDamageMax());
-	this->SetIntData(UNIT_INT_ELEMENTAL_ATTACK_SUCCESS_RATE, monster_info->GetElementalAttackRate());
-	this->SetIntData(UNIT_INT_ELEMENTAL_DEFENSE_SUCCESS_RATE, monster_info->GetElementalDefenseRate());
-	this->SetRadianceImmune(monster_info->GetRadianceImmune());
-	this->SetIntData(UNIT_INT_DEBUFF_RESISTANCE, monster_info->GetDebuffResistance());
-	this->SetIntData(UNIT_INT_DEBUFF_DEFENSE, monster_info->GetDebuffDefense());
+	for (int32 i = 0; i < Element::MAX; ++i)
+		SetResistance(i, _monsterTemplate->Resistance[i]);
 
-	this->SetFloatData(UNIT_FLOAT_RESIST_CRITICAL_DAMAGE_RATE, monster_info->GetCriticalDamageResistance());
-	this->SetFloatData(UNIT_FLOAT_RESIST_EXCELLENT_DAMAGE_RATE, monster_info->GetExcellentDamageResistance());
-	this->SetDamageAbsorb(monster_info->GetDamageAbsorb());
+	SetScriptElementalAttribute(_monsterTemplate->ElementalAttribute);
+	SetElementalAttribute(_monsterTemplate->ElementalAttribute);
+	SetIntData(UNIT_INT_ELEMENTAL_DEFENSE, _monsterTemplate->ElementalDefense);
+	SetIntData(UNIT_INT_ELEMENTAL_DAMAGE_MIN, _monsterTemplate->ElementalDamageMin);
+	SetIntData(UNIT_INT_ELEMENTAL_DAMAGE_MAX, _monsterTemplate->ElementalDamageMax);
+	SetIntData(UNIT_INT_ELEMENTAL_ATTACK_SUCCESS_RATE, _monsterTemplate->ElementalAttackSuccessRate);
+	SetIntData(UNIT_INT_ELEMENTAL_DEFENSE_SUCCESS_RATE, _monsterTemplate->ElementalDefenseSuccessRate);
+	SetIntData(UNIT_INT_DEBUFF_RESISTANCE, _monsterTemplate->DebuffResistance);
+	SetIntData(UNIT_INT_DEBUFF_DEFENSE, _monsterTemplate->DebuffDefense);
 
-	this->SetElite(monster_info->IsElite());
-	
-	MonsterSkillVector skills_tmp = sMonsterMgr->GetMonsterSkillMapBounds(this->GetClass());
+	SetFloatData(UNIT_FLOAT_RESIST_CRITICAL_DAMAGE_RATE, _monsterTemplate->CriticalDamageResistance);
+	SetFloatData(UNIT_FLOAT_RESIST_EXCELLENT_DAMAGE_RATE, _monsterTemplate->ExcellentDamageResistance);
 
-	for ( MonsterSkillVector::const_iterator it = skills_tmp.begin(); it != skills_tmp.end(); ++it )
-	{
-		this->MagicAdd(*it, 0);
-	}
+	auto skills = sMonsterManager->GetMonsterSkillMapBounds(GetClass());
+	for (auto skill : skills)
+		MagicAdd(skill, 0);
 
-	MonsterSkillSpecialList skills_special_tmp = sMonsterMgr->GetMonsterSkillSpecial(this->GetClass());
+	auto special_skills = sMonsterManager->GetMonsterSkillSpecial(GetClass());
+	for (auto & skill : special_skills)
+		AddSpecialSkill(skill->GetSkill());
 
-	for ( MonsterSkillSpecialList::const_iterator it = skills_special_tmp.begin(); it != skills_special_tmp.end(); ++it )
-	{
-		this->AddSpecialSkill((*it)->GetSkill());
-	}
-
-	this->SetLastUpdate(sMonsterMgr->GetLastUpdate());
-	this->SetSpawning(true);
-	this->SetLive(false);
-	this->SetDeadStatus(DEAD_STANDBY);
-	this->SetState(OBJECT_STATE_DEAD);
-	this->SetRespawnTick(GetTickCount());
+	SetLastUpdate(sMonsterManager->GetLastUpdate());
+	SetSpawning(true);
+	SetLive(false);
+	SetDeadStatus(DEAD_STANDBY);
+	SetState(OBJECT_STATE_DEAD);
+	SetRespawnTick(GetTickCount());
 
 	return true;
 }
 
 void Monster::SetDBData()
 {
-	monster const* data = sMonsterMgr->GetMonsterData(this->GetEntry());
+	monster const* data = sMonsterManager->GetMonsterData(this->GetEntry());
 
 	if ( !data )
 	{
@@ -575,85 +509,71 @@ void Monster::SetDBData()
 
 void Monster::SetDBData(monster const* data)
 {
-	this->SetWorldId(data->GetWorld());
-	this->SetInstance(-1);
-	this->SetBasicLocation(data->GetX1(), data->GetY1(), data->GetX2(), data->GetY2());
-	this->SetDirection(data->GetDirection());
-	this->SetRespawnID(data->GetRespawnID());
-	this->SetOriginalDirection(data->GetDirection());
-	this->SetSpawnTick(GetTickCount());
-	this->SetSpawnTime(data->GetSpawnDelay() * IN_MILLISECONDS);
+	SetWorldId(data->GetWorld());
+	SetInstance(-1);
+	SetBasicLocation(data->GetX1(), data->GetY1(), data->GetX2(), data->GetY2());
+	SetDirection(data->GetDirection());
+	SetRespawnID(data->GetRespawnID());
+	SetOriginalDirection(data->GetDirection());
+	SetSpawnTick(GetTickCount());
+	SetSpawnTime(data->GetSpawnDelay() * IN_MILLISECONDS);
 
-	this->SetRespawnType(GAME_OBJECT_RESPAWN_NORMAL);
+	SetRespawnType(GAME_OBJECT_RESPAWN_NORMAL);
 
-	if ( data->GetRespawnTimeMin() != 0 || data->GetRespawnTimeMax() != 0 )
+	if (data->GetRespawnTimeMin() != 0 || data->GetRespawnTimeMax() != 0)
 	{
-		this->SetRespawnTimeRangeMin(data->GetRespawnTimeMin() * IN_MILLISECONDS);
-		this->SetRespawnTimeRangeMax(data->GetRespawnTimeMax() * IN_MILLISECONDS);
-		this->SetRespawnTime(this->GetRandomRespawnTimeRange());
-	}
-	
-	this->SetRespawnDistance(data->GetSpawnDistance());
-	this->SetRespawnLocation((data->GetX1() == data->GetX2() && data->GetY1() == data->GetY2()) ? MONSTER_RESPAWN_NORMAL: MONSTER_RESPAWN_ZONE);
-
-	this->SetMoveDistance(data->GetMoveDistance());
-	this->SetNpcFunction(data->GetNpcFunction());
-
-	if ( data->GetType() != uint8(-1) )
-	{
-		this->SetSendType(MainObjectType(data->GetType()));
-		this->SetCustom(true);
+		SetRespawnTimeRangeMin(data->GetRespawnTimeMin() * IN_MILLISECONDS);
+		SetRespawnTimeRangeMax(data->GetRespawnTimeMax() * IN_MILLISECONDS);
+		SetRespawnTime(GetRandomRespawnTimeRange());
 	}
 
-	if ( data->GetElementalAttribute() != ELEMENTAL_ATTRIBUTE_NONE )
+	SetRespawnDistance(data->GetSpawnDistance());
+	SetRespawnLocation((data->GetX1() == data->GetX2() && data->GetY1() == data->GetY2()) ? MONSTER_RESPAWN_NORMAL : MONSTER_RESPAWN_ZONE);
+
+	SetMoveDistance(data->GetMoveDistance());
+	SetNpcFunction(data->GetNpcFunction());
+
+	if (data->GetElementalAttribute() != ELEMENTAL_ATTRIBUTE_NONE)
 	{
-		this->SetElementalAttribute(data->GetElementalAttribute());
-		this->SetScriptElementalAttribute(data->GetElementalAttribute());
+		SetElementalAttribute(data->GetElementalAttribute());
+		SetScriptElementalAttribute(data->GetElementalAttribute());
 	}
 
-	if ( strlen(data->GetName()) )
-	{
-		this->SetName(data->GetName());
-		this->SetCustom(true);
-	}
+	SetItemBag(data->GetItemBag());
 
-	this->SetItemBag(data->GetItemBag());
-
-	if ( !data->GetScriptName().empty() )
-		this->SetScriptName(data->GetScriptName());
+	if (!data->GetScriptName().empty())
+		SetScriptName(data->GetScriptName());
 }
 
-void Monster::SetEventDBData(monster_event const* data)
+void Monster::SetEventDBData(MonsterEvent const* monsterEvent)
 {
-	this->SetWorldId(data->GetWorld());
-	this->SetInstance(-1);
-	this->SetBasicLocation(data->GetX1(), data->GetY1(), data->GetX2(), data->GetY2());
-	this->SetDirection(data->GetDirection());
-	this->SetEventId(data->GetEventID());
-	this->SetRespawnID(data->GetRespawnID());
-	this->SetOriginalDirection(data->GetDirection());
-	this->SetSpawnTick(GetTickCount());
-	this->SetSpawnTime(data->GetSpawnDelay() * IN_MILLISECONDS);
+	SetWorldId(monsterEvent->MapId);
+	SetInstance(-1);
+	SetBasicLocation(monsterEvent->X1, monsterEvent->Y1, monsterEvent->X2, monsterEvent->Y2);
+	SetDirection(monsterEvent->Direction);
+	SetEventId(monsterEvent->EventId);
+	SetRespawnID(monsterEvent->RespawnId);
+	SetOriginalDirection(monsterEvent->Direction);
+	SetSpawnTick(GetTickCount());
+	SetSpawnTime(monsterEvent->SpawnDelay * IN_MILLISECONDS);
 
-	this->SetRespawnType(GAME_OBJECT_RESPAWN_NORMAL);
+	SetRespawnType(GAME_OBJECT_RESPAWN_NORMAL);
 
-	if ( data->GetRespawnTime() != 0 )
-	{
-		this->SetRespawn(data->GetRespawnTime() * IN_MILLISECONDS);
-	}
+	if (monsterEvent->RespawnTime != 0)
+		SetRespawn(monsterEvent->RespawnTime * IN_MILLISECONDS);
 
-	this->SetRespawnDistance(data->GetSpawnDistance());
-	this->SetRespawnLocation((data->GetX1() == data->GetX2() && data->GetY1() == data->GetY2()) ? MONSTER_RESPAWN_NORMAL: MONSTER_RESPAWN_ZONE);
+	SetRespawnDistance(monsterEvent->SpawnDistance);
+	SetRespawnLocation((monsterEvent->X1 == monsterEvent->X2 && monsterEvent->Y1 == monsterEvent->Y2) ? MONSTER_RESPAWN_NORMAL : MONSTER_RESPAWN_ZONE);
 
-	this->SetMoveDistance(data->GetMoveDistance());
-	this->SetNpcFunction(data->GetNpcFunction());
-	this->SetItemBag(data->GetItemBag());
+	SetMoveDistance(monsterEvent->MovementDistance);
+	SetNpcFunction(monsterEvent->NpcFunction);
+	SetItemBag(monsterEvent->ItemBag);
 
-	if ( !data->GetScriptName().empty() )
-		this->SetScriptName(data->GetScriptName());
+	if (!monsterEvent->ScriptName.empty())
+		SetScriptName(monsterEvent->ScriptName);
 
-	this->SetGroupAI(data->GetAIGroup());
-	this->SetGroupMemberAI(data->GetAIGroupMember());
+	SetGroupAI(monsterEvent->AIGroup);
+	SetGroupMemberAI(monsterEvent->AIGroupMember);
 }
 
 void Monster::ReactionUpdate()
@@ -734,7 +654,7 @@ void Monster::ReactionUpdate()
 				this->GetAction()->Rest = 1;
 				this->SetNextActionTime(500);
 			}
-			else if ( this->GetMoveRange() > 0 && !this->HasRestrictionBuff() )
+			else if ( _monsterTemplate->MovementRange > 0 && !this->HasRestrictionBuff() )
 			{
 				if ( !this->IsSummoned() )
 				{
@@ -783,7 +703,7 @@ void Monster::ReactionUpdate()
 			if ( this->GetTarget() && !this->GetPathData()->IsStartEnd() )
 			{
 				int32 dis = Util::Distance(this->GetX(), this->GetY(), this->GetTarget()->GetX(), this->GetTarget()->GetY());
-				int32 attackrange = this->GetAttackRange();
+				int32 attackrange = _monsterTemplate->AttackRange;
 
 				if ( dis <= attackrange )
 				{
@@ -1366,7 +1286,7 @@ void Monster::ChangeAIOrder(uint8 order)
 
 	uint8 old_order = order == 0 ? 0: order - 1;
 
-	AIData const* pAIData = sMonsterMgr->GetMonsterAIData(this->GetGroupAI(), this->GetGroupMemberAI());
+	AIData const* pAIData = sMonsterManager->GetMonsterAIData(this->GetGroupAI(), this->GetGroupMemberAI());
 
 	if ( pAIData )
 	{
@@ -1440,7 +1360,7 @@ void Monster::ProcessHit(Unit* pAttacker)
 		this->GetAction()->EmotionCount = 10;
 	}
 
-	int32 range = this->GetAttackRange();
+	int32 range = _monsterTemplate->AttackRange;
 	int32 dis = Util::Distance(this->GetX(), this->GetY(), pAttacker->GetX(), pAttacker->GetY());
 
 	if ( this->GetAction()->Attack == 0 )
@@ -1684,45 +1604,26 @@ void Monster::TeleportToRegen()
 
 bool Monster::InmuneToRadiance() const
 {
-	if ( this->IsDebuffInmune(true) )
-	{
+	if (IsDebuffInmune(true))
 		return true;
-	}
 
-	MonsterAI const* pAI = this->GetAI();
-
-	if ( pAI )
-	{
+	auto const pAI = this->GetAI();
+	if (pAI)
 		return pAI->InmuneToRadiance();
-	}
 
-	if ( this->GetRadianceImmune() == 1 )
-	{
-		return true;
-	}
+	if (_monsterTemplate->RadianceImmune != 1)
+		return false;
 
-	return false;
+	return true;
 }
 
 bool Monster::InmuneToPunish(Player* pPlayer)
 {
-	if ( !pPlayer )
-	{
+	if (!pPlayer)
 		return false;
-	}
 
-	if ( this->GetRadianceImmune() != 2 )
-	{
+	if (_monsterTemplate->RadianceImmune != 2)
 		return false;
-	}
-
-	UnitPunishMap::const_iterator itr = this->punish_map.find(pPlayer->GetGUID());
-
-	if ( itr == this->punish_map.end() )
-	{
-		this->punish_map[pPlayer->GetGUID()] = MyGetTickCount();
-		return false;
-	}
 
 	return true;
 }

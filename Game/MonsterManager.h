@@ -9,60 +9,52 @@
 #ifndef MONSTER_TEMPLATE_H
 #define MONSTER_TEMPLATE_H
 
-struct monster_template
+struct MonsterTemplate
 {
-	DECLARE(uint16, id);
-	DECLARE_STRING_FIXED(Name, MAX_MONSTER_NAME_LENGTH);
-	DECLARE(uint16, model);
-	DECLARE(float, size);
-	DECLARE(uint8, type);
-	DECLARE(int16, min_level);
-	DECLARE(int16, max_level);
-	DECLARE(int32, power[POWER_MAX]);
-	DECLARE(int32, attack_min_damage);
-	DECLARE(int32, attack_max_damage);
-	DECLARE(int32, magic_min_damage);
-	DECLARE(int32, magic_max_damage);
-	DECLARE(int32, critical_damage_rate);
-	DECLARE(int32, critical_damage_add);
-	DECLARE(int32, excellent_damage_rate);
-	DECLARE(int32, excellent_damage_add);
-	DECLARE(int32, attack_success);
-	DECLARE(int32, defense);
-	DECLARE(int32, defense_magic);
-	DECLARE(int32, defense_success);
-	DECLARE(uint32, move_range);
-	DECLARE(uint32, move_speed);
-	DECLARE(uint32, attack_range);
-	DECLARE(int32, attack_speed);
-	DECLARE(uint32, view_range);
-	DECLARE_PROPERTY_ARRAY(uint8, Resistance, Element::MAX);
-	DECLARE(uint32, respawn_time_min);
-	DECLARE(uint32, respawn_time_max);
-	DECLARE(int32, item_rate);
-	DECLARE(int32, zen_rate);
-	DECLARE(int32, item_max_level);
-	float regen_power[POWER_MAX];
-	DECLARE(uint32, regen_time[POWER_MAX]);
-	DECLARE(uint8, faction);
-	DECLARE(uint8, faction_level);
-	DECLARE_ENUM(uint8, ElementalAttribute);
-	DECLARE_ENUM(int32, ElementalPattern);
-	DECLARE_ENUM(int32, ElementalDefense);
-	DECLARE_ENUM(int32, ElementalDamageMin);
-	DECLARE_ENUM(int32, ElementalDamageMax);
-	DECLARE_ENUM(int32, ElementalAttackRate);
-	DECLARE_ENUM(int32, ElementalDefenseRate);
-	DECLARE_PROPERTY_STRING(ScriptName);
-	DECLARE_ENUM(uint8, RadianceImmune);
-	DECLARE_ENUM(int32, DebuffResistance);
-	DECLARE_ENUM(int32, DebuffDefense);
-	DECLARE_ENUM(uint8, CriticalDamageResistance);
-	DECLARE_ENUM(uint8, ExcellentDamageResistance);
-	DECLARE_ENUM(uint8, DamageAbsorb);
-	DECLARE_BOOL(Elite);
-
-	DECLARE(bool, custom);
+	uint16 Id;
+	std::string Name;
+	uint16 Model;
+	float Size;
+	uint8 Type;
+	int16 Level;
+	int32 Stat[POWER_MAX];
+	int32 DamageMin;
+	int32 DamageMax;
+	int32 CriticalDamageRate;
+	int32 CriticalDamageAdd;
+	int32 ExcellentDamageRate;
+	int32 ExcellentDamageAdd;
+	int32 AttackSuccessRate;
+	int32 Defense;
+	int32 DefenseSuccessRate;
+	uint32 MovementRange;
+	uint32 MovementSpeed;
+	uint32 AttackRange;
+	int32 AttackSpeed;
+	uint32 ViewRange;
+	uint8 Resistance[Element::MAX];
+	uint32 RespawnTimeMin;
+	uint32 RespawnTimeMax;
+	int32 ItemRate;
+	int32 ZenRate;
+	int32 ItemMaxLevel;
+	float StatRecovery[POWER_MAX];
+	uint32 StatRecoveryTime[POWER_MAX];
+	uint8 ElementalAttribute;
+	int32 ElementalDefense;
+	int32 ElementalDamageMin;
+	int32 ElementalDamageMax;
+	int32 ElementalAttackSuccessRate;
+	int32 ElementalDefenseSuccessRate;
+	std::string ScriptName;
+	uint8 RadianceImmune;
+	int32 DebuffResistance;
+	int32 DebuffDefense;
+	uint8 CriticalDamageResistance;
+	uint8 ExcellentDamageResistance;
+	uint8 DamageAbsrob;
+	bool IsElite;
+	bool IsCustom;
 };
 
 struct monster_skill_special
@@ -76,8 +68,6 @@ struct monster
 {
 	DECLARE_ENUM(uint16, GUID);
 	DECLARE_ENUM(uint16, ID);
-	DECLARE_ENUM(uint8, Type);
-	DECLARE_STRING_FIXED(Name, MAX_MONSTER_NAME_LENGTH);
 	DECLARE_ENUM(uint16, World);
 	DECLARE_ENUM(int16, X1);
 	DECLARE_ENUM(int16, Y1);
@@ -96,26 +86,26 @@ struct monster
 	DECLARE_ENUM(uint8, ElementalAttribute);
 };
 
-struct monster_event
+struct MonsterEvent
 {
-	DECLARE_ENUM(uint16, ID);
-	DECLARE_ENUM(uint16, World);
-	DECLARE_ENUM(int16, X1);
-	DECLARE_ENUM(int16, Y1);
-	DECLARE_ENUM(int16, X2);
-	DECLARE_ENUM(int16, Y2);
-	DECLARE_ENUM(uint8, Direction);
-	DECLARE_ENUM(uint32, SpawnDelay);
-	DECLARE_ENUM(uint8, SpawnDistance);
-	DECLARE_ENUM(uint32, RespawnTime);
-	DECLARE_ENUM(uint32, RespawnID);
-	DECLARE_ENUM(uint8, MoveDistance);
-	DECLARE_ENUM(uint8, EventID);
-	DECLARE_PROPERTY_STRING(NpcFunction);
-	DECLARE_PROPERTY_STRING(ItemBag);
-	DECLARE_PROPERTY_STRING(ScriptName);
-	DECLARE_ENUM(uint32, AIGroup);
-	DECLARE_ENUM(uint32, AIGroupMember);
+	uint16 MonsterId;
+	uint16 MapId;
+	int16 X1;
+	int16 Y1;
+	int16 X2;
+	int16 Y2;
+	uint8 Direction;
+	uint32 SpawnDelay;
+	uint8 SpawnDistance;
+	uint32 RespawnTime;
+	uint32 RespawnId;
+	uint8 MovementDistance;
+	uint8 EventId;
+	std::string NpcFunction;
+	std::string ItemBag;
+	std::string ScriptName;
+	uint32 AIGroup;
+	uint32 AIGroupMember;
 
 	union
 	{
@@ -315,7 +305,6 @@ struct MonsterItem
 	DECLARE_ENUM(uint8, Level);
 };
 
-typedef std::map<uint16, monster_template*> MonsterTemplateMap;
 typedef std::vector<uint16> MonsterSkillVector;
 typedef UNORDERED_MAP<uint16, MonsterSkillVector> MonsterSkillMap;
 typedef std::vector<monster_skill_special*> MonsterSkillSpecialList;
@@ -339,39 +328,21 @@ typedef std::map<uint32, monster_ai_unit*> MonsterAIUnitMap;
 typedef std::map<uint32, monster_ai_element*> MonsterAIElementMap;
 typedef std::map<uint32, monster_ai_automata*> MonsterAIAutomataMap;
 
-typedef std::list<monster_event*> MonsterEventList;
-
 typedef std::map<uint16, monster_respawn*> MonsterRespawnMap;
 
 typedef std::vector<monster_exclusive*> MonsterExclusiveList;
 
-class CMonsterMgr
+typedef std::unordered_multimap<uint8, MonsterEvent*>::iterator MonsterEventItr;
+
+class MonsterManager
 {
-	SingletonInstance(CMonsterMgr);
+	SingletonInstance(MonsterManager);
 
 	public:
-		MonsterTemplateMap map_template;
-		MonsterSkillMap monster_skill_map;
-		MonsterSkillSpecialMap monster_skill_special_map;
-		MonsterMap monster_map;
-		MonsterAIGroupMap monster_ai_group_map;
-		MonsterItemMap m_monster_item_map;
-		MonsterRespawnLocationMap m_monster_respawn_location_map;
-		MonsterEquipmentMap m_monster_equipment_map;
-		MonsterAIUnitMap m_monster_ai_unit;
-		MonsterAIElementMap m_monster_ai_element;
-		MonsterAIAutomataMap m_monster_ai_automata;
-		MonsterEventList monster_event_list;
-		MonsterRespawnMap monster_respawn_map;
-		MonsterExclusiveList monster_exclusive_list;
-
-		DECLARE_ENUM(time_t, LastUpdate);
-	public:
-		CMonsterMgr();
-		virtual ~CMonsterMgr();
+		MonsterManager();
+		virtual ~MonsterManager();
 
 		void LoadMonsterTemplate();
-		void LoadMonsterTemplateCustom();
 		void LoadMonsterItems();
 		void LoadMonsterSkill();
 		void LoadMonsterSkillSpecial();
@@ -384,7 +355,6 @@ class CMonsterMgr
 		void LoadMonster();
 		void LoadMonster(uint16 guid);
 		void LoadMonsterEvent();
-		void LoadMonsterEvent(uint8 event_id);
 		void LoadMonsterRespawn();
 		void LoadMonsterExclusive();
 	
@@ -397,7 +367,7 @@ class CMonsterMgr
 		bool GenerateItem(Item & item, int32 level, bool exe);
 		void ClearItem();
 	public:
-		monster_template * GetMonsterTemplate(uint16 id) const;
+		MonsterTemplate const* GetMonsterTemplate(uint16 id) const;
 		monster * GetMonsterData(uint16 index) const;
 
 		MonsterSkillVector GetMonsterSkillMapBounds(uint16 monster) const
@@ -477,7 +447,28 @@ class CMonsterMgr
 		void BuildMonsterCustomData(Monster* pMonster, Player* pPlayer);
 
 		uint16 GetRandomSkillSpecial(Monster* pMonster, int16 type);
+
+		std::pair<MonsterEventItr, MonsterEventItr> GetEventMonsters(uint8 eventId) { return _monsterEvent.equal_range(eventId); }
+	private:
+		std::unordered_map<uint16, MonsterTemplate> _monsterTemplate;
+		MonsterSkillMap monster_skill_map;
+		MonsterSkillSpecialMap monster_skill_special_map;
+		MonsterMap monster_map;
+		MonsterAIGroupMap monster_ai_group_map;
+		MonsterItemMap m_monster_item_map;
+		MonsterRespawnLocationMap m_monster_respawn_location_map;
+		MonsterEquipmentMap m_monster_equipment_map;
+		MonsterAIUnitMap m_monster_ai_unit;
+		MonsterAIElementMap m_monster_ai_element;
+		MonsterAIAutomataMap m_monster_ai_automata;
+		std::unordered_multimap<uint8, MonsterEvent*> _monsterEvent;
+		MonsterRespawnMap monster_respawn_map;
+		MonsterExclusiveList monster_exclusive_list;
+
+		DECLARE_ENUM(time_t, LastUpdate);
 };
+
+#define sMonsterManager MonsterManager::instance()
 
 bool AllowItemDropInWorld(uint16 world, Item const& item);
 

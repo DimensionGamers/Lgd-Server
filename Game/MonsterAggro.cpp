@@ -196,7 +196,7 @@ void Monster::DropItem()
 		sItemMgr->ItemSerialCreate(pMaxAttacker, this->GetWorldId(), this->GetX(), this->GetY(), Item(ITEMGET(14, 0), 0, 1.0f), false);
 	}
 
-	int32 item_rate = this->GetItemRate();
+	int32 item_rate = _monsterTemplate->ItemRate;
 
 	if ( item_rate > 0 )
 	{
@@ -242,7 +242,7 @@ void Monster::DropItem()
 		{
 			if ( Random(item_rate) < item_drop_per )
 			{
-				item_drop = sMonsterMgr->GenerateItem(item, this->GetLevel() - 25, true);
+				item_drop = sMonsterManager->GenerateItem(item, this->GetLevel() - 25, true);
 			}
 		}
 		else
@@ -254,7 +254,7 @@ void Monster::DropItem()
 					return;
 				}
 
-				item_drop = sMonsterMgr->GenerateItem(item, this->GetLevel(), false);
+				item_drop = sMonsterManager->GenerateItem(item, this->GetLevel(), false);
 			}
 		}
 
@@ -357,41 +357,32 @@ void Monster::DropItem()
 
 void Monster::DropZen()
 {
-	if ( DS_MAP_RANGE(this->GetWorldId()) )
-	{
+	if (DS_MAP_RANGE(this->GetWorldId()))
 		return;
-	}
 
 	Player* pMaxAttacker = this->GetMaxAttacker();
 	World* pWorld = this->GetWorld();
 
-	if ( !pWorld || !pMaxAttacker )
-	{
+	if (!pWorld || !pMaxAttacker)
 		return;
-	}
 
-	if ( this->GetZen() < 1 || this->GetZenRate() <= 0 )
-	{
+	if (this->GetZen() < 1 || _monsterTemplate->ZenRate <= 0)
 		return;
-	}
 
-	int32 zen_rate = this->GetZenRate();
-
-	if ( zen_rate < 1 )
-	{
+	int32 zen_rate = _monsterTemplate->ZenRate;
+	if (zen_rate < 1)
 		zen_rate = 1;
-	}
 
-	if ( RANDOM(zen_rate) < 10 )
+	if (RANDOM(zen_rate) < 10)
 	{
 		int32 zen_drop = this->GetZen() + (this->GetZen() * pMaxAttacker->GetData(PLAYER_DATA_MONSTER_DIE_GIVE_ZEN) / 100) + 7;
 
 		pWorld->AddZen(this, this->GetX(), this->GetY(), zen_drop);
 	}
 
-	if ( RANDOM(400) == 1 )
+	if (RANDOM(400) == 1)
 	{
-		for ( uint8 i = 0; i < 4; i++ )
+		for (uint8 i = 0; i < 4; i++)
 		{
 			int16 x = this->GetX() - 2 + RANDOM(3);
 			int16 y = this->GetY() - 2 + RANDOM(3);

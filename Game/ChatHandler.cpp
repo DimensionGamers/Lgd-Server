@@ -93,9 +93,7 @@ namespace CommandAdmin
 
 	static ChatCommand monster_command[] = 
 	{
-		{	"add",			&ChatHandler::CommandMonsterAdd,	AUTHORITY_CODE_ADMINISTRATOR,	ADMIN_FLAG_MONSTER,		".monster add #id #spawn_distance #move_distance",	nullptr},
 		{	"temp",			&ChatHandler::CommandMonsterAddTemp,AUTHORITY_CODE_ADMINISTRATOR,	ADMIN_FLAG_MONSTER,		".monster temp #monster #move_distance #despawn_time #despawn_die",	nullptr},
-		{	"remove",		&ChatHandler::CommandMonsterRemove,	AUTHORITY_CODE_ADMINISTRATOR,	ADMIN_FLAG_MONSTER,		".monster remove #guid",	nullptr},
 		{	"alter",		&ChatHandler::CommandMonsterAlter,	AUTHORITY_CODE_ADMINISTRATOR,	ADMIN_FLAG_MONSTER,		".monster alter #type #data",	nullptr},
 		{	nullptr,		nullptr,								0,						ADMIN_FLAG_NONE,		"",				nullptr}
 	};
@@ -2481,130 +2479,6 @@ void ChatHandler::CommandBanAcc(const char * msg)
 	
 }
 
-void ChatHandler::CommandMonsterAdd(const char * msg)
-{
-	std::stringstream conversor(msg);
-	int32 monster_id = 0;
-	int32 spawn_distance = 0;
-	int32 move_distance = 0;
-
-	conversor >> monster_id >> spawn_distance >> move_distance;
-
-	if ( !sMonsterMgr->GetMonsterTemplate(monster_id) )
-	{
-		this->GetPlayer()->SendNotice(CUSTOM_MESSAGE_ID_RED, "Invalid monster id: %d", monster_id);
-		return;
-	}
-
-	uint16 max_guid = -1;
-
-	PreparedStatement* stmt = GameServerDatabase.GetPreparedStatement(QUERY_SRVCFG_MONSTER_MAX_GUID);
-	stmt->setUInt16(0, sGameServer->GetServerCode());
-
-	PreparedQueryResult result = GameServerDatabase.Query(stmt);
-
-	if ( result )
-	{
-		Field* fields = result->Fetch();
-
-		max_guid = fields[0].GetUInt16();
-
-		max_guid++;
-	}
-
-	if ( max_guid == uint16(-1) || max_guid >= sObjectMgr->GetMaxMonsters() )
-	{
-		this->GetPlayer()->SendNotice(CUSTOM_MESSAGE_ID_RED, "Invalid monster guid: %u", max_guid);
-		return;
-	}
-
-	SQLTransaction trans = GameServerDatabase.BeginTransaction();
-
-	stmt = GameServerDatabase.GetPreparedStatement(QUERY_SRVCFG_MONSTER_ADD);
-	stmt->setUInt16(0, sGameServer->GetServerCode());
-	stmt->setUInt16(1, max_guid);
-	stmt->setUInt16(2, monster_id);
-	stmt->setUInt16(3, this->GetPlayer()->GetWorldId());
-	stmt->setInt16(4, this->GetPlayer()->GetX());
-	stmt->setInt16(5, this->GetPlayer()->GetY());
-	stmt->setInt16(6, this->GetPlayer()->GetX());
-	stmt->setInt16(7, this->GetPlayer()->GetY());
-	stmt->setInt8(8, this->GetPlayer()->GetDirection());
-	stmt->setUInt8(9, spawn_distance);
-	stmt->setUInt8(10, move_distance);
-	trans->Append(stmt);
-
-	GameServerDatabase.CommitTransaction(trans);
-
-	monster * add_monster = new monster;
-
-	add_monster->SetGUID(max_guid);
-	add_monster->SetID(monster_id);
-	add_monster->SetType(-1);
-	add_monster->SetName("");
-	add_monster->SetWorld(this->GetPlayer()->GetWorldId());
-	add_monster->SetX1(this->GetPlayer()->GetX());
-	add_monster->SetY1(this->GetPlayer()->GetY());
-	add_monster->SetX2(this->GetPlayer()->GetX());
-	add_monster->SetY2(this->GetPlayer()->GetY());
-	add_monster->SetDirection(this->GetPlayer()->GetDirection());
-	add_monster->SetSpawnDelay(0);
-	add_monster->SetSpawnDistance(spawn_distance);
-	add_monster->SetRespawnTimeMin(0);
-	add_monster->SetRespawnTimeMax(0);
-	add_monster->SetRespawnID(0);
-	add_monster->SetMoveDistance(move_distance);
-	add_monster->SetNpcFunction("");
-	add_monster->SetItemBag("");
-	add_monster->SetScriptName("");
-	add_monster->SetElementalAttribute(0);
-
-	if ( add_monster->GetX1() > 255 )
-		add_monster->SetX1(255);
-
-	if ( add_monster->GetX1() < 0 )
-		add_monster->SetX1(0);
-
-	if ( add_monster->GetY1() > 255 )
-		add_monster->SetY1(255);
-
-	if ( add_monster->GetY1() < 0 )
-		add_monster->SetY1(0);
-
-	if ( add_monster->GetX2() > 255 )
-		add_monster->SetX2(255);
-
-	if ( add_monster->GetX2() < 0 )
-		add_monster->SetX2(0);
-
-	if ( add_monster->GetY2() > 255 )
-		add_monster->SetY2(255);
-
-	if ( add_monster->GetY2() < 0 )
-		add_monster->SetY2(0);
-
-	if ( add_monster->GetX2() < add_monster->GetX1() )
-		add_monster->SetX2(add_monster->GetX1());
-
-	if ( add_monster->GetY2() < add_monster->GetY1() )
-		add_monster->SetY2(add_monster->GetY1());
-
-	sMonsterMgr->monster_map[add_monster->GetGUID()] = add_monster;
-
-	Monster* mMonster = MONSTER_ADD_CONTINUE(add_monster);
-
-	if ( !mMonster )
-		return;
-		
-	if ( !mMonster->GetWorld() )
-	{
-		mMonster->SetConnectStatus(CONNECT_STATUS_NONE);
-		return;
-	}
-
-	mMonster->AddToWorld();
-}
-
 void ChatHandler::CommandZenAdd(const char * msg)
 {
 	std::stringstream conversor(msg);
@@ -3036,32 +2910,6 @@ void ChatHandler::CommandAction(const char * msg)
 		pUnit->ToUnit()->ActionSend(ENTRY(pUnit), id, pUnit->GetDirection(), true);
 
 	VIEWPORT_CLOSE
-}
-
-void ChatHandler::CommandMonsterRemove(const char * msg)
-{
-	std::stringstream conversor(msg);
-	int32 id = 0;
-	conversor >> id;
-
-	Monster* pMonster = sObjectMgr->FindMonster(id);
-
-	if ( !pMonster )
-	{
-		this->GetPlayer()->SendNotice(CUSTOM_MESSAGE_ID_RED, "Invalid ID: %d", id);
-		return;
-	}
-
-	pMonster->Remove();
-	sMonsterMgr->monster_map.erase(id);
-
-	PreparedStatement* stmt = GameServerDatabase.GetPreparedStatement(QUERY_SRVCFG_MONSTER_DISABLE);
-	stmt->setUInt16(0, sGameServer->GetServerCode());
-	stmt->setUInt16(1, id);
-
-	GameServerDatabase.Execute(stmt);
-
-	this->GetPlayer()->SendNotice(CUSTOM_MESSAGE_ID_BLUE, "Monster %d deleted", id);
 }
 
 void ChatHandler::CommandMonsterAlter(const char * msg)
@@ -5048,17 +4896,16 @@ void ChatHandler::ReloadMonster(const char * msg)
 	{
 	case 0:
 		{
-			sMonsterMgr->LoadMonsterTemplate();
-			sMonsterMgr->LoadMonsterTemplateCustom();
-			sMonsterMgr->LoadMonsterSkill();
-			sMonsterMgr->LoadMonsterSkillSpecial();
-			sMonsterMgr->LoadMonsterAIElement();
-			sMonsterMgr->LoadMonsterAIAutomata();
-			sMonsterMgr->LoadMonsterAIUnit();
-			sMonsterMgr->LoadMonsterAIGroup();
-			sMonsterMgr->LoadMonsterRespawnLocation();
-			sMonsterMgr->LoadMonsterEquipment();
-			sMonsterMgr->SetLastUpdate(time(nullptr));
+			sMonsterManager->LoadMonsterTemplate();
+			sMonsterManager->LoadMonsterSkill();
+			sMonsterManager->LoadMonsterSkillSpecial();
+			sMonsterManager->LoadMonsterAIElement();
+			sMonsterManager->LoadMonsterAIAutomata();
+			sMonsterManager->LoadMonsterAIUnit();
+			sMonsterManager->LoadMonsterAIGroup();
+			sMonsterManager->LoadMonsterRespawnLocation();
+			sMonsterManager->LoadMonsterEquipment();
+			sMonsterManager->SetLastUpdate(time(nullptr));
 
 			if ( this->GetPlayer() )
 				this->GetPlayer()->SendNotice(CUSTOM_MESSAGE_ID_BLUE, "Monsters data reloaded.");
@@ -5110,7 +4957,7 @@ void ChatHandler::ReloadMonster(const char * msg)
 				pMonster->Remove();
 			}
 
-			sMonsterMgr->LoadMonster(guid);
+			sMonsterManager->LoadMonster(guid);
 
 			if ( this->GetPlayer() )
 				this->GetPlayer()->SendNotice(CUSTOM_MESSAGE_ID_BLUE, "Monsters reloaded.");
@@ -5118,18 +4965,10 @@ void ChatHandler::ReloadMonster(const char * msg)
 
 	case 3:
 		{
-			sMonsterMgr->LoadMonsterEvent();
+			sMonsterManager->LoadMonsterEvent();
 
 			if ( this->GetPlayer() )
 				this->GetPlayer()->SendNotice(CUSTOM_MESSAGE_ID_BLUE, "Monsters event reloaded.");
-		} break;
-
-	case 4:
-		{
-			sMonsterMgr->LoadMonsterEvent(guid);
-
-			if ( this->GetPlayer() )
-				this->GetPlayer()->SendNotice(CUSTOM_MESSAGE_ID_BLUE, "Monsters event %u reloaded.", guid);
 		} break;
 
 	case 5:
@@ -5434,7 +5273,7 @@ void ChatHandler::ReloadItem(const char * msg)
 	sItemMgr->LoadGuardianEliteOption();
 	sItemMgr->LoadGuardianEliteOptionValue();
 	sItemMgr->SetLastItemUpdate(time(nullptr));
-	sMonsterMgr->LoadMonsterItems();
+	sMonsterManager->LoadMonsterItems();
 
 	sItemBagMgr->LoadItemBagTemplate();
 	sItemBagMgr->LoadItemBagItems();

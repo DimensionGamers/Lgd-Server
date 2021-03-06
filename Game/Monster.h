@@ -51,11 +51,12 @@ struct ActionData
 		}
 };
 
-struct monster_template;
+struct MonsterTemplate;
 struct skill_special;
 struct skill_special_element;
 struct monster;
 struct MonsterAI;
+struct MonsterEvent;
 
 class Monster: public Unit
 {
@@ -110,7 +111,7 @@ class Monster: public Unit
 		bool SetTemplateInfo();
 		void SetDBData();
 		void SetDBData(monster const* data);
-		void SetEventDBData(monster_event const* data);
+		void SetEventDBData(MonsterEvent const* monsterEvent);
 		
 		void UpdateMovement() override;
 		void MoveAttempt();
@@ -217,27 +218,22 @@ class Monster: public Unit
 		bool InmuneToPunish(Player* pPlayer);
 
 		int32 GetPlayerViewportCount() const;
-	protected:
+
+		MonsterTemplate const* GetMonsterTemplate() const { return _monsterTemplate; }
+	private:
 		DECLARE_PROPERTY(uint16, Class);
-		DECLARE_ENUM(uint16, Model);
 		DECLARE_STRING_FIXED(Name, MAX_MONSTER_NAME_LENGTH);
 		DECLARE_PROPERTY(int32, MoveDistance);
 		DECLARE_ENUM(RespawnType, RespawnType);
 		DECLARE_ENUM(MonsterDespawn, DespawnType);
 		DECLARE_PROPERTY(uint8, RespawnDistance);
-		DECLARE_ENUM(uint8, MoveRange);
 		DECLARE_PROPERTY_STRING(NpcFunction);
 		DECLARE_PROPERTY_STRING(ItemBag);
 		DECLARE_PROPERTY_STRING(ScriptName);
-		DECLARE_PROPERTY(int32, AttackRange);
-		DECLARE_PROPERTY(int32, ViewRange);
-		DECLARE_BOOL(Custom);
 		DECLARE_PROPERTY_PTR(Player, MaxAttacker);
 		DECLARE_ENUM(uint32, MaxAttackerGUID);
 		DECLARE_STRING_FIXED(MaxAttackerName, MAX_CHARACTER_LENGTH + 1);
 		DECLARE_ENUM(int16, Level);
-		DECLARE_ENUM(int32, ZenRate);
-		DECLARE_ENUM(int32, ItemRate);
 		DECLARE_ENUM(RespawnLocation, RespawnLocation);
 		DECLARE_PROPERTY_PTR(Unit, Target);
 		DECLARE_PROPERTY(int16, TargetX);
@@ -266,8 +262,6 @@ class Monster: public Unit
 		DECLARE_PROPERTY_ARRAY(uint16, SkillSpecial, MAX_MONSTER_SPECIAL_SKILL);
 		DECLARE_ARRAY_STRUCT(SkillElement, SkillElement, SKILL_ELEMENT_MAX);
 
-		DECLARE_PROPERTY_ARRAY(float, RegenPower, POWER_MAX);
-		DECLARE_PROPERTY_ARRAY(uint32, RefillTime, POWER_MAX);
 		DECLARE_PROPERTY_ARRAY(TCType, RefillTick, POWER_MAX);
 		DECLARE_ENUM(TCType, RegenPowerTime);
 
@@ -331,10 +325,8 @@ class Monster: public Unit
 
 		DECLARE_STRUCT(TickTimer, TeleportOutOfRangeTime);
 
-		DECLARE_ENUM(uint8, RadianceImmune);
-
-		DECLARE_BOOL(Elite);
-		DECLARE_ENUM(uint8, DamageAbsorb);
+	private:
+		MonsterTemplate const* _monsterTemplate;
 };
 
 #endif

@@ -5023,7 +5023,7 @@ struct VIEWPORT_MONSTER_CUSTOM_DATA
 		this->h.set(HEADCODE_MISC_CHARACTER_DATA, SUBCODE_MISC_CHARACTER_DATA_MONSTER_CUSTOM_DATA, sizeof(VIEWPORT_MONSTER_CUSTOM_DATA));
 		this->index = -1;
 		this->type = 0;
-		memset(this->name, 0, 32);
+		memset(this->name, 0, MAX_MONSTER_NAME_LENGTH);
 		this->size = 0.0f;
 		this->race = 0;
 
@@ -5038,7 +5038,7 @@ struct VIEWPORT_MONSTER_CUSTOM_DATA
 	PBMSG_HEAD2 h;
 	uint16 index;
 	uint8 type;
-	char name[32];
+	char name[MAX_MONSTER_NAME_LENGTH];
 	float size;
 	uint8 race;
 	VIEWPORT_MONSTER_CUSTOM_EQUIPMENT equipment[12];

@@ -26,7 +26,7 @@ public:
 
 			if ( this->IsTimerElapsed(0) )
 			{
-				if ( sMonsterMgr->TeleportToRandomLocation(me(), 5) )
+				if ( sMonsterManager->TeleportToRandomLocation(me(), 5) )
 				{
 					me()->SetNpcFunction(this->GetCurrentShop());
 					this->StartTimer(0, sGameServer->GetSecretShopWarpTime());

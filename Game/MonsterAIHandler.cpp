@@ -10,7 +10,7 @@ MonsterAIHandler::MonsterAIHandler(Monster* pMonster)
 		
 void MonsterAIHandler::Run()
 {
-	this->SetAIUnit(sMonsterMgr->GetMonsterAIUnit(this->GetMonster()->GetCurrentAI()));
+	this->SetAIUnit(sMonsterManager->GetMonsterAIUnit(this->GetMonster()->GetCurrentAI()));
 
 	if ( !this->GetAIUnit() )
 		return;
@@ -80,7 +80,7 @@ bool MonsterAIHandler::RunAIAutomata()
 			case MAI_STATE_TRANS_IN_ENEMY:
 				if ( pPlayer )
 				{
-					if ( IN_RANGE(this->GetMonster(), pPlayer, this->GetMonster()->GetAttackRange()) )
+					if ( IN_RANGE(this->GetMonster(), pPlayer, GetMonster()->GetMonsterTemplate()->AttackRange) )
 					{
 						bTransition = true;
 					}
@@ -90,7 +90,7 @@ bool MonsterAIHandler::RunAIAutomata()
 			case MAI_STATE_TRANS_OUT_ENEMY:
 				if ( pPlayer )
 				{
-					if ( !IN_RANGE(this->GetMonster(), pPlayer, this->GetMonster()->GetAttackRange()) )
+					if (!IN_RANGE(this->GetMonster(), pPlayer, GetMonster()->GetMonsterTemplate()->AttackRange))
 					{
 						bTransition = true;
 					}

@@ -620,7 +620,6 @@ class Unit: public Object
 		void ClearPathData(bool update = false);
 
 		DECLARE_ENUM(uint8, ElementalAttribute);
-		DECLARE_PROPERTY(int32, ElementalPattern);
 		DECLARE_PTR(Unit, MiningIndex);
 		DECLARE_PROPERTY(uint8, MiningStage);
 
@@ -629,8 +628,6 @@ class Unit: public Object
 		// Almacena las coordenadas hacia donde tiene intencion de moverse
 		DECLARE_ENUM(int16, TempX);
 		DECLARE_ENUM(int16, TempY);
-
-		UnitPunishMap punish_map;
 };
 
 #define NAME_S(p) if((p)!=nullptr){delete (p);(p)=nullptr;}

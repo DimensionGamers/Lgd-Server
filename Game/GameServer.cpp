@@ -638,8 +638,6 @@ void GameServer::LoadCommonSettings()
 	this->SetSkillBastionReduction(sMain->GetInt32("Skill.BastionReduction", 0));
 	this->SetSkillPunishRatePVM(sMain->GetInt32("Skill.PunishRatePVM", 0));
 	this->SetSkillPunishRatePVP(sMain->GetInt32("Skill.PunishRatePVP", 0));
-	this->SetSkillPunishFrequencyPVM(sMain->GetUInt32("Skill.PunishFrequencyPVM", 0));
-	this->SetSkillPunishFrequencyPVP(sMain->GetUInt32("Skill.PunishFrequencyPVP", 0));
 	this->SetSkillPunishFirstHit(sMain->GetBool("Skill.PunishFirstHit", false));
 	this->SetSkillPunishMaxDamage(sMain->GetUInt32("Skill.PunishMaxDamage", 0));
 

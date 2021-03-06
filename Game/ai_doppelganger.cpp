@@ -62,7 +62,7 @@ void DoppelgangerBasicAI::FindPath()
 	int16 tx = me()->GetX();
 	int16 ty = me()->GetY();
 
-	int32 maxmoverange = me()->GetMoveRange() * 2 + 1;
+	int32 maxmoverange = me()->GetMonsterTemplate()->MovementRange * 2 + 1;
 
 	if ( maxmoverange < 1 )
 	{
@@ -116,8 +116,8 @@ void DoppelgangerBasicAI::FindPath()
 	}
 	else
 	{
-		tx = (me()->GetX() - me()->GetMoveRange()) + Random(maxmoverange);
-		ty = (me()->GetY() - me()->GetMoveRange()) + Random(maxmoverange);
+		tx = (me()->GetX() - me()->GetMonsterTemplate()->MovementRange) + Random(maxmoverange);
+		ty = (me()->GetY() - me()->GetMonsterTemplate()->MovementRange) + Random(maxmoverange);
 	}
 
 	me()->SetTarget(nullptr);

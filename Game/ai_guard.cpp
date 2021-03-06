@@ -44,7 +44,7 @@ public:
 			Object * pObject = nullptr;
 			me()->SetTarget(nullptr);
 
-			int32 min_distance = me()->GetViewRange();
+			int32 min_distance = me()->GetMonsterTemplate()->ViewRange;
 
 			VIEWPORT_LOOP_OBJECT(me(), pObject)
 
@@ -166,7 +166,7 @@ public:
 			Object * pObject = nullptr;
 			me()->SetTarget(nullptr);
 
-			int32 min_distance = me()->GetViewRange();
+			int32 min_distance = me()->GetMonsterTemplate()->ViewRange;
 
 			VIEWPORT_LOOP_OBJECT(me(), pObject)
 

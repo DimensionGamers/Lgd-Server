@@ -353,36 +353,29 @@ devil_square_ranking * DevilSquare::GetRankingData(uint8 position) const
 
 void DevilSquare::AddMonster()
 {
-	for ( MonsterEventList::const_iterator it = sMonsterMgr->monster_event_list.begin(); it != sMonsterMgr->monster_event_list.end(); ++it )
+	auto event_monsters = sMonsterManager->GetEventMonsters(EVENT_DEVIL_SQUARE);
+	for (auto itr = event_monsters.first; itr != event_monsters.second; ++itr)
 	{
-		if ( (*it)->GetEventID() != EVENT_DEVIL_SQUARE )
-		{
+		auto const& event_monster = itr->second;
+
+		if (event_monster->devil_square.ground != GetGround())
 			continue;
-		}
 
-		if ( (*it)->devil_square.ground != this->GetGround() )
+		auto monster = sObjectMgr->MonsterTryAdd(event_monster->MonsterId, event_monster->MapId);
+		if (monster)
 		{
-			continue;
-		}
+			monster->SetEventDBData(event_monster);
+			monster->SetDespawnTime(event_monster->devil_square.despawn_time * IN_MILLISECONDS);
+			monster->SetDespawnTick(MyGetTickCount());
+			monster->SetDespawnType(MONSTER_DESPAWN_DIE);
 
-		Monster* pMonster = sObjectMgr->MonsterTryAdd((*it)->GetID(), (*it)->GetWorld());
+			if (event_monster->devil_square.boss)
+				monster->SetRespawnType(GAME_OBJECT_RESPAWN_DELETE);
 
-		if ( pMonster )
-		{
-			pMonster->SetEventDBData(*it);
-			pMonster->SetDespawnTime((*it)->devil_square.despawn_time * IN_MILLISECONDS);
-			pMonster->SetDespawnTick(MyGetTickCount());
-			pMonster->SetDespawnType(MONSTER_DESPAWN_DIE);
+			monster->SetEventGround(GetGround());
+			monster->AddToWorld();
 
-			if ( (*it)->devil_square.boss )
-			{
-				pMonster->SetRespawnType(GAME_OBJECT_RESPAWN_DELETE);
-			}
-
-			pMonster->SetEventGround(this->GetGround());
-			pMonster->AddToWorld();
-
-			this->Log("Added Monster [%u][%u]", pMonster->GetEntry(), pMonster->GetClass());
+			this->Log("Added Monster [%u][%u]", monster->GetEntry(), monster->GetClass());
 		}
 	}
 }

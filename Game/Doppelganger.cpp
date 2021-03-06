@@ -864,53 +864,42 @@ int32 DoppelgangerGround::GetActiveZoneCount() const
 
 void DoppelgangerGround::AddMonster()
 {
-	for ( MonsterEventList::const_iterator it = sMonsterMgr->monster_event_list.begin(); it != sMonsterMgr->monster_event_list.end(); ++it )
+	auto event_monsters = sMonsterManager->GetEventMonsters(EVENT_DOPPELGANGER);
+	for (auto itr = event_monsters.first; itr != event_monsters.second; ++itr)
 	{
-		if ( (*it)->GetEventID() != EVENT_DOPPELGANGER )
-		{
+		auto const& event_monster = itr->second;
+
+		if (event_monster->doppelganger.ground != GetGround())
 			continue;
-		}
 
-		if ( (*it)->doppelganger.ground != this->GetGround() )
-		{
+		if (event_monster->doppelganger.zone < 0 || event_monster->doppelganger.zone >= MAX_DOPPELGANGER_ZONE)
 			continue;
-		}
 
-		if ( (*it)->doppelganger.zone < 0 || (*it)->doppelganger.zone >= MAX_DOPPELGANGER_ZONE )
-		{
+		if (this->GetZone(event_monster->doppelganger.zone)->PlayerGetCount() <= 0)
 			continue;
-		}
 
-		if ( this->GetZone((*it)->doppelganger.zone)->PlayerGetCount() <= 0 )
+		auto monster = sObjectMgr->MonsterTryAdd(event_monster->MonsterId, event_monster->MapId);
+		if (monster)
 		{
-			continue;
-		}
+			monster->SetEventDBData(event_monster);
+			monster->SetRespawnType(GAME_OBJECT_RESPAWN_NORMAL);
+			monster->SetMoveDistance(200);
 
-		Monster* pMonster = sObjectMgr->MonsterTryAdd((*it)->GetID(), (*it)->GetWorld());
-
-		if ( pMonster )
-		{
-			pMonster->SetEventDBData(*it);
-			pMonster->SetRespawnType(GAME_OBJECT_RESPAWN_NORMAL);
-			pMonster->SetMoveDistance(200);
-
-			if ( (*it)->doppelganger.despawn_time > 0 )
+			if (event_monster->doppelganger.despawn_time > 0)
 			{
-				pMonster->SetDespawnTime((*it)->doppelganger.despawn_time * IN_MILLISECONDS);
-				pMonster->SetDespawnTick(MyGetTickCount());
-				pMonster->SetDespawnType(MONSTER_DESPAWN_DIE);
+				monster->SetDespawnTime(event_monster->doppelganger.despawn_time * IN_MILLISECONDS);
+				monster->SetDespawnTick(MyGetTickCount());
+				monster->SetDespawnType(MONSTER_DESPAWN_DIE);
 			}
 
-			pMonster->SetRespawnLocation(MONSTER_RESPAWN_ZONE);
-		
-			if ( (*it)->doppelganger.boss )
-			{
-				pMonster->SetRespawnType(GAME_OBJECT_RESPAWN_DELETE);
-			}
+			monster->SetRespawnLocation(MONSTER_RESPAWN_ZONE);
 
-			pMonster->SetEventGround((*it)->doppelganger.ground);
-			pMonster->SetEventStage((*it)->doppelganger.zone);
-			pMonster->AddToWorld();
+			if (event_monster->doppelganger.boss)
+				monster->SetRespawnType(GAME_OBJECT_RESPAWN_DELETE);
+
+			monster->SetEventGround(event_monster->doppelganger.ground);
+			monster->SetEventStage(event_monster->doppelganger.zone);
+			monster->AddToWorld();
 		}
 	}
 }

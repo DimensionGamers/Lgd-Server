@@ -93,7 +93,6 @@ struct monster_ai_state;
 struct monster_ai_element;
 struct CrownBasicAI;
 struct CrownSwitchBasicAI;
-struct monster_event;
 
 struct item_template;
 
@@ -237,7 +236,7 @@ class MuRoomyInfo;
 
 #include "ObjectManager.h"
 
-#include "MonsterMgr.h"
+#include "MonsterManager.h"
 #include "EventManager.h"
 
 #include "spe.h"
@@ -280,7 +279,6 @@ class MuRoomyInfo;
 
 
 #define sMessage SystemMessage::instance()
-#define sMonsterMgr CMonsterMgr::instance()
 #define sCashShopMgr CashShopMgr::instance()
 #define sGenMgr CGenMgr::instance()
 #define sJewelMix JewelMix::instance()

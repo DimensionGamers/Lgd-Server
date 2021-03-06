@@ -495,7 +495,6 @@ void Player::CalculateCharacter()
 	this->SetArmorSetBonus(false);
 
 	this->SetElementalAttribute(ELEMENTAL_ATTRIBUTE_NONE);
-	this->SetElementalPattern(0);
 
 	this->GetPentagramOption()->Reset();
 	this->GetPentagramJewelOption()->Reset();
@@ -6850,18 +6849,6 @@ void Player::UpdateStatus()
 			this->SetInstance(-1);
 		}
 	}
-
-	for ( UnitPunishMap::const_iterator itr = this->punish_map.begin(); itr != this->punish_map.end(); )
-	{
-		if ( (MyGetTickCount() > (itr->second + sGameServer->GetSkillPunishFrequencyPVP())) )
-		{
-			this->punish_map.erase(itr++);
-		}
-		else
-		{
-			++itr;
-		}
-	}
 }
 
 void Player::LoadDefaultSkill()
@@ -8799,8 +8786,6 @@ void Player::Respawn()
 	this->SetTY(this->GetY());
 	this->CreateFrustrum();
 	this->RestoreEventAnimation();
-
-	this->punish_map.clear();
 
 	this->SetDeadStatus(DEAD_NONE);
 	this->SetState(OBJECT_STATE_STAND_BY);
@@ -16125,25 +16110,7 @@ bool Player::InmuneToRadiance() const
 
 bool Player::InmuneToPunish(Player* pPlayer)
 {
-	if ( !pPlayer )
-	{
-		return false;
-	}
-
-	if ( !sGameServer->GetSkillPunishFrequencyPVP() )
-	{
-		return false;
-	}
-
-	UnitPunishMap::const_iterator itr = this->punish_map.find(pPlayer->GetGUID());
-
-	if ( itr == this->punish_map.end() )
-	{
-		this->punish_map[pPlayer->GetGUID()] = MyGetTickCount();
-		return false;
-	}
-
-	return true;
+	return false;
 }
 
 void Player::ApplyRadianceDebuff(Unit* pTarget, uint16 effect, int32 & punish_damage, int32 count)

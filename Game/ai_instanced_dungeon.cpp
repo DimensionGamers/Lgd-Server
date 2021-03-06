@@ -80,38 +80,28 @@ public:
 
 		void OnRespawn()
 		{
-			DungeonInstanceLevel const* pData = sDungeon->GetInstanceLevel(this->GetLevel());
-
-			if (!pData)
-			{
+			const auto instance_level_data = sDungeon->GetInstanceLevel(GetLevel());
+			if (!instance_level_data)
 				return;
-			}
 
-			monster_template const* pMonsterInfo = sMonsterMgr->GetMonsterTemplate(me()->GetClass());
+			me()->PowerSet(POWER_LIFE, me()->GetMonsterTemplate()->Stat[POWER_LIFE] * instance_level_data->GetHP());
+			me()->PowerSetMax(POWER_LIFE, me()->GetMonsterTemplate()->Stat[POWER_LIFE] * instance_level_data->GetHP());
 
-			if (!pMonsterInfo)
-			{
-				return;
-			}
+			me()->SetIntData(UNIT_INT_ATTACK_DAMAGE_LEFT_MIN, me()->GetMonsterTemplate()->DamageMin * instance_level_data->GetDamage());
+			me()->SetIntData(UNIT_INT_ATTACK_DAMAGE_LEFT_MAX, me()->GetMonsterTemplate()->DamageMax * instance_level_data->GetDamage());
+			me()->SetIntData(UNIT_INT_ATTACK_DAMAGE_RIGHT_MIN, me()->GetMonsterTemplate()->DamageMin * instance_level_data->GetDamage());
+			me()->SetIntData(UNIT_INT_ATTACK_DAMAGE_RIGHT_MAX, me()->GetMonsterTemplate()->DamageMax * instance_level_data->GetDamage());
+			me()->SetIntData(UNIT_INT_DEFENSE, me()->GetMonsterTemplate()->Defense * instance_level_data->GetDefense());
+			me()->SetIntData(UNIT_INT_ATTACK_RATE, me()->GetMonsterTemplate()->AttackSuccessRate * instance_level_data->GetAttackSuccess());
+			me()->SetIntData(UNIT_INT_DEFENSE_RATE, me()->GetMonsterTemplate()->DefenseSuccessRate * instance_level_data->GetDefenseSuccess());
 
-			me()->PowerSet(POWER_LIFE, me()->GetScriptMaxPower(POWER_LIFE) * pData->GetHP());
-			me()->PowerSetMax(POWER_LIFE, me()->GetScriptMaxPower(POWER_LIFE) * pData->GetHP());
+			me()->SetIntData(UNIT_INT_ELEMENTAL_DAMAGE_MIN, me()->GetMonsterTemplate()->ElementalDamageMin * instance_level_data->GetElementalDamage());
+			me()->SetIntData(UNIT_INT_ELEMENTAL_DAMAGE_MAX, me()->GetMonsterTemplate()->ElementalDamageMax * instance_level_data->GetElementalDamage());
+			me()->SetIntData(UNIT_INT_ELEMENTAL_DEFENSE, me()->GetMonsterTemplate()->ElementalDefense * instance_level_data->GetElementalDefense());
+			me()->SetIntData(UNIT_INT_ELEMENTAL_ATTACK_SUCCESS_RATE, me()->GetMonsterTemplate()->ElementalAttackSuccessRate * instance_level_data->GetElementalAttackSuccess());
+			me()->SetIntData(UNIT_INT_ELEMENTAL_DEFENSE_SUCCESS_RATE, me()->GetMonsterTemplate()->ElementalDefenseSuccessRate * instance_level_data->GetElementalDefenseSuccess());
 
-			me()->SetIntData(UNIT_INT_PHYSICAL_DAMAGE_MIN, pMonsterInfo->attack_min_damage.get() * pData->GetDamage());
-			me()->SetIntData(UNIT_INT_PHYSICAL_DAMAGE_MAX, pMonsterInfo->attack_max_damage.get() * pData->GetDamage());
-
-			me()->SetIntData(UNIT_INT_DEFENSE, pMonsterInfo->defense.get() * pData->GetDefense());
-
-			me()->SetIntData(UNIT_INT_ATTACK_RATE, pMonsterInfo->attack_success.get() * pData->GetAttackSuccess());
-			me()->SetIntData(UNIT_INT_DEFENSE_RATE, pMonsterInfo->defense_success.get() * pData->GetDefenseSuccess());
-
-			me()->SetIntData(UNIT_INT_ELEMENTAL_DAMAGE_MIN, pMonsterInfo->GetElementalDamageMin() * pData->GetElementalDamage());
-			me()->SetIntData(UNIT_INT_ELEMENTAL_DAMAGE_MAX, pMonsterInfo->GetElementalDamageMax() * pData->GetElementalDamage());
-			me()->SetIntData(UNIT_INT_ELEMENTAL_DEFENSE, pMonsterInfo->GetElementalDefense() * pData->GetElementalDefense());
-			me()->SetIntData(UNIT_INT_ELEMENTAL_ATTACK_SUCCESS_RATE, pMonsterInfo->GetElementalAttackRate() * pData->GetElementalAttackSuccess());
-			me()->SetIntData(UNIT_INT_ELEMENTAL_DEFENSE_SUCCESS_RATE, pMonsterInfo->GetElementalDefenseRate() * pData->GetElementalDefenseSuccess());
-
-			me()->SetLevel(pMonsterInfo->min_level.get() * pData->GetLevel());
+			me()->SetLevel(me()->GetMonsterTemplate()->Level * instance_level_data->GetLevel());
 		}
 
 		void OnDie()
@@ -212,40 +202,28 @@ public:
 
 		void OnRespawn()
 		{
-			DungeonInstanceLevel const* pData = sDungeon->GetInstanceLevel(this->GetLevel());
-
-			if (!pData)
-			{
+			auto const instance_level_data = sDungeon->GetInstanceLevel(GetLevel());
+			if (!instance_level_data)
 				return;
-			}
 
-			monster_template const* pMonsterInfo = sMonsterMgr->GetMonsterTemplate(me()->GetClass());
+			me()->PowerSet(POWER_LIFE, me()->GetMonsterTemplate()->Stat[POWER_LIFE] * instance_level_data->GetHP());
+			me()->PowerSetMax(POWER_LIFE, me()->GetMonsterTemplate()->Stat[POWER_LIFE] * instance_level_data->GetHP());
 
-			if (!pMonsterInfo)
-			{
-				return;
-			}
+			me()->SetIntData(UNIT_INT_ATTACK_DAMAGE_LEFT_MIN, me()->GetMonsterTemplate()->DamageMin * instance_level_data->GetDamage());
+			me()->SetIntData(UNIT_INT_ATTACK_DAMAGE_LEFT_MAX, me()->GetMonsterTemplate()->DamageMax * instance_level_data->GetDamage());
+			me()->SetIntData(UNIT_INT_ATTACK_DAMAGE_RIGHT_MIN, me()->GetMonsterTemplate()->DamageMin * instance_level_data->GetDamage());
+			me()->SetIntData(UNIT_INT_ATTACK_DAMAGE_RIGHT_MAX, me()->GetMonsterTemplate()->DamageMax * instance_level_data->GetDamage());
+			me()->SetIntData(UNIT_INT_DEFENSE, me()->GetMonsterTemplate()->Defense * instance_level_data->GetDefense());
+			me()->SetIntData(UNIT_INT_ATTACK_RATE, me()->GetMonsterTemplate()->AttackSuccessRate * instance_level_data->GetAttackSuccess());
+			me()->SetIntData(UNIT_INT_DEFENSE_RATE, me()->GetMonsterTemplate()->DefenseSuccessRate * instance_level_data->GetDefenseSuccess());
 
-			me()->PowerSet(POWER_LIFE, me()->GetScriptMaxPower(POWER_LIFE) * pData->GetHP());
-			me()->PowerSetMax(POWER_LIFE, me()->GetScriptMaxPower(POWER_LIFE) * pData->GetHP());
+			me()->SetIntData(UNIT_INT_ELEMENTAL_DAMAGE_MIN, me()->GetMonsterTemplate()->ElementalDamageMin * instance_level_data->GetElementalDamage());
+			me()->SetIntData(UNIT_INT_ELEMENTAL_DAMAGE_MAX, me()->GetMonsterTemplate()->ElementalDamageMax * instance_level_data->GetElementalDamage());
+			me()->SetIntData(UNIT_INT_ELEMENTAL_DEFENSE, me()->GetMonsterTemplate()->ElementalDefense * instance_level_data->GetElementalDefense());
+			me()->SetIntData(UNIT_INT_ELEMENTAL_ATTACK_SUCCESS_RATE, me()->GetMonsterTemplate()->ElementalAttackSuccessRate * instance_level_data->GetElementalAttackSuccess());
+			me()->SetIntData(UNIT_INT_ELEMENTAL_DEFENSE_SUCCESS_RATE, me()->GetMonsterTemplate()->ElementalDefenseSuccessRate * instance_level_data->GetElementalDefenseSuccess());
 
-			me()->SetIntData(UNIT_INT_ATTACK_DAMAGE_LEFT_MIN, pMonsterInfo->attack_min_damage.get() * pData->GetDamage());
-			me()->SetIntData(UNIT_INT_ATTACK_DAMAGE_LEFT_MAX, pMonsterInfo->attack_max_damage.get() * pData->GetDamage());
-			me()->SetIntData(UNIT_INT_ATTACK_DAMAGE_RIGHT_MIN, pMonsterInfo->attack_min_damage.get() * pData->GetDamage());
-			me()->SetIntData(UNIT_INT_ATTACK_DAMAGE_RIGHT_MAX, pMonsterInfo->attack_max_damage.get() * pData->GetDamage());
-
-			me()->SetIntData(UNIT_INT_DEFENSE, pMonsterInfo->defense.get() * pData->GetDefense());
-
-			me()->SetIntData(UNIT_INT_ATTACK_RATE, pMonsterInfo->attack_success.get() * pData->GetAttackSuccess());
-			me()->SetIntData(UNIT_INT_DEFENSE_RATE, pMonsterInfo->defense_success.get() * pData->GetDefenseSuccess());
-
-			me()->SetIntData(UNIT_INT_ELEMENTAL_DAMAGE_MIN, pMonsterInfo->GetElementalDamageMin() * pData->GetElementalDamage());
-			me()->SetIntData(UNIT_INT_ELEMENTAL_DAMAGE_MAX, pMonsterInfo->GetElementalDamageMax() * pData->GetElementalDamage());
-			me()->SetIntData(UNIT_INT_ELEMENTAL_DEFENSE, pMonsterInfo->GetElementalDefense() * pData->GetElementalDefense());
-			me()->SetIntData(UNIT_INT_ELEMENTAL_ATTACK_SUCCESS_RATE, pMonsterInfo->GetElementalAttackRate() * pData->GetElementalAttackSuccess());
-			me()->SetIntData(UNIT_INT_ELEMENTAL_DEFENSE_SUCCESS_RATE, pMonsterInfo->GetElementalDefenseRate() * pData->GetElementalDefenseSuccess());
-
-			me()->SetLevel(pMonsterInfo->min_level.get() * pData->GetLevel());
+			me()->SetLevel(me()->GetMonsterTemplate()->Level * instance_level_data->GetLevel());
 		}
 
 		void OnDie()

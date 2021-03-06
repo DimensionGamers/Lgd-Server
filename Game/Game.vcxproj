@@ -259,7 +259,7 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemMgr.h" />
     <ClInclude Include="Monster.h" />
-    <ClInclude Include="MonsterMgr.h" />
+    <ClInclude Include="MonsterManager.h" />
     <ClInclude Include="NpcHandler.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Party.h" />
@@ -501,7 +501,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemMgr.cpp" />
     <ClCompile Include="Monster.cpp" />
-    <ClCompile Include="MonsterMgr.cpp" />
+    <ClCompile Include="MonsterManager.cpp" />
     <ClCompile Include="NpcHandler.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="Party.cpp" />

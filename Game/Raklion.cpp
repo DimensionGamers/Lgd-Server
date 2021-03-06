@@ -286,99 +286,72 @@ void Raklion::ProcState_End()
 
 void Raklion::AddEggs()
 {
-	for ( MonsterEventList::const_iterator it = sMonsterMgr->monster_event_list.begin(); it != sMonsterMgr->monster_event_list.end(); ++it )
+	auto event_monsters = sMonsterManager->GetEventMonsters(EVENT_RAKLION);
+	for (auto itr = event_monsters.first; itr != event_monsters.second; ++itr)
 	{
-		if ( (*it)->GetEventID() != EVENT_RAKLION )
-		{
+		auto const& event_monster = itr->second;
+
+		if (event_monster->MonsterId != 460 && event_monster->MonsterId != 461 && event_monster->MonsterId != 462)
 			continue;
-		}
 
-		if ( (*it)->GetID() != 460 && 
-			 (*it)->GetID() != 461 && 
-			 (*it)->GetID() != 462 )
+		auto monster = sObjectMgr->MonsterTryAdd(event_monster->MonsterId, event_monster->MapId);
+		if (monster)
 		{
-			continue;
-		}
-
-		Monster* pMonster = sObjectMgr->MonsterTryAdd((*it)->GetID(), (*it)->GetWorld());
-
-		if ( pMonster )
-		{
-			pMonster->SetEventDBData(*it);
-			pMonster->SetRespawnType(GAME_OBJECT_RESPAWN_DELETE);
-			pMonster->AddToWorld();
-			this->IncreaseEggCount(1);
+			monster->SetEventDBData(event_monster);
+			monster->SetRespawnType(GAME_OBJECT_RESPAWN_DELETE);
+			monster->AddToWorld();
+			IncreaseEggCount(1);
 		}
 	}
 }
 
 void Raklion::AddSelupan()
 {
-	for ( MonsterEventList::const_iterator it = sMonsterMgr->monster_event_list.begin(); it != sMonsterMgr->monster_event_list.end(); ++it )
+	auto event_monsters = sMonsterManager->GetEventMonsters(EVENT_RAKLION);
+	for (auto itr = event_monsters.first; itr != event_monsters.second; ++itr)
 	{
-		if ( (*it)->GetEventID() != EVENT_RAKLION )
-		{
+		auto const& event_monster = itr->second;
+
+		if (event_monster->MonsterId != 459)
 			continue;
-		}
 
-		if ( (*it)->GetID() != 459 )
+		auto monster = sObjectMgr->MonsterTryAdd(event_monster->MonsterId, event_monster->MapId);
+		if (monster)
 		{
-			continue;
-		}
+			monster->SetEventDBData(event_monster);
+			monster->SetRespawnType(GAME_OBJECT_RESPAWN_DELETE);
+			monster->AddToWorld();
 
-		Monster* pMonster = sObjectMgr->MonsterTryAdd((*it)->GetID(), (*it)->GetWorld());
-
-		if ( pMonster )
-		{
-			pMonster->SetEventDBData(*it);
-			pMonster->SetRespawnType(GAME_OBJECT_RESPAWN_DELETE);
-			pMonster->AddToWorld();
-
-			this->IncreaseBossCount(1);
+			IncreaseBossCount(1);
 		}
 	}
 }
 
 void Raklion::AddSummoned()
 {
-	for ( MonsterEventList::const_iterator it = sMonsterMgr->monster_event_list.begin(); it != sMonsterMgr->monster_event_list.end(); ++it )
+	auto event_monsters = sMonsterManager->GetEventMonsters(EVENT_RAKLION);
+	for (auto itr = event_monsters.first; itr != event_monsters.second; ++itr)
 	{
-		if ( (*it)->GetEventID() != EVENT_RAKLION )
-		{
+		auto const& event_monster = itr->second;
+
+		if (event_monster->MonsterId == 459 || event_monster->MonsterId == 460 || event_monster->MonsterId == 461 || event_monster->MonsterId == 462)
 			continue;
-		}
 
-		if ( (*it)->GetID() == 459 || 
-			 (*it)->GetID() == 460 || 
-			 (*it)->GetID() == 461 || 
-			 (*it)->GetID() == 462 )
+		auto monster = sObjectMgr->MonsterTryAdd(event_monster->MonsterId, event_monster->MapId);
+		if (monster)
 		{
-			continue;
-		}
+			monster->SetEventDBData(event_monster);
+			monster->SetRespawnType(GAME_OBJECT_RESPAWN_DELETE);
+			monster->AddToWorld();
+			IncreaseSummonCount(1);
 
-		Monster* pMonster = sObjectMgr->MonsterTryAdd((*it)->GetID(), (*it)->GetWorld());
-
-		if ( pMonster )
-		{
-			pMonster->SetEventDBData(*it);
-			pMonster->SetRespawnType(GAME_OBJECT_RESPAWN_DELETE);
-			pMonster->AddToWorld();
-			this->IncreaseSummonCount(1);
-
-			if ( this->GetSummonMaxCount() > 0 )
-			{
-				if ( this->GetSummonCount() >= this->GetSummonMaxCount() )
-				{
-					break;
-				}
-			}
+			if (GetSummonMaxCount() > 0 && GetSummonCount() >= GetSummonMaxCount())
+				break;
 		}
 	}
 
-	if ( this->GetSummonMaxCount() <= 0 )
-	{
-		this->SetSummonMaxCount(this->GetSummonCount());
-	}
+	if (GetSummonMaxCount() <= 0)
+		SetSummonMaxCount(GetSummonCount());
 }
 
 void Raklion::ClearMonster()

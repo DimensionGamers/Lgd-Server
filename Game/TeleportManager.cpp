@@ -294,19 +294,19 @@ void TeleportManager::SendMonsterInfo(Player* player)
 		if (teleport_data->MonsterId == uint16(-1))
 			continue;
 
-		auto const monster_data = sMonsterMgr->GetMonsterTemplate(teleport_data->MonsterId);
-		if (!monster_data)
+		auto const monster_template = sMonsterManager->GetMonsterTemplate(teleport_data->MonsterId);
+		if (!monster_template)
 			continue;
 
 		auto & body_data = body[head->count++];
 
 		body_data.id = teleport_data->Id;
 		body_data.monster = teleport_data->MonsterId;
-		body_data.hp = monster_data->power[POWER_LIFE].get();
-		body_data.attack_power = monster_data->attack_max_damage.get();
-		body_data.defense = monster_data->defense.get();
-		body_data.elemental_damage = monster_data->GetElementalDamageMax();
-		body_data.elemental_defense = monster_data->GetElementalDefense();
+		body_data.hp = monster_template->Stat[POWER_LIFE];
+		body_data.attack_power = monster_template->DamageMax;
+		body_data.defense = monster_template->Defense;
+		body_data.elemental_damage = monster_template->ElementalDamageMax;
+		body_data.elemental_defense = monster_template->ElementalDefense;
 	}
 
 	head->Set(0x59, 0x06, sizeof(PACKET_WARP_MONSTER_INFO_HEAD) + (head->count * sizeof(PACKET_WARP_MONSTER_INFO_BODY)));

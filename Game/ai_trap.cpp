@@ -21,7 +21,7 @@ public:
 
 		bool Update()
 		{
-			if ( !me()->GetAttackRange() )
+			if (!me()->GetMonsterTemplate()->AttackRange)
 			{
 				this->EnemySearch();
 			}
@@ -81,7 +81,7 @@ public:
 			Object * pObject = nullptr;
 			me()->SetTarget(nullptr);
 			int16 pos = me()->GetX();
-			int32 count = me()->GetAttackRange() + 1;
+			int32 count = me()->GetMonsterTemplate()->AttackRange + 1;
 
 			for( int32 n = 0; n < count; ++n )
 			{
@@ -110,7 +110,7 @@ public:
 			Object * pObject = nullptr;
 			me()->SetTarget(nullptr);
 			int16 pos = me()->GetY();
-			int32 count = me()->GetAttackRange() + 1;
+			int32 count = me()->GetMonsterTemplate()->AttackRange + 1;
 
 			for( int32 n = 0; n < count; ++n )
 			{
@@ -149,10 +149,10 @@ public:
 				if ( pObject->ToPlayer()->IsAdministrator() )
 					continue;
 
-				if ( (me()->GetY() - me()->GetAttackRange()) > pObject->GetY() || (me()->GetY() + me()->GetAttackRange()) < pObject->GetY() )
+				if ((me()->GetY() - me()->GetMonsterTemplate()->AttackRange) > pObject->GetY() || (me()->GetY() + me()->GetMonsterTemplate()->AttackRange) < pObject->GetY())
 					continue;
 
-				if ( (me()->GetX() - me()->GetAttackRange()) > pObject->GetX() || (me()->GetX() + me()->GetAttackRange()) < pObject->GetX() )
+				if ((me()->GetX() - me()->GetMonsterTemplate()->AttackRange) > pObject->GetX() || (me()->GetX() + me()->GetMonsterTemplate()->AttackRange) < pObject->GetX())
 					continue;
 
 				me()->SetTarget(pObject->ToPlayer());

@@ -581,49 +581,40 @@ void BloodCastle::ProcessStatueDestroyed(Player* pKiller, Monster* pStatue)
 
 void BloodCastle::AddMonster(BloodCastleMonsterType type)
 {
-	for ( MonsterEventList::const_iterator it = sMonsterMgr->monster_event_list.begin(); it != sMonsterMgr->monster_event_list.end(); ++it )
+	auto event_monsters = sMonsterManager->GetEventMonsters(EVENT_BLOOD_CASTLE);
+	for (auto itr = event_monsters.first; itr != event_monsters.second; ++itr)
 	{
-		if ( (*it)->GetEventID() != EVENT_BLOOD_CASTLE )
-		{
+		auto const& event_monster = itr->second;
+
+		if (event_monster->blood_castle.ground != GetGround())
 			continue;
-		}
 
-		if ( (*it)->blood_castle.ground != this->GetGround() )
-		{
+		if (event_monster->blood_castle.type != type)
 			continue;
-		}
 
-		if ( (*it)->blood_castle.type != type )
+		auto monster = sObjectMgr->MonsterTryAdd(event_monster->MonsterId, event_monster->MapId);
+		if (monster)
 		{
-			continue;
-		}
+			monster->SetEventDBData(event_monster);
+			monster->SetRespawnLocation(MONSTER_RESPAWN_ZONE);
+			monster->SetRespawn(IN_MILLISECONDS);
 
-		Monster* pMonster = sObjectMgr->MonsterTryAdd((*it)->GetID(), (*it)->GetWorld());
-
-		if ( pMonster )
-		{
-			pMonster->SetEventDBData(*it);
-			pMonster->SetRespawnLocation(MONSTER_RESPAWN_ZONE);
-			pMonster->SetRespawn(IN_MILLISECONDS);
-
-			switch ( type )
+			switch (type)
 			{
 			case BLOOD_CASTLE_MONSTER_DOOR:
-				{
-					pMonster->SetRespawnType(GAME_OBJECT_RESPAWN_DELETE);
-				} break;
+				monster->SetRespawnType(GAME_OBJECT_RESPAWN_DELETE);
+				break;
 
 			case BLOOD_CASTLE_MONSTER_STATUE:
-				{
-					pMonster->SetRespawnType(GAME_OBJECT_RESPAWN_DELETE);
-					pMonster->SetClass(132 + Random(3));
-				} break;
+				monster->SetRespawnType(GAME_OBJECT_RESPAWN_DELETE);
+				monster->SetClass(132 + Random(3));
+				break;
 			}
 
-			pMonster->SetEventGround(this->GetGround());
-			pMonster->AddToWorld();
+			monster->SetEventGround(GetGround());
+			monster->AddToWorld();
 
-			this->Log("Added Monster [%u][%u].", pMonster->GetEntry(), pMonster->GetClass());
+			this->Log("Added Monster [%u][%u].", monster->GetEntry(), monster->GetClass());
 		}
 	}
 }

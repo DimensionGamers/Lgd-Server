@@ -6,16 +6,17 @@
 *
 */
 
-CMonsterMgr::CMonsterMgr()
+MonsterManager::MonsterManager()
 {
 	this->SetLastUpdate(0);
 }
 
-CMonsterMgr::~CMonsterMgr()
+MonsterManager::~MonsterManager()
 {
 	this->ClearItem();
 
-	MAP_CLEAR(MonsterTemplateMap::iterator, this->map_template);
+	_monsterTemplate.clear();
+
 	MAP_CLEAR(MonsterAIUnitMap::iterator, this->m_monster_ai_unit);
 	MAP_CLEAR(MonsterAIElementMap::iterator, this->m_monster_ai_element);
 	MAP_CLEAR(MonsterAIAutomataMap::iterator, this->m_monster_ai_automata);
@@ -55,254 +56,125 @@ CMonsterMgr::~CMonsterMgr()
 	this->monster_skill_special_map.clear();
 	this->monster_ai_group_map.clear();
 
-	LIST_CLEAR(MonsterEventList::iterator, this->monster_event_list);
+	CLEAR_MAP(_monsterEvent);
 	MAP_CLEAR(MonsterRespawnMap::iterator, this->monster_respawn_map);
 
 	LIST_CLEAR(MonsterExclusiveList::iterator, this->monster_exclusive_list);
 }
 
-void CMonsterMgr::LoadMonsterTemplate()
+void MonsterManager::LoadMonsterTemplate()
 {
-	sLog->outInfo(LOG_DEFAULT, "Loading Monster Template...");
+	sLog->outLoad(true, "Loading Monster Template...");
 
-	MAP_CLEAR(MonsterTemplateMap::iterator, this->map_template);
-
-	uint32 count = 0;
-
-	QueryResult result = GameServerDatabase.Query("SELECT * FROM monster_template");
-
-	if ( result )
+	auto result = GameServerDatabase.Query("SELECT * FROM monster_template");
+	if (result)
 	{
+		_monsterTemplate.rehash((size_t)result->GetRowCount());
 		do
 		{
-			Field* fields = result->Fetch();
-			int32 loop = 0;
+			FieldReader reader(result->Fetch());
 
-			monster_template * add_monster = new monster_template;
+			auto id = reader.GetUInt16();
 
-			add_monster->id.set(fields[loop++].GetUInt16());
-			add_monster->SetName(fields[loop++].GetCString());
-			add_monster->model.set(fields[loop++].GetUInt16());
-			add_monster->size.set(fields[loop++].GetFloat());
-			add_monster->type.set(fields[loop++].GetUInt8());
-			add_monster->min_level.set(fields[loop++].GetInt16());
-			add_monster->max_level.set(fields[loop++].GetInt16());
+			auto & data = _monsterTemplate[id];
 
-			for ( uint8 i = 0; i < POWER_MAX; i++ )
+			data.Id = id;
+			data.Name = reader.GetString();
+			data.Model = reader.GetUInt16();
+			data.Size = reader.GetFloat();
+			data.Type = reader.GetUInt8();
+			data.Level = reader.GetInt16();
+
+			for (int32 i = 0; i < POWER_MAX; ++i)
+				data.Stat[i] = reader.GetInt32();
+
+			data.DamageMin = reader.GetInt32();
+			data.DamageMax = reader.GetInt32();
+			data.CriticalDamageRate = reader.GetInt32();
+			data.CriticalDamageAdd = reader.GetInt32();
+			data.ExcellentDamageRate = reader.GetInt32();
+			data.ExcellentDamageAdd = reader.GetInt32();
+			data.AttackSuccessRate = reader.GetInt32();
+			data.Defense = reader.GetInt32();
+			data.DefenseSuccessRate = reader.GetInt32();
+			data.MovementRange = reader.GetUInt32();
+			data.MovementSpeed = reader.GetUInt32();
+			data.AttackRange = reader.GetUInt32();
+			data.AttackSpeed = reader.GetInt32();
+			data.ViewRange = reader.GetUInt32();
+
+			for (int32 i = 0; i < Element::MAX; ++i)
+				data.Resistance[i] = reader.GetUInt8();
+
+			data.RespawnTimeMin = reader.GetUInt32();
+			data.RespawnTimeMax = reader.GetUInt32();
+			data.ItemRate = reader.GetInt32();
+			data.ZenRate = reader.GetInt32();
+			data.ItemMaxLevel = reader.GetInt32();
+
+			for (int32 i = 0; i < POWER_MAX; ++i)
 			{
-				add_monster->power[i].set(fields[loop++].GetInt32());
+				data.StatRecovery[i] = reader.GetFloat();
+				data.StatRecoveryTime[i] = reader.GetUInt32();
 			}
 
-			add_monster->attack_min_damage.set(fields[loop++].GetInt32());
-			add_monster->attack_max_damage.set(fields[loop++].GetInt32());
-			add_monster->magic_min_damage.set(fields[loop++].GetInt32());
-			add_monster->magic_max_damage.set(fields[loop++].GetInt32());
-			add_monster->critical_damage_rate.set(fields[loop++].GetInt32());
-			add_monster->critical_damage_add.set(fields[loop++].GetInt32());
-			add_monster->excellent_damage_rate.set(fields[loop++].GetInt32());
-			add_monster->excellent_damage_add.set(fields[loop++].GetInt32());
-			add_monster->attack_success.set(fields[loop++].GetInt32());
-			add_monster->defense.set(fields[loop++].GetInt32());
-			add_monster->defense_magic.set(fields[loop++].GetInt32());
-			add_monster->defense_success.set(fields[loop++].GetInt32());
-			add_monster->move_range.set(fields[loop++].GetUInt32());
-			add_monster->move_speed.set(fields[loop++].GetUInt32());
-			add_monster->attack_range.set(fields[loop++].GetUInt32());
-			add_monster->attack_speed.set(fields[loop++].GetInt32());
-			add_monster->view_range.set(fields[loop++].GetUInt32());
+			data.ScriptName = reader.GetString();
 
-			for ( uint8 i = 0; i < Element::MAX; i++ )
+			data.ElementalAttribute = reader.GetUInt8();
+			data.ElementalDefense = reader.GetInt32();
+			data.ElementalDamageMin = reader.GetInt32();
+			data.ElementalDamageMax = reader.GetInt32();
+			data.ElementalAttackSuccessRate = reader.GetInt32();
+			data.ElementalDefenseSuccessRate = reader.GetInt32();
+			data.RadianceImmune = reader.GetUInt8();
+			data.DebuffResistance = reader.GetInt32();
+			data.DebuffDefense = reader.GetInt32();
+			data.CriticalDamageResistance = reader.GetUInt8();
+			data.ExcellentDamageResistance = reader.GetUInt8();
+			data.DamageAbsrob = reader.GetUInt8();
+			data.IsElite = reader.GetBool();
+			data.IsCustom = reader.GetBool();
+
+			if (!sScriptAI->IsScriptAI(data.ScriptName))
 			{
-				add_monster->SetResistance(i, fields[loop++].GetUInt8());
+				sLog->outError(LOG_DEFAULT, "Wrong AI Script: %s", data.ScriptName.c_str());
+				data.ScriptName.clear();
 			}
 
-			add_monster->respawn_time_min.set(fields[loop++].GetUInt32());
-			add_monster->respawn_time_max.set(fields[loop++].GetUInt32());
-			add_monster->item_rate.set(fields[loop++].GetInt32());
-			add_monster->zen_rate.set(fields[loop++].GetInt32());
-			add_monster->item_max_level.set(fields[loop++].GetInt32());
-
-			for ( uint8 i = 0; i < POWER_MAX; i++ )
-			{
-				add_monster->regen_power[i] = fields[loop++].GetFloat();
-				add_monster->regen_time[i].set(fields[loop++].GetUInt32());
-			}
-
-			add_monster->faction.set(fields[loop++].GetUInt8());
-			add_monster->faction_level.set(fields[loop++].GetUInt8());
-
-			add_monster->SetScriptName(fields[loop++].GetString());
-
-			add_monster->SetElementalAttribute(fields[loop++].GetUInt8());
-			add_monster->SetElementalPattern(fields[loop++].GetInt32());
-			add_monster->SetElementalDefense(fields[loop++].GetInt32());
-			add_monster->SetElementalDamageMin(fields[loop++].GetInt32());
-			add_monster->SetElementalDamageMax(fields[loop++].GetInt32());
-			add_monster->SetElementalAttackRate(fields[loop++].GetInt32());
-			add_monster->SetElementalDefenseRate(fields[loop++].GetInt32());
-			add_monster->SetRadianceImmune(fields[loop++].GetUInt8());
-			add_monster->SetDebuffResistance(fields[loop++].GetInt32());
-			add_monster->SetDebuffDefense(fields[loop++].GetInt32());
-			add_monster->SetCriticalDamageResistance(fields[loop++].GetUInt8());
-			add_monster->SetExcellentDamageResistance(fields[loop++].GetUInt8());
-			add_monster->SetDamageAbsorb(fields[loop++].GetUInt8());
-			add_monster->SetElite(fields[loop++].GetBool());
-
-			if ( !sScriptAI->IsScriptAI(add_monster->GetScriptName()) )
-			{
-				sLog->outError(LOG_DEFAULT, "Wrong AI Script: %s", add_monster->GetScriptName().c_str());
-				add_monster->ResetScriptName();
-			}
-
-			if ( add_monster->attack_range > add_monster->view_range )
-				add_monster->view_range.set(add_monster->attack_range.get());
-
-			add_monster->custom.set(false);
-
-			this->map_template[add_monster->id.get()] = add_monster;
-			count++;
-		}
-		while(result->NextRow());
+			if (data.AttackRange > data.ViewRange)
+				data.ViewRange = data.AttackRange;
+		} while (result->NextRow());
 	}
-	
-	sLog->outInfo(LOG_DEFAULT, ">> Loaded %u monsters definitions", count);
-	sLog->outInfo(LOG_DEFAULT, " ");
+
+	sLog->outLoad(false, ">> Loaded %u monsters definitions", _monsterTemplate.size());
 }
 
-void CMonsterMgr::LoadMonsterTemplateCustom()
+void MonsterManager::LoadMonsterItems()
 {
-	sLog->outInfo(LOG_DEFAULT, "Loading Monster Template Custom...");
+	sLog->outLoad(true, "Loading Monster Items...");
 
-	uint32 count = 0;
+	ClearItem();
 
-	QueryResult result = GameServerDatabase.Query("SELECT * FROM monster_template_custom");
-
-	if ( result )
+	for (auto itr : _monsterTemplate)
 	{
-		do
-		{
-			Field* fields = result->Fetch();
-			int32 loop = 0;
+		auto const & monster_template = itr.second;
 
-			monster_template * add_monster = new monster_template;
-
-			add_monster->id.set(fields[loop++].GetUInt16());
-			add_monster->SetName(fields[loop++].GetCString());
-			add_monster->model.set(fields[loop++].GetUInt16());
-			add_monster->size.set(fields[loop++].GetFloat());
-			add_monster->type.set(fields[loop++].GetUInt8());
-			add_monster->min_level.set(fields[loop++].GetInt16());
-			add_monster->max_level.set(fields[loop++].GetInt16());
-
-			for ( uint8 i = 0; i < POWER_MAX; i++ )
-			{
-				add_monster->power[i].set(fields[loop++].GetInt32());
-			}
-
-			add_monster->attack_min_damage.set(fields[loop++].GetInt32());
-			add_monster->attack_max_damage.set(fields[loop++].GetInt32());
-			add_monster->magic_min_damage.set(fields[loop++].GetInt32());
-			add_monster->magic_max_damage.set(fields[loop++].GetInt32());
-			add_monster->critical_damage_rate.set(fields[loop++].GetInt32());
-			add_monster->critical_damage_add.set(fields[loop++].GetInt32());
-			add_monster->excellent_damage_rate.set(fields[loop++].GetInt32());
-			add_monster->excellent_damage_add.set(fields[loop++].GetInt32());
-			add_monster->attack_success.set(fields[loop++].GetInt32());
-			add_monster->defense.set(fields[loop++].GetInt32());
-			add_monster->defense_magic.set(fields[loop++].GetInt32());
-			add_monster->defense_success.set(fields[loop++].GetInt32());
-			add_monster->move_range.set(fields[loop++].GetUInt32());
-			add_monster->move_speed.set(fields[loop++].GetUInt32());
-			add_monster->attack_range.set(fields[loop++].GetUInt32());
-			add_monster->attack_speed.set(fields[loop++].GetInt32());
-			add_monster->view_range.set(fields[loop++].GetUInt32());
-
-			for ( uint8 i = 0; i < Element::MAX; i++ )
-			{
-				add_monster->SetResistance(i, fields[loop++].GetUInt8());
-			}
-
-			add_monster->respawn_time_min.set(fields[loop++].GetUInt32());
-			add_monster->respawn_time_max.set(fields[loop++].GetUInt32());
-			add_monster->item_rate.set(fields[loop++].GetInt32());
-			add_monster->zen_rate.set(fields[loop++].GetInt32());
-			add_monster->item_max_level.set(fields[loop++].GetInt32());
-
-			for ( uint8 i = 0; i < POWER_MAX; i++ )
-			{
-				add_monster->regen_power[i] = fields[loop++].GetFloat();
-				add_monster->regen_time[i].set(fields[loop++].GetUInt32());
-			}
-
-			add_monster->faction.set(fields[loop++].GetUInt8());
-			add_monster->faction_level.set(fields[loop++].GetUInt8());
-
-			add_monster->SetScriptName(fields[loop++].GetString());
-
-			add_monster->SetElementalAttribute(fields[loop++].GetUInt8());
-			add_monster->SetElementalPattern(fields[loop++].GetInt32());
-			add_monster->SetElementalDefense(fields[loop++].GetInt32());
-			add_monster->SetElementalDamageMin(fields[loop++].GetInt32());
-			add_monster->SetElementalDamageMax(fields[loop++].GetInt32());
-			add_monster->SetElementalAttackRate(fields[loop++].GetInt32());
-			add_monster->SetElementalDefenseRate(fields[loop++].GetInt32());
-			add_monster->SetRadianceImmune(fields[loop++].GetUInt8());
-			add_monster->SetDebuffResistance(fields[loop++].GetInt32());
-			add_monster->SetDebuffDefense(fields[loop++].GetInt32());
-
-			add_monster->SetCriticalDamageResistance(fields[loop++].GetUInt8());
-			add_monster->SetExcellentDamageResistance(fields[loop++].GetUInt8());
-			add_monster->SetDamageAbsorb(fields[loop++].GetUInt8());
-			add_monster->SetElite(fields[loop++].GetBool());
-
-			if ( !sScriptAI->IsScriptAI(add_monster->GetScriptName()) )
-			{
-				sLog->outError(LOG_DEFAULT, "Wrong AI Script: %s", add_monster->GetScriptName().c_str());
-				add_monster->ResetScriptName();
-			}
-
-			if ( add_monster->attack_range > add_monster->view_range )
-				add_monster->view_range.set(add_monster->attack_range.get());
-
-			add_monster->custom.set(true);
-
-			this->map_template[add_monster->id.get()] = add_monster;
-			count++;
-		}
-		while(result->NextRow());
+		CreateItem(monster_template.Level, monster_template.ItemMaxLevel);
 	}
-	
-	sLog->outInfo(LOG_DEFAULT, ">> Loaded %u custom monsters definitions", count);
-	sLog->outInfo(LOG_DEFAULT, " ");
+
+	sLog->outLoad(false, ">> Loaded monsters items");
 }
 
-void CMonsterMgr::LoadMonsterItems()
+MonsterTemplate const* MonsterManager::GetMonsterTemplate(uint16 id) const
 {
-	sLog->outInfo(LOG_DEFAULT, "Loading Monster Items...");
-
-	this->ClearItem();
-
-	for ( MonsterTemplateMap::const_iterator it = this->map_template.begin(); it != this->map_template.end(); ++it )
-	{
-		this->CreateItem(it->second->max_level.get(), it->second->item_max_level.get());
-	}
-}
-
-monster_template * CMonsterMgr::GetMonsterTemplate(uint16 id) const
-{
-	MonsterTemplateMap::const_iterator it = this->map_template.find(id);
-
-	if ( it != this->map_template.end() )
-	{
-		return it->second;
-	}
+	auto itr = _monsterTemplate.find(id);
+	if (itr != this->_monsterTemplate.end())
+		return &itr->second;
 	else
-	{
 		return nullptr;
-	}
 }
 
-monster * CMonsterMgr::GetMonsterData(uint16 index) const
+monster * MonsterManager::GetMonsterData(uint16 index) const
 {
 	MonsterMap::const_iterator it = this->monster_map.find(index);
 
@@ -316,7 +188,7 @@ monster * CMonsterMgr::GetMonsterData(uint16 index) const
 	}
 }
 
-void CMonsterMgr::LoadMonsterSkill()
+void MonsterManager::LoadMonsterSkill()
 {
 	sLog->outInfo(LOG_DEFAULT, "Loading Monster Skill...");
 
@@ -353,7 +225,7 @@ void CMonsterMgr::LoadMonsterSkill()
 	sLog->outInfo(LOG_DEFAULT, " ");
 }
 
-void CMonsterMgr::LoadMonsterSkillSpecial()
+void MonsterManager::LoadMonsterSkillSpecial()
 {
 	sLog->outInfo(LOG_DEFAULT, "Loading Monster Skill Special...");
 
@@ -399,7 +271,7 @@ void CMonsterMgr::LoadMonsterSkillSpecial()
 	sLog->outInfo(LOG_DEFAULT, " ");
 }
 
-void CMonsterMgr::LoadMonsterAIElement()
+void MonsterManager::LoadMonsterAIElement()
 {
 	sLog->outInfo(LOG_DEFAULT, "Loading Monster AI Element...");
 
@@ -442,7 +314,7 @@ void CMonsterMgr::LoadMonsterAIElement()
 	sLog->outInfo(LOG_DEFAULT, " ");
 }
 	
-void CMonsterMgr::LoadMonsterAIAutomata()
+void MonsterManager::LoadMonsterAIAutomata()
 {
 	sLog->outInfo(LOG_DEFAULT, "Loading Monster AI Automata...");
 
@@ -510,7 +382,7 @@ void CMonsterMgr::LoadMonsterAIAutomata()
 	sLog->outInfo(LOG_DEFAULT, " ");
 }
 	
-void CMonsterMgr::LoadMonsterAIUnit()
+void MonsterManager::LoadMonsterAIUnit()
 {
 	sLog->outInfo(LOG_DEFAULT, "Loading Monster AI Unit...");
 
@@ -551,7 +423,7 @@ void CMonsterMgr::LoadMonsterAIUnit()
 	sLog->outInfo(LOG_DEFAULT, " ");
 }
 
-void CMonsterMgr::LoadMonsterAIGroup()
+void MonsterManager::LoadMonsterAIGroup()
 {
 	sLog->outInfo(LOG_DEFAULT, "Loading Monster AI Group...");
 
@@ -600,7 +472,7 @@ void CMonsterMgr::LoadMonsterAIGroup()
 	sLog->outInfo(LOG_DEFAULT, " ");
 }
 
-void CMonsterMgr::LoadMonsterRespawnLocation()
+void MonsterManager::LoadMonsterRespawnLocation()
 {
 	sLog->outInfo(LOG_DEFAULT, "Loading Monster Respawn Location...");
 
@@ -646,7 +518,7 @@ void CMonsterMgr::LoadMonsterRespawnLocation()
 	sLog->outInfo(LOG_DEFAULT, " ");
 }
 
-void CMonsterMgr::LoadMonsterEquipment()
+void MonsterManager::LoadMonsterEquipment()
 {
 	sLog->outInfo(LOG_DEFAULT, "Loading Monster Equipment...");
 
@@ -693,7 +565,7 @@ void CMonsterMgr::LoadMonsterEquipment()
 	sLog->outInfo(LOG_DEFAULT, " ");
 }
 
-void CMonsterMgr::LoadMonster()
+void MonsterManager::LoadMonster()
 {
 	sLog->outInfo(LOG_DEFAULT, "Loading Monster...");
 
@@ -717,8 +589,6 @@ void CMonsterMgr::LoadMonster()
 
 			add_monster->SetGUID(fields[loop++].GetUInt16());
 			add_monster->SetID(fields[loop++].GetUInt16());
-			add_monster->SetType(fields[loop++].GetUInt8());
-			add_monster->SetName(fields[loop++].GetCString());
 			add_monster->SetWorld(fields[loop++].GetUInt16());
 			add_monster->SetX1(fields[loop++].GetInt16());
 			add_monster->SetY1(fields[loop++].GetInt16());
@@ -802,7 +672,7 @@ void CMonsterMgr::LoadMonster()
 	sLog->outInfo(LOG_DEFAULT, " ");
 }
 
-void CMonsterMgr::LoadMonster(uint16 guid)
+void MonsterManager::LoadMonster(uint16 guid)
 {
 	sLog->outInfo(LOG_DEFAULT, "Loading Monster...");
 
@@ -838,8 +708,6 @@ void CMonsterMgr::LoadMonster(uint16 guid)
 
 			add_monster->SetGUID(fields[loop++].GetUInt16());
 			add_monster->SetID(fields[loop++].GetUInt16());
-			add_monster->SetType(fields[loop++].GetUInt8());
-			add_monster->SetName(fields[loop++].GetCString());
 			add_monster->SetWorld(fields[loop++].GetUInt16());
 			add_monster->SetX1(fields[loop++].GetInt16());
 			add_monster->SetY1(fields[loop++].GetInt16());
@@ -923,220 +791,125 @@ void CMonsterMgr::LoadMonster(uint16 guid)
 	sLog->outInfo(LOG_DEFAULT, " ");
 }
 
-void CMonsterMgr::LoadMonsterEvent()
+void MonsterManager::LoadMonsterEvent()
 {
-	sLog->outInfo(LOG_DEFAULT, "Loading Monster Event...");
+	sLog->outLoad(true, "Loading Monster Event...");
 
-	LIST_CLEAR(MonsterEventList::iterator, this->monster_event_list);
+	CLEAR_MAP(_monsterEvent);
 
-	uint32 count = 0;
-
-	QueryResult result = GameServerDatabase.PQuery("SELECT * FROM monster_event WHERE monster_event.server = %u", sGameServer->GetTransferServer());
-
-	if ( result )
+	auto result = GameServerDatabase.PQuery("SELECT * FROM monster_event WHERE monster_event.server = %u", sGameServer->GetTransferServer());
+	if (result)
 	{
 		do
 		{
-			Field* fields = result->Fetch();
+			FieldReader reader(result->Fetch());
+			reader.Skip(); ///- Skip server
 
-			int32 add_count = fields[24].GetInt32();
+			auto monster_id = reader.GetUInt16();
+			auto map_id = reader.GetUInt16();
+			auto x1 = reader.GetInt16();
+			auto y1 = reader.GetInt16();
+			auto x2 = reader.GetInt16();
+			auto y2 = reader.GetInt16();
+			auto direction = reader.GetUInt8();
+			auto spawn_delay = reader.GetUInt32();
+			auto spawn_distance = reader.GetUInt8();
+			auto respawn_time = reader.GetUInt32();
+			auto respawn_id = reader.GetUInt32();
+			auto movement_distance = reader.GetUInt8();
+			auto event_id = reader.GetUInt8();
+			auto raw_data_1 = reader.GetInt32();
+			auto raw_data_2 = reader.GetInt32();
+			auto raw_data_3 = reader.GetInt32();
+			auto raw_data_4 = reader.GetInt32();
+			auto raw_data_5 = reader.GetInt32();
+			auto npc_function = reader.GetString();
+			auto item_bag = reader.GetString();
+			auto script_name = reader.GetString();
+			auto ai_group = reader.GetUInt32();
+			auto ai_group_member = reader.GetUInt32();
+			auto add_count = reader.GetInt32();
 
-			for ( int32 i = 0; i < add_count; ++i )
+			for (int32 i = 0; i < add_count; ++i)
 			{
-				monster_event * add_monster = new monster_event;
-				int32 loop = 1;
+				MonsterEvent * add_monster = new MonsterEvent;
 
-				add_monster->SetID(fields[loop++].GetUInt16());
-				add_monster->SetWorld(fields[loop++].GetUInt16());
-				add_monster->SetX1(fields[loop++].GetInt16());
-				add_monster->SetY1(fields[loop++].GetInt16());
-				add_monster->SetX2(fields[loop++].GetInt16());
-				add_monster->SetY2(fields[loop++].GetInt16());
-				add_monster->SetDirection(fields[loop++].GetInt8());
-				add_monster->SetSpawnDelay(fields[loop++].GetUInt32());
-				add_monster->SetSpawnDistance(fields[loop++].GetUInt8());
-				add_monster->SetRespawnTime(fields[loop++].GetUInt32());
-				add_monster->SetRespawnID(fields[loop++].GetUInt32());
-				add_monster->SetMoveDistance(fields[loop++].GetUInt8());
-				add_monster->SetEventID(fields[loop++].GetUInt8());
-				add_monster->raw.data[0] = fields[loop++].GetInt32();
-				add_monster->raw.data[1] = fields[loop++].GetInt32();
-				add_monster->raw.data[2] = fields[loop++].GetInt32();
-				add_monster->raw.data[3] = fields[loop++].GetInt32();
-				add_monster->raw.data[4] = fields[loop++].GetInt32();
-				add_monster->SetNpcFunction(fields[loop++].GetString());
-				add_monster->SetItemBag(fields[loop++].GetString());
-				add_monster->SetScriptName(fields[loop++].GetString());
-				add_monster->SetAIGroup(fields[loop++].GetUInt32());
-				add_monster->SetAIGroupMember(fields[loop++].GetUInt32());
+				add_monster->MonsterId = monster_id;
+				add_monster->MapId = map_id;
+				add_monster->X1 = x1;
+				add_monster->Y1 = y1;
+				add_monster->X2 = x2;
+				add_monster->Y2 = y2;
+				add_monster->Direction = direction;
+				add_monster->SpawnDelay = spawn_delay;
+				add_monster->SpawnDistance = spawn_distance;
+				add_monster->RespawnTime = respawn_time;
+				add_monster->RespawnId = respawn_id;
+				add_monster->MovementDistance = movement_distance;
+				add_monster->EventId = event_id;
+				add_monster->raw.data[0] = raw_data_1;
+				add_monster->raw.data[1] = raw_data_2;
+				add_monster->raw.data[2] = raw_data_3;
+				add_monster->raw.data[3] = raw_data_4;
+				add_monster->raw.data[4] = raw_data_5;
+				add_monster->NpcFunction = npc_function;
+				add_monster->ItemBag = item_bag;
+				add_monster->ScriptName = script_name;
+				add_monster->AIGroup = ai_group;
+				add_monster->AIGroupMember = ai_group_member;
 
-				if ( !sScriptAI->IsScriptAI(add_monster->GetScriptName()) )
+				if (!sScriptAI->IsScriptAI(add_monster->ScriptName))
 				{
-					sLog->outError(LOG_DEFAULT, "Wrong AI Script: %s", add_monster->GetScriptName().c_str());
-					add_monster->ResetScriptName();
+					sLog->outError(LOG_DEFAULT, "Wrong AI Script: %s", add_monster->ScriptName.c_str());
+					add_monster->ScriptName.clear();
 				}
 
-				if ( add_monster->GetX1() > 255 )
-					add_monster->SetX1(255);
+				if (add_monster->X1 > 255)
+					add_monster->X1 = 255;
 
-				if ( add_monster->GetX1() < 0 )
-					add_monster->SetX1(0);
+				if (add_monster->X1 < 0)
+					add_monster->X1 = 0;
 
-				if ( add_monster->GetY1() > 255 )
-					add_monster->SetY1(255);
+				if (add_monster->Y1 > 255)
+					add_monster->Y1 = 255;
 
-				if ( add_monster->GetY1() < 0 )
-					add_monster->SetY1(0);
+				if (add_monster->Y1 < 0)
+					add_monster->Y1 = 0;
 
-				if ( add_monster->GetX2() > 255 )
-					add_monster->SetX2(255);
+				if (add_monster->X2 > 255)
+					add_monster->X2 = 255;
 
-				if ( add_monster->GetX2() < 0 )
-					add_monster->SetX2(0);
+				if (add_monster->X2 < 0)
+					add_monster->X2 = 0;
 
-				if ( add_monster->GetY2() > 255 )
-					add_monster->SetY2(255);
+				if (add_monster->Y2 > 255)
+					add_monster->Y2 = 255;
 
-				if ( add_monster->GetY2() < 0 )
-					add_monster->SetY2(0);
+				if (add_monster->Y2 < 0)
+					add_monster->Y2 = 0;
 
-				if ( add_monster->GetX2() < add_monster->GetX1() )
-					add_monster->SetX2(add_monster->GetX1());
+				if (add_monster->X2 < add_monster->X1)
+					add_monster->X2 = add_monster->X1;
 
-				if ( add_monster->GetY2() < add_monster->GetY1() )
-					add_monster->SetY2(add_monster->GetY1());
+				if (add_monster->Y2 < add_monster->Y1)
+					add_monster->Y2 = add_monster->Y1;
 
-				if ( this->GetMonsterTemplate(add_monster->GetID()) == nullptr )
+				if (!GetMonsterTemplate(add_monster->MonsterId))
 				{
-					sLog->outError(LOG_DEFAULT, "Wrong Monster Event ID: %u", add_monster->GetID());
+					sLog->outError(LOG_DEFAULT, "Wrong Monster Event ID: %u", add_monster->MonsterId);
 					delete add_monster;
 					continue;
 				}
 
-				this->monster_event_list.push_back(add_monster);
-				count++;
+				_monsterEvent.emplace(add_monster->EventId, add_monster);
 			}
-		}
-		while(result->NextRow());
+		} while (result->NextRow());
 	}
-	
-	sLog->outInfo(LOG_DEFAULT, ">> Loaded %u monster event definitions", count);
-	sLog->outInfo(LOG_DEFAULT, " ");
+
+	sLog->outLoad(false, ">> Loaded %u monster event definitions", _monsterEvent.size());
 }
 
-void CMonsterMgr::LoadMonsterEvent(uint8 event_id)
-{
-	sLog->outInfo(LOG_DEFAULT, "Loading Monster Event...");
-
-	for ( MonsterEventList::iterator it = this->monster_event_list.begin(); it != this->monster_event_list.end(); )
-	{
-		if ( (*it)->GetEventID() == event_id )
-		{
-			delete *it;
-			it = this->monster_event_list.erase(it);
-		}
-		else
-		{
-			++it;
-		}
-	}
-
-	uint32 count = 0;
-
-	QueryResult result = GameServerDatabase.PQuery("SELECT * FROM monster_event WHERE monster_event.server = %u AND event_id = %u", sGameServer->GetTransferServer(), event_id);
-
-	if ( result )
-	{
-		do
-		{
-			Field* fields = result->Fetch();
-
-			int32 add_count = fields[24].GetInt32();
-
-			for ( int32 i = 0; i < add_count; ++i )
-			{
-				monster_event * add_monster = new monster_event;
-				int32 loop = 1;
-
-				add_monster->SetID(fields[loop++].GetUInt16());
-				add_monster->SetWorld(fields[loop++].GetUInt16());
-				add_monster->SetX1(fields[loop++].GetInt16());
-				add_monster->SetY1(fields[loop++].GetInt16());
-				add_monster->SetX2(fields[loop++].GetInt16());
-				add_monster->SetY2(fields[loop++].GetInt16());
-				add_monster->SetDirection(fields[loop++].GetInt8());
-				add_monster->SetSpawnDelay(fields[loop++].GetUInt32());
-				add_monster->SetSpawnDistance(fields[loop++].GetUInt8());
-				add_monster->SetRespawnTime(fields[loop++].GetUInt32());
-				add_monster->SetRespawnID(fields[loop++].GetUInt32());
-				add_monster->SetMoveDistance(fields[loop++].GetUInt8());
-				add_monster->SetEventID(fields[loop++].GetUInt8());
-				add_monster->raw.data[0] = fields[loop++].GetInt32();
-				add_monster->raw.data[1] = fields[loop++].GetInt32();
-				add_monster->raw.data[2] = fields[loop++].GetInt32();
-				add_monster->raw.data[3] = fields[loop++].GetInt32();
-				add_monster->raw.data[4] = fields[loop++].GetInt32();
-				add_monster->SetNpcFunction(fields[loop++].GetString());
-				add_monster->SetItemBag(fields[loop++].GetString());
-				add_monster->SetScriptName(fields[loop++].GetString());
-				add_monster->SetAIGroup(fields[loop++].GetUInt32());
-				add_monster->SetAIGroupMember(fields[loop++].GetUInt32());
-
-				if ( !sScriptAI->IsScriptAI(add_monster->GetScriptName()) )
-				{
-					sLog->outError(LOG_DEFAULT, "Wrong AI Script: %s", add_monster->GetScriptName().c_str());
-					add_monster->ResetScriptName();
-				}
-
-				if ( add_monster->GetX1() > 255 )
-					add_monster->SetX1(255);
-
-				if ( add_monster->GetX1() < 0 )
-					add_monster->SetX1(0);
-
-				if ( add_monster->GetY1() > 255 )
-					add_monster->SetY1(255);
-
-				if ( add_monster->GetY1() < 0 )
-					add_monster->SetY1(0);
-
-				if ( add_monster->GetX2() > 255 )
-					add_monster->SetX2(255);
-
-				if ( add_monster->GetX2() < 0 )
-					add_monster->SetX2(0);
-
-				if ( add_monster->GetY2() > 255 )
-					add_monster->SetY2(255);
-
-				if ( add_monster->GetY2() < 0 )
-					add_monster->SetY2(0);
-
-				if ( add_monster->GetX2() < add_monster->GetX1() )
-					add_monster->SetX2(add_monster->GetX1());
-
-				if ( add_monster->GetY2() < add_monster->GetY1() )
-					add_monster->SetY2(add_monster->GetY1());
-
-				if ( this->GetMonsterTemplate(add_monster->GetID()) == nullptr )
-				{
-					sLog->outError(LOG_DEFAULT, "Wrong Monster Event ID: %u", add_monster->GetID());
-					delete add_monster;
-					continue;
-				}
-
-				this->monster_event_list.push_back(add_monster);
-				count++;
-			}
-		}
-		while(result->NextRow());
-	}
-	
-	sLog->outInfo(LOG_DEFAULT, ">> Loaded %u monster event definitions", count);
-	sLog->outInfo(LOG_DEFAULT, " ");
-}
-
-void CMonsterMgr::LoadMonsterRespawn()
+void MonsterManager::LoadMonsterRespawn()
 {
 	sLog->outInfo(LOG_DEFAULT, "Loading Monster Respawn...");
 
@@ -1170,7 +943,7 @@ void CMonsterMgr::LoadMonsterRespawn()
 	sLog->outInfo(LOG_DEFAULT, " ");
 }
 
-void CMonsterMgr::LoadMonsterExclusive()
+void MonsterManager::LoadMonsterExclusive()
 {
 	sLog->outInfo(LOG_DEFAULT, "Loading Monster Exclusive...");
 
@@ -1202,7 +975,7 @@ void CMonsterMgr::LoadMonsterExclusive()
 	sLog->outInfo(LOG_DEFAULT, " ");
 }
 
-void CMonsterMgr::SpawnMonsters()
+void MonsterManager::SpawnMonsters()
 {
 	for ( MonsterMap::const_iterator it = this->monster_map.begin(); it != this->monster_map.end(); ++it )
 	{
@@ -1235,7 +1008,7 @@ void CMonsterMgr::SpawnMonsters()
 	}
 }
 
-bool CMonsterMgr::IsMonsterExclusive(uint16 guid) const
+bool MonsterManager::IsMonsterExclusive(uint16 guid) const
 {
 	bool success = true;
 	bool founded = false;
@@ -1261,7 +1034,7 @@ bool CMonsterMgr::IsMonsterExclusive(uint16 guid) const
 	return success;
 }
 
-void CMonsterMgr::CreateItem(int32 level, int32 max_level)
+void MonsterManager::CreateItem(int32 level, int32 max_level)
 {
 	if ( level < 1 )
 	{
@@ -1312,7 +1085,7 @@ void CMonsterMgr::CreateItem(int32 level, int32 max_level)
 	}
 }
 
-int32 CMonsterMgr::GenerateItemLevel(item_template const* item_info, int32 level)
+int32 MonsterManager::GenerateItemLevel(item_template const* item_info, int32 level)
 {
 	if ( item_info->GetLevel() == 0 )
 	{
@@ -1343,7 +1116,7 @@ int32 CMonsterMgr::GenerateItemLevel(item_template const* item_info, int32 level
 	return -1;
 }
 
-bool CMonsterMgr::InsertItem(int32 level, uint16 item, uint8 item_level)
+bool MonsterManager::InsertItem(int32 level, uint16 item, uint8 item_level)
 {
 	MonsterItemList & item_list = this->m_monster_item_map[level];
 
@@ -1363,7 +1136,7 @@ bool CMonsterMgr::InsertItem(int32 level, uint16 item, uint8 item_level)
 	return true;
 }
 
-bool CMonsterMgr::GenerateItem(Item & item, int32 level, bool exe)
+bool MonsterManager::GenerateItem(Item & item, int32 level, bool exe)
 {
 	if ( level < 1 )
 		return false;
@@ -1417,7 +1190,7 @@ bool CMonsterMgr::GenerateItem(Item & item, int32 level, bool exe)
 	return false;
 }
 	
-void CMonsterMgr::ClearItem()
+void MonsterManager::ClearItem()
 {
 	for ( MonsterItemMap::iterator i_list = this->m_monster_item_map.begin(); i_list != this->m_monster_item_map.end(); ++i_list )
 	{
@@ -1432,7 +1205,7 @@ void CMonsterMgr::ClearItem()
 	this->m_monster_item_map.clear();
 }
 
-void CMonsterMgr::GenerateRespawnLocation(Monster* pMonster)
+void MonsterManager::GenerateRespawnLocation(Monster* pMonster)
 {
 	monster_respawn_location const* pData = this->GetRandomRespawnLocation(pMonster);
 
@@ -1447,7 +1220,7 @@ void CMonsterMgr::GenerateRespawnLocation(Monster* pMonster)
 	pMonster->SetBasicLocation(pData->GetX1(), pData->GetY1(), pData->GetX2(), pData->GetY2());
 }
 
-monster_respawn_location const* CMonsterMgr::GetRandomRespawnLocation(Monster* pMonster) const
+monster_respawn_location const* MonsterManager::GetRandomRespawnLocation(Monster* pMonster) const
 {
 	if ( !pMonster->GetRespawnID() )
 		return nullptr;
@@ -1471,7 +1244,7 @@ monster_respawn_location const* CMonsterMgr::GetRandomRespawnLocation(Monster* p
 	return m_randomizer.GetRandomValue(RANDOM_POOL_RATE);
 }
 
-bool CMonsterMgr::TeleportToRandomLocation(Monster* pMonster, int32 attempts)
+bool MonsterManager::TeleportToRandomLocation(Monster* pMonster, int32 attempts)
 {
 	do
 	{
@@ -1502,17 +1275,15 @@ bool CMonsterMgr::TeleportToRandomLocation(Monster* pMonster, int32 attempts)
 	return false;
 }
 
-void CMonsterMgr::BuildMonsterCustomData(Monster* pMonster, Player* pPlayer)
+void MonsterManager::BuildMonsterCustomData(Monster* pMonster, Player* pPlayer)
 {
-	if ( !pMonster->IsCustom() )
-	{
+	if (!pMonster->GetMonsterTemplate()->IsCustom)
 		return;
-	}
 
 	VIEWPORT_MONSTER_CUSTOM_DATA pMsg;
 	pMsg.index = pMonster->GetEntry();
 	pMsg.type = pMonster->GetSendType();
-	memcpy(pMsg.name, pMonster->GetName(), 32);
+	memcpy(pMsg.name, pMonster->GetName(), MAX_MONSTER_NAME_LENGTH);
 	pMsg.size = pMonster->GetSize();
 	
 	MonsterEquipmentMap::const_iterator it = this->m_monster_equipment_map.find(pMonster->GetClass());
@@ -1540,7 +1311,7 @@ void CMonsterMgr::BuildMonsterCustomData(Monster* pMonster, Player* pPlayer)
 	}
 }
 
-uint16 CMonsterMgr::GetRandomSkillSpecial(Monster* pMonster, int16 type)
+uint16 MonsterManager::GetRandomSkillSpecial(Monster* pMonster, int16 type)
 {
 	MonsterSkillSpecialMap::const_iterator it = this->monster_skill_special_map.find(pMonster->GetClass());
 

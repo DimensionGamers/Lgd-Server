@@ -570,7 +570,7 @@ void Object::ViewportSendObject(Object* pObject, bool clear)
 			{
 				if ( Monster * pMonster = pObject->ToCreature() )
 				{
-					sMonsterMgr->BuildMonsterCustomData(pMonster, this->ToPlayer());
+					sMonsterManager->BuildMonsterCustomData(pMonster, this->ToPlayer());
 				}
 			} break;
 
@@ -650,7 +650,7 @@ void Object::ViewportConstructMonster(Object* pUnit, Monster* pMonster, uint8 * 
 	VIEWPORT_CREATE_MONSTER body;
 
 	body.SetIndex(pMonster->GetEntry());
-	body.SetClass(pMonster->GetModel());
+	body.SetClass(pMonster->GetMonsterTemplate()->Model);
 	body.x = pMonster->GetX();
 	body.y = pMonster->GetY();
 
@@ -710,8 +710,8 @@ void Object::ViewportConstructMonster(Object* pUnit, Monster* pMonster, uint8 * 
 	body.critical_damage_resistance = pMonster->GetFloatData(UNIT_FLOAT_RESIST_CRITICAL_DAMAGE_RATE); ///- Critical
 	body.excellent_damage_resistance = pMonster->GetFloatData(UNIT_FLOAT_RESIST_EXCELLENT_DAMAGE_RATE); ///- Excellent
 	body.SetDebuffResistance(pMonster->GetIntData(UNIT_INT_DEBUFF_RESISTANCE)); ///- Debuff
-	body.damage_absorb = pMonster->GetDamageAbsorb();
-	body.elite = pMonster->IsElite() ? 1 : 0;
+	body.damage_absorb = pMonster->GetMonsterTemplate()->DamageAbsrob;
+	body.elite = pMonster->GetMonsterTemplate()->IsElite ? 1 : 0;
 	body.unk27 = 0;
 
 	body.effect_count = pMonster->GetActiveBuffCount();
@@ -734,7 +734,7 @@ void Object::ViewportConstructMonsterSummon(Object* pUnit, Monster* pMonster, ui
 	VIEWPORT_CREATE_MONSTER_SUMMONED body;
 
 	body.SetIndex(pMonster->GetEntry());
-	body.SetClass(pMonster->GetModel());
+	body.SetClass(pMonster->GetMonsterTemplate()->Model);
 	body.x = pMonster->GetX();
 	body.y = pMonster->GetY();
 
