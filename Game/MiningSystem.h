@@ -10,9 +10,8 @@
 //************ Client -> GameServer ************//
 //**********************************************//
 #pragma pack(1)
-struct PMSG_MINING_START_RECV
+struct MINING_START_REQUEST : C1_HEADER_SUB
 {
-	PBMSG_HEAD2 h; // C1:4C:00
 	uint16 index;
 	uint16 monster_index;
 	uint16 monster_class;
@@ -20,9 +19,8 @@ struct PMSG_MINING_START_RECV
 	uint8 stage;
 };
 
-struct PMSG_MINING_SUCCESS_RECV
+struct MINING_SUCCESS_REQUEST : C1_HEADER_SUB
 {
-	PBMSG_HEAD2 h; // C1:4C:01
 	uint16 index;
 	uint16 monster_index;
 	uint16 monster_class;
@@ -31,9 +29,8 @@ struct PMSG_MINING_SUCCESS_RECV
 	uint8 result;
 };
 
-struct PMSG_MINING_FAILURE_RECV
+struct MINING_FAILURE_REQUEST : C1_HEADER_SUB
 {
-	PBMSG_HEAD2 h; // C1:4C:03
 	uint16 index;
 	uint16 monster_index;
 	uint8 map;
@@ -43,14 +40,13 @@ struct PMSG_MINING_FAILURE_RECV
 //************ GameServer -> Client ************//
 //**********************************************//
 
-struct PMSG_MINING_START_SEND
+struct MINING_START_SEND : C1_HEADER_SUB
 {
-	PMSG_MINING_START_SEND()
+	MINING_START_SEND()
 	{
-		this->h.set(HEADCODE_MINING_SYSTEM, 0x00, sizeof(PMSG_MINING_START_SEND));
+		this->Set(HEADCODE_MINING_SYSTEM, 0x00, sizeof(MINING_START_SEND));
 	}
 
-	PBMSG_HEAD2 h;
 	uint16 index;
 	uint16 MonsterIndex;
 	uint16 MonsterClass;
@@ -60,14 +56,13 @@ struct PMSG_MINING_START_SEND
 	uint32 result;
 };
 
-struct PMSG_MINING_SUCCESS_SEND
+struct MINING_SUCCESS_SEND : C1_HEADER_SUB
 {
-	PMSG_MINING_SUCCESS_SEND()
+	MINING_SUCCESS_SEND()
 	{
-		this->h.set(HEADCODE_MINING_SYSTEM, 0x01, sizeof(PMSG_MINING_SUCCESS_SEND));
+		this->Set(HEADCODE_MINING_SYSTEM, 0x01, sizeof(MINING_SUCCESS_SEND));
 	}
 
-	PBMSG_HEAD2 h;
 	uint16 index;
 	uint16 MonsterIndex;
 	uint16 MonsterClass;
@@ -76,14 +71,13 @@ struct PMSG_MINING_SUCCESS_SEND
 	uint32 value;
 };
 
-struct PMSG_MINING_CANCEL
+struct MINING_CANCEL_SEND : C1_HEADER_SUB
 {
-	PMSG_MINING_CANCEL()
+	MINING_CANCEL_SEND()
 	{
-		this->h.set(HEADCODE_MINING_SYSTEM, 0x02, sizeof(PMSG_MINING_CANCEL));
+		this->Set(HEADCODE_MINING_SYSTEM, 0x02, sizeof(MINING_CANCEL_SEND));
 	}
 
-	PBMSG_HEAD2 h;
 	uint16 index;
 	uint16 MonsterIndex;
 	uint16 MonsterClass;

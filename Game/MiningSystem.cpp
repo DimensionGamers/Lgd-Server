@@ -116,9 +116,9 @@ void MiningSystem::CGMiningStartRecv(Player* pPlayer, uint8 * Packet)
 		return;
 	}
 
-	POINTER_PCT_LOG(PMSG_MINING_START_RECV, lpMsg, Packet, 0);
+	POINTER_PCT_CHECK(MINING_START_REQUEST, lpMsg, Packet, 0);
 
-	if ( lpMsg->index != pPlayer->GetEntry() )
+	if (lpMsg->index != pPlayer->GetEntry())
 	{
 		sLog->outError("jewel", "%s -- Wrong Index[%u] %s", __FUNCTION__, lpMsg->index, pPlayer->BuildLog().c_str());
 
@@ -299,7 +299,7 @@ void MiningSystem::CGMiningSuccessRecv(Player* pPlayer, uint8 * Packet)
 		return;
 	}
 
-	POINTER_PCT_LOG(PMSG_MINING_SUCCESS_RECV, lpMsg, Packet, 0);
+	POINTER_PCT_CHECK(MINING_SUCCESS_REQUEST, lpMsg, Packet, 0);
 
 	if ( lpMsg->index != pPlayer->GetEntry() )
 	{
@@ -421,7 +421,7 @@ void MiningSystem::CGMiningFailureRecv(Player* pPlayer, uint8 * Packet)
 		return;
 	}
 
-	POINTER_PCT_LOG(PMSG_MINING_FAILURE_RECV, lpMsg, Packet, 0);
+	POINTER_PCT_CHECK(MINING_FAILURE_REQUEST, lpMsg, Packet, 0);
 
 	if ( lpMsg->index != pPlayer->GetEntry() )
 	{
@@ -473,7 +473,7 @@ void MiningSystem::CGMiningFailureRecv(Player* pPlayer, uint8 * Packet)
 
 void MiningSystem::GCMiningStartSend(Player* pPlayer, uint16 monster_index, uint16 monster_class, uint8 map, uint8 stage, uint32 value, uint8 result)
 {
-	PMSG_MINING_START_SEND pMsg;
+	MINING_START_SEND pMsg;
 	pMsg.index = pPlayer->GetEntry();
 	pMsg.MonsterIndex = monster_index;
 	pMsg.MonsterClass = monster_class;
@@ -482,12 +482,12 @@ void MiningSystem::GCMiningStartSend(Player* pPlayer, uint16 monster_index, uint
 	pMsg.value = value;
 	pMsg.result = result;
 
-	pPlayer->SEND_PCT(pMsg);
+	pPlayer->SendPacket(&pMsg);
 }
 
 void MiningSystem::GCMiningSuccessSend(Player* pPlayer, uint16 monster_index, uint16 monster_class, uint8 map, uint8 stage, uint8 result)
 {
-	PMSG_MINING_SUCCESS_SEND pMsg;
+	MINING_SUCCESS_SEND pMsg;
 	pMsg.index = pPlayer->GetEntry();
 	pMsg.MonsterIndex = monster_index;
 	pMsg.MonsterClass = monster_class;
@@ -495,19 +495,19 @@ void MiningSystem::GCMiningSuccessSend(Player* pPlayer, uint16 monster_index, ui
 	pMsg.stage = stage;
 	pMsg.value = result;
 
-	pPlayer->SEND_PCT(pMsg);
+	pPlayer->SendPacket(&pMsg);
 }
 
 void MiningSystem::GCMiningFailSend(Player* pPlayer, uint16 monster_index, uint16 monster_class, uint8 map, uint8 stage)
 {
-	PMSG_MINING_CANCEL pMsg;
+	MINING_CANCEL_SEND pMsg;
 	pMsg.index = pPlayer->GetEntry();
 	pMsg.MonsterIndex = monster_index;
 	pMsg.MonsterClass = monster_class;
 	pMsg.map = map;
 	pMsg.stage = stage;
 
-	pPlayer->SEND_PCT(pMsg);
+	pPlayer->SendPacket(&pMsg);
 }
 
 void MiningSystem::Restore(Player* pPlayer)
